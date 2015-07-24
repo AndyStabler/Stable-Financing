@@ -11,13 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150722134231) do
+ActiveRecord::Schema.define(version: 20150724085338) do
+
+  create_table "transactions", force: :cascade do |t|
+    t.date     "dat"
+    t.decimal  "amount"
+    t.boolean  "recurring"
+    t.boolean  "daily"
+    t.boolean  "weekly"
+    t.boolean  "monthly"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.decimal  "balance",    precision: 8, scale: 2
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.decimal  "balance"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

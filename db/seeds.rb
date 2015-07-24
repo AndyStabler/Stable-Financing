@@ -8,3 +8,6 @@
 User.delete_all
 
 User.create!([{name: 'Andy Stabler', balance: '500.40'}, {name: 'Fiona Barron', balance: '9999.999'}])
+
+Transaction.create!([{dat: Date.today, amount: '50.25', recurring: true, daily: true, weekly: false, monthly: false},
+                     {dat: Date.today, amount: '24.50', recurring: false, daily: false, weekly: false, monthly: false}]);
