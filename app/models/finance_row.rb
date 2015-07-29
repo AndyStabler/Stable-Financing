@@ -1,4 +1,4 @@
-class BalanceRow
+class FinanceRow
 
   attr_accessor :on, :in_val, :out_val, :balance, :diff, :running_monthly_diff
 
