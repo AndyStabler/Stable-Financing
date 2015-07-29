@@ -1,8 +1,36 @@
 class User < ActiveRecord::Base
 
-  has_many :incoming, -> { where outgoing: false }, class_name: 'Transfer'
-  has_many :outgoing, -> { where outgoing: true }, class_name: 'Transfer'
-  has_many :balance, through: :Transfer
+  
+  has_many :transfers
+
+  has_many :balance, through: :transfers, source: :balances
+
+
+  def incoming
+    transfers.where(outgoing: false)
+  end
+
+  def outgoing
+    transfers.where(outgoing: true)
+  end
+
+  ##
+  # Let's start by creating a row for every day, but there's no reason we couldn't let the user specify
+  # the unit of time they wish each row to represent (day/week/month, etc)
+  #
+  def finance_rows_between(start_date, end_date)
+    days = (end_date.to_date - start_date.to_date).to_i
+    rows = Array.new
+    days.times do |i|
+      day = start_date+i.days #+0 days, +1 day, +2 days, etc.
+      # get latest (with respect to start_date) balance for this user
+
+      #balance
+
+
+      #rows.add FinanceRow.new
+    end
+  end
 
   ##
   # Returns the balance for the user on a given date
@@ -26,6 +54,12 @@ class User < ActiveRecord::Base
     trans.each do |tr|
       # tr.
     end
+
+  end
+
+  private
+
+  def days_between start_date, end_date
 
   end
 
