@@ -8,6 +8,7 @@ class CreateTransactions < ActiveRecord::Migration
       t.boolean :daily
       t.boolean :weekly
       t.boolean :monthly
+      t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false
     end
