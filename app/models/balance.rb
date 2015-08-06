@@ -1,5 +1,4 @@
 class Balance < ActiveRecord::Base
-  belongs_to :transfer
+  belongs_to :user
 
-  delegate :user, to: :transfer
 end

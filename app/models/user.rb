@@ -1,10 +1,8 @@
 class User < ActiveRecord::Base
 
-  
   has_many :transfers
-
-  has_many :balance, through: :transfers, source: :balances
-
+  # many balances over time - store them so the user can see what's going on
+  has_many :balances
 
   def incoming
     transfers.where(outgoing: false)
