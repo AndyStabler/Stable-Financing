@@ -11,17 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150729130934) do
+ActiveRecord::Schema.define(version: 20150805131704) do
 
   create_table "balances", force: :cascade do |t|
     t.decimal  "value"
-    t.integer  "transfer_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.datetime "on"
+    t.integer  "user_id"
   end
 
-  add_index "balances", ["transfer_id"], name: "index_balances_on_transfer_id"
+  add_index "balances", ["user_id"], name: "index_balances_on_user_id"
 
   create_table "transfers", force: :cascade do |t|
     t.decimal  "amount"
