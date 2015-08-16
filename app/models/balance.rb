@@ -12,7 +12,6 @@ class Balance < ActiveRecord::Base
     # if it's the first in the list, there's no difference from previous balance
     return 0 unless ind != 0
     # if the month is different to the previous balance's, then the diff is 0
-    #return 0 unless bals[ind].on.month == bals[ind-1].on.month && bals[ind].on.year == bals[ind-1].on.year
     # previous balance is from same month? diff is balance - old balance
     bals[ind].value - bals[ind-1].value
   end
