@@ -2,17 +2,8 @@ class Balance < ActiveRecord::Base
   belongs_to :user
 
   def last_of_month?
-    ordered_bals = user.balances.order(:on)
-    # true if day is last day of month
-    return true unless on.day != on.end_of_month.day
-    # true if this balance is the last in the db
-    return true unless ordered_bals.last != self
-    # true if month is different to the next balance's in the DB
-    # just because the months are equal, it's not necessarily the case that the years are equal!
-    return true unless on.month == ordered_bals[ordered_bals.index(self)+1].on.month &&
-        on.year == ordered_bals[ordered_bals.index(self)+1].on.year
-
-    false
+    new_ordered_bals = user.balances.order(:on).group_by { |bal| bal.on.beginning_of_month }
+    new_ordered_bals[on.beginning_of_month].sort_by { |bal| bal.on }.last == self
   end
 
   def diff_from_previous_balance
