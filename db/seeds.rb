@@ -32,9 +32,14 @@ transfers = [{on: Date.today - 5.days, reference: 'init', amount: 3000.00, recur
 Transfer.create!(transfers)
 
 Balance.delete_all
-Balance.create!([{value: 500, on: Date.today, user: User.find_by_name("Andy Stabler")},
+Balance.create!([{value: 500, on: Date.today-5.weeks, user: User.find_by_name("Andy Stabler")},
+                 {value: 30, on: Date.today-3.weeks, user: User.find_by_name("Andy Stabler")},
+                 {value: 100, on: Date.today-2.weeks, user: User.find_by_name("Andy Stabler")},
+                 {value: 50, on: Date.today-5, user: User.find_by_name("Andy Stabler")},
+                 {value: 300, on: Date.today-3, user: User.find_by_name("Andy Stabler")},
+                 {value: 1000, on: Date.today-2, user: User.find_by_name("Andy Stabler")},
                  {value: 3000, on: Date.today-10.days, user: User.find_by_name("Fiona Barron")},
-                 {value: 2970, on: Date.today-5.days, user: User.find_by_name("Fiona Barron")}])
+                 {value: 2900, on: Date.today-5.days, user: User.find_by_name("Fiona Barron")}])
 # {value: 2946, on: Date.today-4, user: User.find_by_name("Andy Stabler")},
 # {value: 3000, on: Date.today-2, user: User.find_by_name("Andy Stabler")},
 # {value: 100, on: Date.today, user: User.find_by_name("Andy Stabler")}])
