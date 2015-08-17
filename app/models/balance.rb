@@ -18,19 +18,7 @@ class Balance < ActiveRecord::Base
 
   def month_diff
     bals = user.balances.where(on: on.beginning_of_month..on.end_of_month)
-
-    return bals.map(&:diff_from_previous_balance).inject(:+)
-
-    diff = 0
-
-    bal_store = nil
-    bals.each do |bal|
-      unless bal_store.nil?
-        diff+= bal.value - bal_store
-      end
-      bal_store = bal.value
-    end
-    diff
+    bals.map(&:diff_from_previous_balance).inject(:+)
   end
 
 end
