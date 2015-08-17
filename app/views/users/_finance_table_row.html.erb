@@ -1,0 +1,6 @@
+<tr>
+  <td class="<%= tense + "-date"%>"><%= frow.on %></td>
+  <td class="<%= frow.diff > 0 ? (tense + "-pos") : frow.diff < 0 ? (tense + "-neg") : (tense + "-neut") %>"><%= frow.diff %></td>
+  <td class="<%= frow.running_monthly_diff.nil? ? "" : frow.running_monthly_diff > 0 ? (tense + "-pos") : frow.running_monthly_diff < 0 ? (tense + "-neg") : (tense + "-neut") %>"><%= frow.running_monthly_diff %></td>
+  <td class="<%= frow.balance > 0 ? (tense + "-pos") : frow.balance < 0 ? (tense + "-neg") : (tense + "-neut") %>"><%= frow.balance %></td>
+</tr>

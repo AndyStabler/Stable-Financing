@@ -2,6 +2,10 @@
 
 <h1>Listing Users</h1>
 
+<% @users.each do |user| %>
+    <%= render "finance_table", user: user%>
+<% end %>
+
 <table>
   <thead>
   <tr>
@@ -25,11 +29,14 @@
           <table>
             <thead>
             <th>Date</th>
+            <th>Ref</th>
             <th>Amount</th>
             </thead>
-            <% @transfers.each do |trans| %>
+            <% user.transfers.each do |trans| %>
                 <tr>
                   <td><%= trans.on %></td>
+                  <td><%= trans.reference %></td>
+                  <td><%= trans.recurrence %></td>
                   <td><%= trans.amount %></td>
                 </tr>
             <% end %>
