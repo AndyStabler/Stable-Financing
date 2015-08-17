@@ -1,3 +1,64 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.user-finances {
+  min-width: 50%;
+  position: relative;
+  left: 25%;
+  border: none;
+
+  thead {
+    background-color: #f9f9f9;
+  }
+
+  th, td {
+    border: none;
+  }
+
+  th {
+    font-size: 1.5em;
+    padding: 1.25em;
+  }
+
+  td {
+    padding: 0.5em 2em;
+    text-align: center;
+    margin: 0;
+  }
+
+  tr:hover > td {
+    background-color: #daf6ff;
+  }
+
+  .past-date {
+    background-color: #E4E4E4;
+  }
+
+  .future-date {
+    background-color: #F5F5F5;
+  }
+  .past-pos {
+    background-color: #E9FFE9;
+  }
+
+  .future-pos {
+    background-color: #E9FFE9;
+  }
+
+  .past-neg {
+    background-color: #FDD7E3;
+  }
+
+  .future-neg {
+    background-color: #FDD7E3;
+  }
+
+  .past-neut {
+    background-color: #D8F4FD;
+  }
+
+  .future-neut {
+    background-color: #D8F4FD;
+  }
+}
