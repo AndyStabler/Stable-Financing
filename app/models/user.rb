@@ -34,7 +34,6 @@ class User < ActiveRecord::Base
     balance_groups.each do |day, bals|
       row_on = bals.last.on.day_s
       row_bal = bals.sort_by { |bal| bal[:on] }.last
-      logger.debug "is #{bals.last.on} the last of the month? #{bals.last.last_of_month?}"
       row_month_diff = bals.last.last_of_month? ? bals.last.month_diff : nil
       rows << FinanceRow.new(row_on, row_bal.value, row_bal.diff_from_previous_balance, row_month_diff)
     end
@@ -45,7 +44,6 @@ class User < ActiveRecord::Base
     trans_date_map.group_by do |date, _|
       date.beginning_of_month
     end
-
   end
 
   def all_balance_data
@@ -72,7 +70,7 @@ class User < ActiveRecord::Base
     # let us only consider transfers that occur after the last balance update
     trans_date_map = trans_date_map.select { |day, _| day >= bal.on }
 
-    create_finance_rows trans_date_map
+    create_prediction_finance_rows trans_date_map
   end
 
   def calculate_transfers_between start_date, end_date
@@ -102,9 +100,9 @@ class User < ActiveRecord::Base
     trans_date_map
   end
 
-  def create_finance_rows date_trans
+  def create_prediction_finance_rows date_trans
     latest_balance = balances.order(:on).last
-    date_trans = date_trans.select{|day, _| day > latest_balance.on}
+    date_trans = date_trans.select { |day, _| day > latest_balance.on }
     monthly_transfers = trans_per_month(date_trans)
     balance_value = latest_balance.value
     rows = Array.new
@@ -118,22 +116,15 @@ class User < ActiveRecord::Base
       end.inject(:+)
       total = -(out_vals||0) + (in_vals||0)
 
-      # transfer_sum_on_day = trans.select { |tr| tr.outgoing }.map { |tr| tr.amount }.inject(:-).to_f + (trans.select { |tr| !tr.outgoing }.map { |tr| tr.amount }.inject(:+))
-      balance_value += total #transfer_sum_on_day
+      balance_value += total
       month_diff = nil
-      #logger.debug "diffs is #{diffs}"
-      # TODO: what's going on here? We were using a hash map, now it's turned into an array? Are they the same?
-      last_tr_of_month = monthly_transfers[day.beginning_of_month].map { |day, trans| trans }.last
-      # logger.debug "relevant transactions is #{last_tr_of_month}"
-      # logger.debug "checking if day #{day} == #{last_tr_of_month.last.on} : #{day == last_tr_of_month.last.on}"
-      # if this date is the last for the month
-      # [month => [date => [trans1, trans1], date => [trans1, trans2],
-      #  month => [date => [trans1, trans1], date => [trans1, trans2]]
-      if day == last_tr_of_month.last.on
-        # get all [date => [trans]] for this month, then sum the
-        valid_trans = last_tr_of_month #diffs[tr.on.beginning_of_month].values
-        incomings = valid_trans.select { |trans| !trans.outgoing }.flatten.map(&:amount).inject(:+).to_f
-        outgoings = valid_trans.select(&:outgoing).flatten.map(&:amount).inject(:+).to_f
+      last_date_trans_of_mon = monthly_transfers[day.beginning_of_month].sort_by { |day, _| day }
+      last_date = last_date_trans_of_mon.last[0]
+      last_transfers = last_date_trans_of_mon.map { |_, dat_tran| dat_tran }.flatten
+
+      if day == last_date
+        incomings = last_transfers.select { |trans| !trans.outgoing }.map(&:amount).inject(:+).to_f
+        outgoings = last_transfers.select { |trans| trans.outgoing }.map(&:amount).inject(:+).to_f
         month_diff = incomings - outgoings
       end
 
