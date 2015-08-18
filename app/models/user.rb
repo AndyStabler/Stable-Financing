@@ -1,8 +1,13 @@
 class User < ActiveRecord::Base
 
+  extend FriendlyId
+
+  friendly_id :username
+
   has_many :transfers
   # many balances over time - store them so the user can see what's going on
   has_many :balances
+  validates_format_of :username, :with => /\A[a-z0-9]+\z/i
 
   def incoming
     transfers.where(outgoing: false)

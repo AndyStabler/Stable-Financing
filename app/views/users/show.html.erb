@@ -1,3 +1,20 @@
 <p id="notice"><%= notice %></p>
+<h1><%= @user.name %></h1>
+<div class="user-transfers">
+  <div class="options">
+    <p id="options-in" class="selected">In</p>
+    <p id="options-out" class="unselected">Out</p>
+  </div>
+  <div id="user-transfers-in">
+    <% @user.transfers.where(outgoing: false).each do |tr| %>
+        <%= render "Transfers/show", transfer: tr %>
+    <% end %>
+  </div>
+  <div id="user-transfers-out">
+    <% @user.transfers.where(outgoing: true).each do |tr| %>
+        <%= render "Transfers/show", transfer: tr %>
+    <% end %>
+  </div>
+</div>
 
 <%= render "finance_table", user: @user %>
