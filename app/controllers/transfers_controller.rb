@@ -63,7 +63,7 @@ class TransfersController < ApplicationController
   def destroy
     @transfer.destroy
     respond_to do |format|
-      format.html { redirect_to transactions_url, notice: 'Transfer was successfully destroyed.' }
+      format.html { redirect_to :back, notice: 'Transfer was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

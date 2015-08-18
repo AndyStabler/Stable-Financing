@@ -3,69 +3,26 @@
 <h1>Listing Users</h1>
 
 <% @users.each do |user| %>
-    <%= render "finance_table", user: user%>
-<% end %>
+    <h1><%= user.name %></h1>
+    <div class="user-transfers">
+      <div class="options">
+        <p id="options-in" class="selected">In</p>
 
-<table>
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th colspan="3"></th>
-  </tr>
-  </thead>
-
-  <tbody>
-  <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: {confirm: 'Are you sure?'} %></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td colspan="4">
-          <h2>Transfers</h2>
-          <table>
-            <thead>
-            <th>Date</th>
-            <th>Ref</th>
-            <th>Amount</th>
-            </thead>
-            <% user.transfers.each do |trans| %>
-                <tr>
-                  <td><%= trans.on %></td>
-                  <td><%= trans.reference %></td>
-                  <td><%= trans.recurrence %></td>
-                  <td><%= trans.amount %></td>
-                </tr>
-            <% end %>
-          </table>
-
-        </td>
-      </tr>
-  <% end %>
-  </tbody>
-</table>
-
-<% @users.each do |user| %>
-    <div id="transfer" style="margin: 5px; background-color: hotpink">
-      <h1>Incoming for <%= user.name %></h1>
-      <% user.incoming.each do |incoming| %>
-          <p><%= incoming.amount %></p>
-
-          <p> balance today after transfer:    <%# user.balance_on incoming.on %></p>
-      <% end %>
-
-      <h1>Outgoing for <%= user.name %></h1>
-      <% user.outgoing.each do |outgoing| %>
-          <p><%= outgoing.amount %></p>
-      <% end %>
+        <p id="options-out" class="unselected">Out</p>
+      </div>
+      <div id="user-transfers-in">
+        <% user.transfers.where(outgoing: false).each do |tr| %>
+            <%= render "Transfers/show", transfer: tr %>
+        <% end %>
+      </div>
+      <div id="user-transfers-out">
+        <% user.transfers.where(outgoing: true).each do |tr| %>
+            <%= render "Transfers/show", transfer: tr %>
+        <% end %>
+      </div>
     </div>
 
-
+    <%= render "finance_table", user: user %>
 <% end %>
-
-<br>
 
 <%= link_to 'New User', new_user_path %>

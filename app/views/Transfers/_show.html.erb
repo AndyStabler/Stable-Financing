@@ -1,29 +1,13 @@
-<p id="notice"><%= notice %></p>
+<div class="transfer">
 
-<p>
-  <strong>Dat:</strong>
-  <%= @transfer.on %>
-</p>
 
-<p>
-  <strong>Amount:</strong>
-  <%= @transfer.amount %>
-</p>
+  <h2><%= transfer.reference.capitalize %></h2>
 
-<p>
-  <strong>Recurrence:</strong>
-  <%= @transfer.recurrence %>
-</p>
+  <p><strong>Date: </strong> <%= transfer.on.strftime("%d/%m/%Y") %></p>
 
-<p>
-  <strong>User:</strong>
-  <%= @transfer.user.name %>
-</p>
+  <p><strong>Amount: </strong> <%= transfer.amount %></p>
 
-<p>
-  <strong>Outgoing:</strong>
-  <%= @transfer.outgoing? %>
-</p>
+  <p><strong>Recurrence: </strong> <%= transfer.recurrence %></p>
 
-<%= link_to 'Edit', edit_transfer_path(@transfer) %> |
-<%= link_to 'Back', transfers_path %>
+  <%= link_to 'Destroy', transfer, method: :delete, data: {confirm: 'Are you sure?'} %>
+</div>
