@@ -2,10 +2,54 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.user-transfers {
+  width: 20%;
+  float: left;
+
+  .options {
+    width: 100%;
+    p {
+      padding: 0.5em 1.5em;
+      //background-color: lightblue;
+      display: inline-block;
+      border-radius: 0 15px 0 0;
+      margin: 0;
+    }
+
+    p:hover {
+      cursor: pointer;
+    }
+
+    .unselected {
+      background-color: #E4E4E4;
+    }
+
+    .selected {
+      background-color: #f9f9f9;
+    }
+  }
+
+  #user-transfers-in {
+    padding: 0.25em;
+    background-color: #f9f9f9;
+  }
+
+  #user-transfers-out {
+    background-color: #f9f9f9;
+    padding: 0.25em;
+    display: none;
+  }
+}
+
+#options-in {
+  float: left;
+}
+
 .user-finances {
   min-width: 50%;
-  position: relative;
-  left: 25%;
+  //position: relative;
+  //float: left;
+  left: 5%;
   border: none;
 
   thead {
