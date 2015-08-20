@@ -2,19 +2,31 @@
 <h1><%= @user.name %></h1>
 <div class="user-transfers">
   <h1>Transfers</h1>
+
   <div class="options">
     <p id="options-in" class="selected">In</p>
+
     <p id="options-out" class="unselected">Out</p>
   </div>
-  <div id="user-transfers-in">
-    <% @user.transfers.where(outgoing: false).each do |tr| %>
-        <%= render "Transfers/show", transfer: tr %>
-    <% end %>
-  </div>
-  <div id="user-transfers-out">
-    <% @user.transfers.where(outgoing: true).each do |tr| %>
-        <%= render "Transfers/show", transfer: tr %>
-    <% end %>
+  <div class="user-transfers-panel">
+    <p id="user-transfer-new-button">New &#9658;</p>
+
+    <div id="user-transfers-in">
+      <div id="user-transfers-new">
+        <%= render 'new_transfer_form', transfer: Transfer.new, user: @user, outgoing: false %>
+      </div>
+      <% @user.transfers.where(outgoing: false).each do |tr| %>
+          <%= render "Transfers/show", transfer: tr %>
+      <% end %>
+    </div>
+    <div id="user-transfers-out">
+      <div id="user-transfers-new">
+        <%= render 'new_transfer_form', transfer: Transfer.new, user: @user, outgoing: true %>
+      </div>
+      <% @user.transfers.where(outgoing: true).each do |tr| %>
+          <%= render "Transfers/show", transfer: tr %>
+      <% end %>
+    </div>
   </div>
 </div>
 
