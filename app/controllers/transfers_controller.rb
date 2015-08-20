@@ -76,6 +76,6 @@ class TransfersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transfer_params
-      params.require(:transfer).permit(:on, :amount, :recurrence, :user_id, :outgoing)
+      params.require(:transfer).permit(:on, :amount, :recurrence, :user_id, :outgoing, :reference)
     end
 end
