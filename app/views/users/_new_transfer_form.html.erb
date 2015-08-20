@@ -1,0 +1,39 @@
+<%= form_for transfer, url: url_for(controller: 'users', action: 'new_transfer') do |f| %>
+    <!--form_for @user, :url => url_for(:controller => 'mycontroller', :action => 'myaction')-->
+    <% if transfer.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@transfer.errors.count, "error") %> prohibited this transaction from being saved:</h2>
+
+          <ul>
+            <% transfer.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :reference %><br>
+      <%= f.text_field :reference %>
+    </div>
+    <div class="field">
+      <%= f.label :on %><br>
+      <%= f.date_select :on %>
+    </div>
+    <div class="field">
+      <%= f.label :amount %><br>
+      <%= f.text_field :amount %>
+    </div>
+    <div class="field">
+      <%= f.label :recurrence %><br>
+      <%= f.select(:recurrence, options_for_select(Transfer.recurrences.keys.to_a)) %>
+    </div>
+    <div class="field">
+      <%= f.label :user_id %><br>
+
+      <p><%= user.name %></p>
+    </div>
+    <%= f.hidden_field :outgoing, value: outgoing %>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>
