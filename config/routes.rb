@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   resources :balances
   resources :transfers
   resources :users
+
+  post 'users/:id/new/transfer', to: 'users#new_transfer'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
