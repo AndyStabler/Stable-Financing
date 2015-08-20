@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :new_transfer]
 
   # GET /users
   # GET /users.json
@@ -61,10 +61,31 @@ class UsersController < ApplicationController
     end
   end
 
+  #POST /users/:id/new/transfer
+  def new_transfer
+    transfer = Transfer.new(trans_params)
+    transfer.user= @user
+    respond_to do |format|
+      if transfer.save
+        format.html { redirect_to :back, notice: 'Transfer was successfully added.' }
+        format.json { render json: :no_content }
+      else
+        format.html { render :new }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+
+    end
+  end
+
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.friendly.find(params[:id])
+  end
+
+  # TODO: this is the exact same function as is in the transaction controller. Make less DRY . . .
+  def trans_params
+    params.require(:transfer).permit(:on, :amount, :recurrence, :user_id, :outgoing, :reference)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
