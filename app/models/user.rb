@@ -64,7 +64,6 @@ class User < ActiveRecord::Base
   # creates a list of FinanceRows based on calculations from saved transfers
   #
   def prediction_data_between(start_date, end_date)
-
     # the last balance
     bal = balances.order(:on).last
 
@@ -141,7 +140,6 @@ class User < ActiveRecord::Base
   def all_prediction_data
     trans = transfers.order(:on)
     return [] unless trans.any?
-    #logger.debug "first transfer is #{trans.first}"
     from = trans.first.on
     to = trans.last.on+1.year
     prediction_data_between(from, to)

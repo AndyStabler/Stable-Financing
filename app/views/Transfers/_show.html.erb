@@ -5,7 +5,7 @@
 
   <p><strong>Date: </strong> <%= transfer.on.strftime("%d/%m/%Y") %></p>
 
-  <p><strong>Amount: </strong> <%= transfer.amount %></p>
+  <p><strong>Amount: </strong> <%= number_to_currency(transfer.amount, precision: 2, unit: '£') %></p>
 
   <p><strong>Recurrence: </strong> <%= transfer.recurrence %></p>
 
