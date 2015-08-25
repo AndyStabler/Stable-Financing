@@ -28,11 +28,13 @@
       <%= f.select(:recurrence, options_for_select(Transfer.recurrences.keys.to_a)) %>
     </div>
     <div class="field">
-      <%= f.label :user_id %><br>
+      <%= f.label :outgoing %><br>
+      <%= f.radio_button :outgoing, true, checked: true %>
+      <%= f.label :outgoing, "Yes", value: true %>
+      <%= f.radio_button :outgoing, false, value: false %>
+      <%= f.label :outgoing, "No", value: false %>
 
-      <p><%= user.name %></p>
     </div>
-    <%= f.hidden_field :outgoing, value: outgoing %>
     <div class="actions">
       <%= f.submit %>
     </div>
