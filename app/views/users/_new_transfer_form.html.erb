@@ -16,8 +16,8 @@
       <%= f.text_field :reference %>
     </div>
     <div class="field">
-      <%= f.label :on %><br>
-      <%= f.date_select :on %>
+      <%= f.label :on, "Date" %><br>
+      <%= f.text_field :on, class: "datepicker" %>
     </div>
     <div class="field">
       <%= f.label :amount %><br>
