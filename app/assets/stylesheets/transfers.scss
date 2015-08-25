@@ -6,12 +6,41 @@
   font-size: 1.2em;
   line-height: 1.5em;
   font-weight: 200;
-  border-bottom: 1px solid #E4E4E4;
-  padding-bottom: 1em;
+  margin: 0.5em;
+  padding: 1em;
   h1, h2, p {
     font-weight: 200;
   }
-  p {
+  h2 {
     margin: 0;
   }
+  p {
+    margin: 0.25em;
+  }
+}
+
+.in {
+  background-color: #E9FFE9;
+  border: 1px dashed green;
+  h2, p {
+    color: green;
+  }
+}
+
+.out {
+  background-color: #FDD7E3;
+  border: 1px dashed #711B1B;
+  h2, p {
+    color: #711B1B;
+  }
+
+}
+
+.new_transfer {
+  padding: 1em;
+}
+
+#transfer_amount::after {
+  position: absolute;
+  content: "£"
 }
