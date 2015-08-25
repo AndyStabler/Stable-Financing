@@ -1,11 +1,17 @@
-<h1 class="user-title"><%= @user.name %></h1>
+<div class="user-header">
+  <h1 class="user-title"><%= @user.name %></h1>
+  <div class="balance-update">
+    <%= render 'balance_update', balance: Balance.new %>
+  </div>
+</div>
+
 <p id="notice"><%= notice %></p>
 <div class="user-transfers">
   <h1>Transfers</h1>
 
   <div class="user-transfers-new">
     <p id="user-transfer-new-button" class="closed">New</p>
-    <%= render 'new_transfer_form', transfer: Transfer.new, user: @user %>
+    <%= render 'new_transfer_form', transfer: Transfer.new %>
   </div>
 
   <div class="options">
