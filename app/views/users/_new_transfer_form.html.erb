@@ -1,5 +1,4 @@
 <%= form_for transfer, url: url_for(controller: 'users', action: 'new_transfer') do |f| %>
-    <!--form_for @user, :url => url_for(:controller => 'mycontroller', :action => 'myaction')-->
     <% if transfer.errors.any? %>
         <div id="error_explanation">
           <h2><%= pluralize(@transfer.errors.count, "error") %> prohibited this transaction from being saved:</h2>
