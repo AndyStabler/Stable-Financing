@@ -13,3 +13,9 @@ $(document).on 'ready page:load', ->
     document.getElementById("user-transfers-out").style.display = "block"
     document.getElementById("options-in").className = "unselected"
     document.getElementById("options-out").className = "selected")
+  $("#user-transfer-new-button").click(->
+    $("#new_transfer").toggle()
+    $("#user-transfer-new-button").toggleClass("closed open"))
+  $('.datepicker').datepicker({
+    dateFormat: 'dd/mm/yy',
+  }).datepicker('setDate', new Date())
