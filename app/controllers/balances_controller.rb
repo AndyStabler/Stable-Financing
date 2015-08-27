@@ -69,6 +69,6 @@ class BalancesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def balance_params
-      params.require(:balance).permit(:value, :transaction_id)
+      params.require(:balance).permit(:value)
     end
 end
