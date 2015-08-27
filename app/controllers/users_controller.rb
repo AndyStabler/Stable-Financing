@@ -71,16 +71,25 @@ class UsersController < ApplicationController
         format.json { render json: :no_content }
       else
         format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: transfer.errors, status: :unprocessable_entity }
       end
 
     end
   end
 
   def update_balance
+    balance = Balance.new(balance_params)
+    balance.user= @user
+    balance.on = Time.now
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Balance was successfully added.' }
-      format.json { render json: :no_content }
+      if balance.save
+        format.html { redirect_to :back, notice: 'Balance was successfully added.' }
+        format.json { render json: :no_content }
+      else
+        format.html { render :new }
+        format.json { render json: balance.errors, status: :unprocessable_entity }
+      end
+
     end
   end
 
