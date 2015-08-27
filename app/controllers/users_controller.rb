@@ -104,6 +104,10 @@ class UsersController < ApplicationController
     params.require(:transfer).permit(:on, :amount, :recurrence, :user_id, :outgoing, :reference)
   end
 
+  def balance_params
+    params.require(:balance).permit(:value)
+  end
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:name, :balance)
