@@ -13,7 +13,7 @@
 
     <div class="field">
       <%= f.label :value, "Update Balance:" %>
-      <span class="value-currency"><%= f.text_field :value %></span>
+      <span class="value-currency"><%= f.text_field :value, placeholder: number_with_precision(user.balance.value, precision: 2) %></span>
     </div>
     <div class="actions">
       <%= f.submit "Update" %>
