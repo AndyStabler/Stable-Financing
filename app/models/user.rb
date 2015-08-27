@@ -145,4 +145,8 @@ class User < ActiveRecord::Base
     prediction_data_between(from, to)
   end
 
+  def balance
+    balances.order(:on).last||0.0;
+  end
+
 end
