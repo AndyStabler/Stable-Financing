@@ -5,18 +5,12 @@
 .user-header {
   background-color: #5A5A5A;
   margin-bottom: 1em;
+  overflow: auto;
   .balance-update {
     margin-top: 0.5em;
     font-size: 1.5em;
-    width: 60%;
-    position: absolute;
-    left: 50%;
-    top: 0;
-    -webkit-transform: translate(-50%, 0);
-    -moz-transform: translate(-50%, 0);
-    -ms-transform: translate(-50%, 0);
-    -o-transform: translate(-50%, 0);
-    transform: translate(-50%, 0);
+    float: left;
+    margin-left: 10%;
 
     .new_balance {
       margin: 0.1em;
@@ -30,7 +24,7 @@
           font-weight: 100;
           text-align: right;
         }
-        
+
         input[type=text] {
           line-height: 1.5;
           font-size: 1.5em;
@@ -44,6 +38,7 @@
         }
       }
       .actions {
+        float: left;
         input[type=submit] {
           line-height: 2;
           background-color: lightgray;
@@ -63,8 +58,8 @@
 
 .value-currency:before {
   position: absolute;
+  display: inline-block;
   content: "£";
-  top: -13px;
   left: 10px;
   color: gray;
   font-size: 1.5em;
@@ -73,13 +68,17 @@
 
 .user-title {
   padding: 1em;
+  margin-top: .5em;
+  font-size: 1.2em;
+  width: 10%;
   color: #E4E4E4;
-
+  float: left;
   font-weight: 100;
 }
 
 .user-transfers {
   width: 20%;
+  clear: both;
   float: left;
   margin: 0.15em;
   h1 {
