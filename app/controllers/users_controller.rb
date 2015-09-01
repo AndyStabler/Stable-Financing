@@ -63,17 +63,16 @@ class UsersController < ApplicationController
 
   #POST /users/:id/new/transfer
   def new_transfer
-    transfer = Transfer.new(trans_params)
-    transfer.user= @user
+    @transfer = Transfer.new(trans_params)
+    @transfer.user= @user
     respond_to do |format|
-      if transfer.save
-        format.html { redirect_to :back, notice: 'Transfer was successfully added.' }
+      if @transfer.save
+        format.html { redirect_to action: :show }
         format.json { render json: :no_content }
       else
-        format.html { render :new }
-        format.json { render json: transfer.errors, status: :unprocessable_entity }
+        format.html { render :show }
+        format.json { render json: @transfer.errors, status: :unprocessable_entity }
       end
-
     end
   end
 
