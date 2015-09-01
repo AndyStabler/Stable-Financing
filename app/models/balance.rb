@@ -1,6 +1,9 @@
 class Balance < ActiveRecord::Base
   belongs_to :user
 
+  validates :value, :on, :user, presence: {message: "Value cannot be empty"}
+  validates :value, numericality: true
+
   def last_of_month?
     new_ordered_bals = user.balances.order(:on).group_by { |bal| bal.on.beginning_of_month }
     new_ordered_bals[on.beginning_of_month].sort_by { |bal| bal.on }.last == self
