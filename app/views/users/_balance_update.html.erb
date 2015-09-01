@@ -1,19 +1,21 @@
 <%= form_for balance, url: url_for(controller: 'users', action: 'update_balance') do |f| %>
-    <% if balance.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(balance.errors.count, "error") %> prohibited this balance from being saved:</h2>
-
-          <ul>
-            <% balance.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
-
     <div class="field">
       <%= f.label :value, "Update Balance:" %>
-      <span class="value-currency"><%= f.text_field :value, placeholder: number_with_precision(user.balance.value, precision: 2) %></span>
+      <% if !balance.errors.any? %>
+          <span class="value-currency"><%= f.text_field :value, placeholder: number_with_precision(user.balance.value, precision: 2) %></span>
+      <% else %>
+          <div class="error-panel">
+            <span class="value-currency"><%= f.text_field :value, placeholder: number_with_precision(user.balance.value, precision: 2) %></span>
+
+            <div id="error_explanation">
+              <ul>
+                <% balance.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+      <% end %>
     </div>
     <div class="actions">
       <%= f.submit "Update" %>
