@@ -17,12 +17,19 @@
       .field {
         float: left;
         margin-right: 0.1em;
+
         label {
           color: #E4E4E4;
           margin-right: .1em;
           font-size: 1.5em;
           font-weight: 100;
           text-align: right;
+          float: left;
+          -webkit-transform: translateY(50%);
+          -moz-transform: translateY(50%);
+          -ms-transform: translateY(50%);
+          -o-transform: translateY(50%);
+          transform: translateY(50%);
         }
 
         input[type=text] {
@@ -35,8 +42,14 @@
         input[type=text]::before {
           float: left;
           content: "£";
+
+        }
+
+        .error-panel {
+          display: inline-block;
         }
       }
+
       .actions {
         float: left;
         input[type=submit] {
@@ -48,15 +61,31 @@
           background-color: #bbbbbb;
         }
       }
+
+      #error_explanation {
+        position: absolute;
+        background-color: #FDD7E3;
+        width: auto;
+        padding-right: 2em;
+        ul {
+          li {
+            list-style-type: decimal;
+            color: #711B1B;
+          }
+        }
+      }
     }
   }
 }
 
 .value-currency {
   position: relative;
+  .error {
+    border: 1px solid red !important;
+  }
 }
 
-.value-currency:before {
+.value-currency::before {
   position: absolute;
   display: inline-block;
   content: "£";
@@ -64,6 +93,8 @@
   color: gray;
   font-size: 1.5em;
   line-height: 1.5;
+  z-index: 1;
+
 }
 
 .user-title {
