@@ -1,7 +1,8 @@
 <div class="user-header">
   <h1 class="user-title"><%= @user.name %></h1>
+
   <div class="balance-update">
-    <%= render 'balance_update', balance: Balance.new, user: @user %>
+    <%= render 'balance_update', balance: defined?(@balance) ? @balance : Balance.new, user: @user %>
   </div>
 </div>
 
