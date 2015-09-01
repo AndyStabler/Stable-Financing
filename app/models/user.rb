@@ -146,7 +146,7 @@ class User < ActiveRecord::Base
   end
 
   def balance
-    balances.order(:on).last||0.0;
+    balances.order(:on).last||BigDecimal.new(0);
   end
 
 end
