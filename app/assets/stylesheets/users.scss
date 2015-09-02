@@ -47,6 +47,9 @@
 
         .error-panel {
           display: inline-block;
+          #error_explanation {
+            position: absolute;
+          }
         }
       }
 
@@ -62,28 +65,27 @@
         }
       }
 
-      #error_explanation {
-        position: absolute;
-        background-color: #FDD7E3;
-        width: auto;
-        padding-right: 2em;
-        ul {
-          li {
-            list-style-type: decimal;
-            color: #711B1B;
-          }
-        }
-      }
     }
   }
 }
 
 .value-currency {
   position: relative;
-  .error {
-    border: 1px solid red !important;
-  }
+
 }
+
+//#error_explanation {
+//  position: absolute;
+//  background-color: #FDD7E3;
+//  width: auto;
+//  padding-right: 2em;
+//  ul {
+//    li {
+//      list-style-type: decimal;
+//      color: #711B1B;
+//    }
+//  }
+//}
 
 .value-currency::before {
   position: absolute;
@@ -102,9 +104,16 @@
   margin-top: .5em;
   font-size: 1.2em;
   width: 10%;
-  color: #E4E4E4;
+
   float: left;
-  font-weight: 100;
+
+  a, a:hover, a:visited {
+    text-decoration: none;
+    color: #E4E4E4;
+    font-weight: 100;
+    background: transparent;
+  }
+
 }
 
 .user-transfers {
@@ -116,7 +125,7 @@
     padding: 1.25em;
     font-size: 1.5em;
     background-color: #f9f9f9;
-    margin: 0;
+    margin-bottom: 2px;
   }
 
   .options {
