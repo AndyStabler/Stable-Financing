@@ -1,8 +1,6 @@
 <%= form_for transfer, url: url_for(controller: 'users', action: 'new_transfer'), html: {style: (transfer.errors.any? ? "display:block;" : "display:none;").html_safe} do |f| %>
     <% if transfer.errors.any? %>
         <div id="error_explanation">
-          <h2><%= pluralize(@transfer.errors.count, "error") %> prohibited this transaction from being saved:</h2>
-
           <ul>
             <% transfer.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
