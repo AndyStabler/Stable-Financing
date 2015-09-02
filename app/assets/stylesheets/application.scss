@@ -35,3 +35,19 @@ input[type=button], input[type=submit] {
 input[type=button]:hover, input[type=submit]:hover {
     background-color: #2C71AD;
 }
+
+#error_explanation {
+    position: absolute;
+    background-color: #FDD7E3;
+    width: auto;
+    padding-right: 2em;
+
+ul {
+
+li {
+    list-style-type: decimal;
+    color: #711B1B;
+}
+
+}
+}
