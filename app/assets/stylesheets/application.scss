@@ -16,38 +16,41 @@
  */
 
 html, body, * {
-    font-family: "Helvetica Neue", "Arial", sans-serif;
-    color: #333;
-    font-weight: 200;
-    margin: 0;
+  font-family: "Helvetica Neue", "Arial", sans-serif;
+  color: #333;
+  font-weight: 200;
+  margin: 0;
 }
 
 input[type=button], input[type=submit] {
-    -webkit-appearance: none;
-    background-color: #428bca;
-    color: #fff;
-    text-decoration: none;
-    border: none;
-    outline: 0;
-    font-size: 1em;
+  -webkit-appearance: none;
+  background-color: #428bca;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  outline: 0;
+  font-size: 1em;
 }
 
 input[type=button]:hover, input[type=submit]:hover {
-    background-color: #2C71AD;
+  background-color: #2C71AD;
 }
 
 #error_explanation {
-    position: absolute;
-    background-color: #FDD7E3;
-    width: auto;
-    padding-right: 2em;
+  background-color: #FDD7E3;
+  width: auto;
+  padding-right: 2em;
 
-ul {
+  ul {
 
-li {
-    list-style-type: decimal;
-    color: #711B1B;
+    li {
+      list-style-type: decimal;
+      color: #711B1B;
+    }
+
+  }
 }
 
-}
+input.error {
+  border: 1px solid red !important;
 }
