@@ -1,3 +1,5 @@
+require 'bcrypt'
+
 class User < ActiveRecord::Base
 
   extend FriendlyId
@@ -14,6 +16,23 @@ class User < ActiveRecord::Base
   validates_format_of :email, with: /\A\S+@.+\.\S+\z/
   validates :name, :username, :email, :password, presence: true
   validates :email, confirmation: true
+  validates_confirmation_of :new_password, if: :password_changed?
+  before_save :hash_new_password, if: :password_changed?
+
+  def password_changed?
+    !@new_password.blank?
+  end
+
+  def self.authenticate(id, pwd)
+    if user = (find_by_username(id) || find_by_email(id))
+      # if the passwords match, return the user
+      if BCrypt::Password.new(user.password).is_password? pwd
+        return user
+      end
+    end
+    # authentication failed
+    return nil
+  end
 
   def incoming
     transfers.where(outgoing: false)
@@ -152,7 +171,13 @@ class User < ActiveRecord::Base
   end
 
   def balance
-    balances.order(:on).last||BigDecimal.new(0);
+    balances.order(:on).last || BigDecimal.new(0);
+  end
+
+  private
+
+  def hash_new_password
+    self.password = BCrypt::Password.create(@new_password)
   end
 
 end
