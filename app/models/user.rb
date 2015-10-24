@@ -68,13 +68,13 @@ class User < ActiveRecord::Base
     bal = balances.order(:on).last
 
     # get a map from date to array of transfers, [date1 => [transfer, transfer], date2 => [transfer, transfer]]
-    trans_date_map = calculate_transfers_between start_date, end_date
+    trans_date_hash = calculate_transfers_between start_date, end_date
     # order the elements by the date they occur
-    trans_date_map = trans_date_map.sort_by { |day, _| day }
+    trans_date_hash = trans_date_hash.sort_by { |day, _| day }
     # let us only consider transfers that occur after the last balance update
-    trans_date_map = trans_date_map.select { |day, _| day >= bal.on }
+    trans_date_hash = trans_date_hash.select { |day, _| day >= bal.on }
 
-    create_prediction_finance_rows trans_date_map
+    create_prediction_finance_rows trans_date_hash
   end
 
   def calculate_transfers_between start_date, end_date
