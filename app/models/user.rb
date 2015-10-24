@@ -7,7 +7,13 @@ class User < ActiveRecord::Base
   has_many :transfers
   # many balances over time - store them so the user can see what's going on
   has_many :balances
-  validates_format_of :username, :with => /\A[a-z0-9]+\z/i
+
+  attr_accessor :new_password, :new_password_confirmation
+
+  validates_format_of :username, with: /\A[a-z0-9]+\z/i
+  validates_format_of :email, with: /\A\S+@.+\.\S+\z/
+  validates :name, :username, :email, :password, presence: true
+  validates :email, confirmation: true
 
   def incoming
     transfers.where(outgoing: false)
