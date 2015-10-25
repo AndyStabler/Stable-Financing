@@ -79,7 +79,7 @@ class UsersController < ApplicationController
   def update_balance
     @balance = Balance.new(balance_params)
     @balance.user= @user
-    @balance.on = Time.now
+    @balance.on = Time.zone.now
     respond_to do |format|
       if @balance.save
         format.html { redirect_to action: :show }
