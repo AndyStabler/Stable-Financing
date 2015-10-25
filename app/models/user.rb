@@ -12,9 +12,9 @@ class User < ActiveRecord::Base
 
   attr_accessor :new_password, :new_password_confirmation
 
-  validates_format_of :username, with: /\A[a-z0-9]+\z/i
+  validates_format_of :username, with: /\A[a-z0-9\-_]+\z/i
   validates_format_of :email, with: /\A\S+@.+\.\S+\z/
-  validates :name, :username, :email, :password, presence: true
+  validates :name, :username, :email, :new_password, presence: true
   validates :email, confirmation: true
   validates_confirmation_of :new_password, if: :password_changed?
   before_save :hash_new_password, if: :password_changed?
