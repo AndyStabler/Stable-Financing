@@ -25,12 +25,14 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+    balance = Balance.new({:value => 0.0, :on => Time.zone.now, :user => @user})
     respond_to do |format|
-      if @user.save
+      if @user.save && balance.save
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
+        @user.destroy
+        balance.destroy
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
@@ -79,7 +81,7 @@ class UsersController < ApplicationController
   def update_balance
     @balance = Balance.new(balance_params)
     @balance.user= @user
-    @balance.on = Time.now
+    @balance.on = Time.zone.now
     respond_to do |format|
       if @balance.save
         format.html { redirect_to action: :show }
