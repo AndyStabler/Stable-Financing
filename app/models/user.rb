@@ -15,16 +15,17 @@ class User < ActiveRecord::Base
   validates_format_of :username, with: /\A[a-z0-9\-_]+\z/i
   validates_format_of :email, with: /\A\S+@.+\.\S+\z/
   validates :name, :username, :email, :new_password, presence: true
-  validates :email, confirmation: true
+  validates :email, confirmation: true, uniqueness: { case_sensitive: false }
   validates_confirmation_of :new_password, if: :password_changed?
   before_save :hash_new_password, if: :password_changed?
+  before_save { self.email = email.downcase }
 
   def password_changed?
     !@new_password.blank?
   end
 
   def self.authenticate(id, pwd)
-    if user = (find_by_username(id) || find_by_email(id))
+    if user = (find_by_username(id) || find_by_email(id.downcase))
       # if the passwords match, return the user
       if BCrypt::Password.new(user.password).is_password? pwd
         return user
