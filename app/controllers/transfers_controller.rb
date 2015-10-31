@@ -15,22 +15,15 @@ class TransfersController < ApplicationController
   # GET /Transfers/new
   def new
     @transfer = Transfer.new
-    @users = User.all
   end
 
   # GET /Transfers/1/edit
   def edit
-    @users = User.all
   end
 
   # POST /Transfers
   # POST /Transfers.json
   def create
-    #debug transaction_params
-    # puts transaction_params
-    logger.debug "*****\n*****\nDEBUG: PARAMS ARE #{transfer_params}\n*****\n*****\n"
-
-
     @transfer = Transfer.new(transfer_params)
 
     respond_to do |format|
@@ -47,7 +40,9 @@ class TransfersController < ApplicationController
   # PATCH/PUT /Transfers/1
   # PATCH/PUT /Transfers/1.json
   def update
+    # check if set_transfer was successful
     respond_to do |format|
+
       if @transfer.update(transfer_params)
         format.html { redirect_to @transfer, notice: 'Transfer was successfully updated.' }
         format.json { render :show, status: :ok, location: @transfer }
@@ -63,7 +58,7 @@ class TransfersController < ApplicationController
   def destroy
     @transfer.destroy
     respond_to do |format|
-      format.html { redirect_to :back, notice: 'Transfer was successfully destroyed.' }
+      format.html { redirect_to transfers_url, notice: 'Transfer was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
