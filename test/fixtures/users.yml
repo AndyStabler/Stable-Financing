@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  balance: 9.99
+andy:
+  username: andystabler
+  name: Andy Stabler
+  email: andystabler@hotmail.co.uk
+  password: <%= BCrypt::Password.create("pwd") %>
 
-two:
-  name: MyString
-  balance: 9.99
+fiona:
+  username: fionabarron
+  name: Fiona Barron
+  email: fionabarron@hotmail.co.uk
+  password: <%= BCrypt::Password.create("password") %>

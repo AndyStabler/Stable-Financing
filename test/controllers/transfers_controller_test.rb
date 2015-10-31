@@ -2,29 +2,16 @@ require 'test_helper'
 
 class TransfersControllerTest < ActionController::TestCase
   setup do
-    @transfer = transactions(:one)
+    @transfer = transfers(:one)
   end
 
   test "should get index" do
     get :index
     assert_response :success
-    assert_not_nil assigns(:Transfers)
+    assert_not_nil assigns(:transfers)
   end
 
-  test "should get new" do
-    get :new
-    assert_response :success
-  end
-
-  test "should create transaction" do
-    assert_difference('Transfer.count') do
-      post :create, transaction: { amount: @transfer.amount, daily: @transfer.daily, dat: @transfer.dat, monthly: @transfer.monthly, recurring: @transfer.recurring, user_id: @transfer.user_id, weekly: @transfer.weekly }
-    end
-
-    assert_redirected_to transaction_path(assigns(:transaction))
-  end
-
-  test "should show transaction" do
+  test "should show transfer" do
     get :show, id: @transfer
     assert_response :success
   end
@@ -34,16 +21,16 @@ class TransfersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should update transaction" do
-    patch :update, id: @transfer, transaction: { amount: @transfer.amount, daily: @transfer.daily, dat: @transfer.dat, monthly: @transfer.monthly, recurring: @transfer.recurring, user_id: @transfer.user_id, weekly: @transfer.weekly }
-    assert_redirected_to transaction_path(assigns(:@transfer))
+  test "should update transfer" do
+    patch :update, id: @transfer, transfer: { amount: 20}
+    assert_redirected_to transfer_path(assigns(:transfer))
   end
 
-  test "should destroy transaction" do
+  test "should destroy transfer" do
     assert_difference('Transfer.count', -1) do
       delete :destroy, id: @transfer
     end
 
-    assert_redirected_to transactions_path
+    assert_redirected_to transfers_path
   end
 end

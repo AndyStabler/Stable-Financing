@@ -2,8 +2,10 @@
 
 one:
   value: 9.99
-  transaction_id: 
+  'on': 2015-11-20
+  user: andy
 
 two:
   value: 9.99
-  transaction_id: 
+  'on': 2015-11-20
+  user: fiona

@@ -1,19 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
+---
 one:
-  dat: 2015-07-24
+  'on': 2015-07-24
   amount: 9.99
-  recurring: false
-  daily: false
-  weekly: false
-  monthly: false
-  user_id: 
+  outgoing: false
+  recurrence: Transfer.recurrences[:no]
+  reference: ref 1
+  user: andy
 
 two:
-  dat: 2015-07-24
+  'on': 2015-07-24
   amount: 9.99
-  recurring: false
-  daily: false
-  weekly: false
-  monthly: false
-  user_id: 
+  outgoing: true
+  recurrence: Transfer.recurrences[:no]
+  reference: ref 2
+  user: fiona

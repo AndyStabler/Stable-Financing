@@ -18,7 +18,7 @@ class BalancesControllerTest < ActionController::TestCase
 
   test "should create balance" do
     assert_difference('Balance.count') do
-      post :create, balance: { transaction_id: @balance.transaction_id, value: @balance.value }
+      post :create, balance: { value: 50.50, :on => Time.now, :user_id => users(:andy).id }
     end
 
     assert_redirected_to balance_path(assigns(:balance))
@@ -35,7 +35,7 @@ class BalancesControllerTest < ActionController::TestCase
   end
 
   test "should update balance" do
-    patch :update, id: @balance, balance: { transaction_id: @balance.transaction_id, value: @balance.value }
+    patch :update, id: @balance, balance: { on: Time.now, value: @balance.value }
     assert_redirected_to balance_path(assigns(:balance))
   end
 

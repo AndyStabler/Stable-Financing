@@ -2,13 +2,16 @@ require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
   setup do
-    @user = users(:one)
+    @user = users(:andy)
   end
 
   test "should get index" do
+    puts User.all
     get :index
     assert_response :success
-    assert_not_nil assigns(:users)
+    puts "assigns(:users) response is #{assigns(:users)}"
+    assert_equal %w(andystabler fionabarron), assigns(:users).map(&:username)
+    #assert_not_nil assigns(@users)
   end
 
   test "should get new" do
@@ -18,7 +21,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, user: { balance: @user.balance, name: @user.name }
+      post :create, user: {name: "Homer Simpson", username: "hsimpson", password: "doughnuts", email: "h.simpson@aol.com"}
     end
 
     assert_redirected_to user_path(assigns(:user))
@@ -35,7 +38,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should update user" do
-    patch :update, id: @user, user: { balance: @user.balance, name: @user.name }
+    patch :update, id: @user, user: {name: "Homer Simpson", username: "hsimpson", new_password: "doughnuts", email: "h.simpson@aol.com"}
     assert_redirected_to user_path(assigns(:user))
   end
 
@@ -46,4 +49,12 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_redirected_to users_path
   end
+
+  #   test "should create transfer" do
+  #   assert_difference('Transfer.count') do
+  #     post :create, transfer: { amount: @transfer.amount, daily: @transfer.daily, dat: @transfer.dat, monthly: @transfer.monthly, recurring: @transfer.recurring, user_id: @transfer.user_id, weekly: @transfer.weekly }
+  #   end
+
+  #   assert_redirected_to transfer_path(assigns(:transfer))
+  # end
 end
