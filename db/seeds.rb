@@ -6,8 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 User.delete_all
-users = [{name: 'Andy Stabler', username: "andystabler", email: "andy_60@hotmail.co.uk", password: "$2a$10$X2KpieEghC49Qes3lPI/oOi32qBtHJLaEU3Fot6wP2.BNOs7NNFSK"},
-         {name: 'Fiona Barron', username: "fionabarron", email: "fionabarron@hotmail.co.uk", password: "$2a$10$X2KpieEghC49Qes3lPI/oOi32qBtHJLaEU3Fot6wP2.BNOs7NNFSK"}]
+users = [{name: 'Andy Stabler', username: "andystabler", email: "andy_60@hotmail.co.uk", password: BCrypt::Password.create("password")},
+         {name: 'Fiona Barron', username: "fionabarron", email: "fionabarron@hotmail.co.uk", password: BCrypt::Password.create("password")}]
 User.create!(users)
 
 Transfer.delete_all
