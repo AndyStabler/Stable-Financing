@@ -6,9 +6,12 @@
 </p>
 
 <p>
-  <strong>Transfer:</strong>
-  <%= @balance.transfer %>
+  <strong>On:</strong>
+  <%= @balance.on %>
 </p>
-
+<p>
+  <strong>User:</strong>
+  <%= @balance.user.name %>
+</p>
 <%= link_to 'Edit', edit_balance_path(@balance) %> |
 <%= link_to 'Back', balances_path %>
