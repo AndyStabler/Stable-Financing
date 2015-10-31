@@ -27,7 +27,7 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'jquery-ui-rails'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
