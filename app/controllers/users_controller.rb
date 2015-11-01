@@ -28,10 +28,10 @@ class UsersController < ApplicationController
     balance = Balance.new({:value => 0.0, :on => Time.zone.now, :user => @user})
     respond_to do |format|
       if @user.save && balance.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        log_in @user
+        format.html { redirect_to @user, notice: 'Welcome to the party!' }
         format.json { render :show, status: :created, location: @user }
       else
-        @user.destroy
         balance.destroy
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
