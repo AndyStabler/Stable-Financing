@@ -4,10 +4,10 @@ andy:
   username: andystabler
   name: Andy Stabler
   email: andystabler@hotmail.co.uk
-  password: <%= BCrypt::Password.create("pwd") %>
+  password_digest: <%= User.digest "pwd" %>
 
 fiona:
   username: fionabarron
   name: Fiona Barron
   email: fionabarron@hotmail.co.uk
-  password: <%= BCrypt::Password.create("password") %>
+  password_digest: <%= User.digest "password" %>
