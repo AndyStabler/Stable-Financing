@@ -1,5 +1,3 @@
-require 'bcrypt'
-
 class User < ActiveRecord::Base
 
   extend FriendlyId
@@ -10,30 +8,14 @@ class User < ActiveRecord::Base
   # many balances over time - store them so the user can see what's going on
   has_many :balances
 
-  attr_accessor :new_password, :new_password_confirmation
-
-  validates_format_of :username, with: /\A[a-z0-9\-_]+\z/i
+  validates_format_of :username, with: /\A[a-z0-9\-_]+\z/i, length: { maximum: 50 }
   validates_format_of :email, with: /\A\S+@.+\.\S+\z/
+  validates_uniqueness_of :username
   validates :name, :username, :email, :password, presence: true
   validates :email, confirmation: true, uniqueness: { case_sensitive: false }
-  validates_confirmation_of :new_password, if: :password_changed?
-  before_save :hash_new_password, if: :password_changed?
   before_save { self.email = email.downcase }
-
-  def password_changed?
-    !@new_password.blank?
-  end
-
-  def self.authenticate(id, pwd)
-    if user = (find_by_username(id) || find_by_email(id.downcase))
-      # if the passwords match, return the user
-      if BCrypt::Password.new(user.password).is_password? pwd
-        return user
-      end
-    end
-    # authentication failed
-    return nil
-  end
+  has_secure_password
+  validates :password, presence: true, length: { minimum: 6 }
 
   def incoming
     transfers.where(outgoing: false)
@@ -175,10 +157,10 @@ class User < ActiveRecord::Base
     balances.order(:on).last
   end
 
-  private
-
-  def hash_new_password
-    self.password = BCrypt::Password.create(@new_password)
+  def User.digest string
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+                                                  BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
   end
 
 end
