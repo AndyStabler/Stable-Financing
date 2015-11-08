@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151106230425) do
+ActiveRecord::Schema.define(version: 20151108210642) do
 
   create_table "balances", force: :cascade do |t|
     t.decimal  "value"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20151106230425) do
     t.string   "username",        null: false
     t.string   "password_digest"
     t.string   "email"
+    t.string   "remember_digest"
   end
 
 end
