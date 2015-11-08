@@ -6,12 +6,9 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should get index" do
-    puts User.all
     get :index
     assert_response :success
-    puts "assigns(:users) response is #{assigns(:users)}"
     assert_equal %w(andystabler fionabarron), assigns(:users).map(&:username)
-    #assert_not_nil assigns(@users)
   end
 
   test "should get new" do
