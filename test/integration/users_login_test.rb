@@ -2,13 +2,25 @@ require 'test_helper'
 
 class UsersLoginTest < ActionDispatch::IntegrationTest
 
-	test "login with invalid information" do
-		get login_path
-		assert_template 'sessions/new'
-		post login_path, session: {username: "", password: ""}
-		assert_template 'sessions/new'
-		assert_not flash.empty?
-		get root_path
-		assert flash.empty?		
-	end
+  def setup
+    @user = users(:andy)
+  end
+
+  test "login with invalid information" do
+    get login_path
+    assert_template 'sessions/new'
+    post login_path, session: {username: "", password: ""}
+    assert_template 'sessions/new'
+    assert_not flash.empty?
+    get root_path
+    assert flash.empty?
+  end
+
+  test "login with valid information" do
+    get login_path
+    post login_path, :session => { :username => @user.email, :password => "pwd" }
+    assert_redirected_to @user
+    follow_redirect!
+    assert_template 'users/show'
+  end
 end
