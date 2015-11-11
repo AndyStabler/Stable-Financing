@@ -2,15 +2,19 @@
 <h1>Log in</h1>
 
 <%= form_for(:session, url: login_path) do |f| %>
-<div class="field">
-	<%= f.label :username %>
-	<%= f.text_field :username %>
-</div>
-<div class="field">
-	<%= f.label :password %>
-	<%= f.password_field :password %>
-</div>
-<%= f.submit "Log in" %>
+    <div class="field">
+        <%= f.label :username %>
+        <%= f.text_field :username %>
+    </div>
+    <div class="field">
+        <%= f.label :password %>
+        <%= f.password_field :password %>
+    </div>
+    <%= f.label :remember_me, :class => "remember-me" do %>
+        <%= f.check_box :remember_me %>
+        <span>Remember me!</span>
+    <% end %>
+    <%= f.submit "Log in" %>
 <% end %>
 
 <p>New user? <%= link_to "Sign up now!", 'users/new' %></p>
