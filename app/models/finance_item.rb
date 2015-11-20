@@ -1,4 +1,4 @@
-class FinanceRow
+class FinanceItem
 
   attr_accessor :on, :balance, :diff, :running_monthly_diff
 
