@@ -7,7 +7,7 @@
   </thead>
   <tbody>
 
-  <% values = user.all_balance_data %>
+  <% values = user.finance_log %>
   <% if values %>
       <% values.each do |frow| %>
           <%= render "finance_table_row", tense: "past", frow: frow %>
@@ -15,7 +15,7 @@
 
   <% end %>
   <tr></tr>
-  <% values = user.all_prediction_data %>
+  <% values = user.finance_forecast %>
   <% if values %>
       <% values.each do |frow| %>
           <%= render "finance_table_row", tense: "future", frow: frow %>
