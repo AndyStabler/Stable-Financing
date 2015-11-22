@@ -5,7 +5,13 @@ one:
   'on': 2015-11-20
   user: andy
 
+init:
+    value: 0.00
+    'on': <%= DateTime.now-1.month %>
+    user: andy
+
 two:
   value: 9.99
   'on': 2015-11-20
   user: fiona
+

@@ -11,3 +11,9 @@ fiona:
   name: Fiona Barron
   email: fionabarron@hotmail.co.uk
   password_digest: <%= User.digest "password" %>
+
+barry:
+    username: barry
+    name: barry
+    email: barry@aol.com
+    password_digest: <%= User.digest "password" %>
