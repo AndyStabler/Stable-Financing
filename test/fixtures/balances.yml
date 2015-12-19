@@ -11,7 +11,31 @@ init:
     user: andy
 
 two:
-  value: 9.99
+  value: 100
   'on': 2015-11-20
   user: fiona
 
+previous_day_1:
+  value: 100
+  'on': <%= Date.today-2.days %>
+  user: andy
+
+previous_day_2:
+  value: 200
+  'on': <%= Date.today-2.days+1.hour %>
+  user: andy
+
+previous_day_3:
+  value: 300
+  'on': <%= Date.today-1.days %>
+  user: andy
+
+previous_day_4:
+  value: 100
+  'on': <%= Date.today-1.days+1.hour %>
+  user: andy
+
+current_day:
+  value: 150
+  'on': <%= Date.today %>
+  user: andy

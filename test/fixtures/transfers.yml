@@ -1,4 +1,4 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+ # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
   'on': 2015-07-24
@@ -75,3 +75,22 @@ plumber:
   recurrence: <%= Transfer.recurrences[:no] %>
   reference: plumber
   user: andy
+
+# fiona
+
+money_in:
+  'on': <%= DateTime.now %>
+  amount: 5
+  outgoing: false
+  recurrence: <%= Transfer.recurrences[:weekly] %>
+  reference: pocket money
+  user: fiona
+
+
+money_out:
+  'on': <%= DateTime.now %>
+  amount: 5
+  outgoing: true
+  recurrence: <%= Transfer.recurrences[:weekly] %>
+  reference: sweets
+  user: fiona
