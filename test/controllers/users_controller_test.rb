@@ -8,7 +8,7 @@ class UsersControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_equal %w(andystabler fionabarron), assigns(:users).map(&:username)
+    assert_equal User.all.map(&:username), assigns(:users).map(&:username)
   end
 
   test "should get new" do
