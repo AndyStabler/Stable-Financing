@@ -7,9 +7,9 @@ class NumberCruncher
   def self.finance_forecast user
     trans = user.transfers.order(:on)
     return [] unless trans.any?
-    from = trans.first.on
-    to = trans.last.on+1.year
-    balance_forecast_between(from, to, user)
+    from = trans.first.on.to_date
+    to = trans.last.on.to_date+1.year
+    balance_forecast_between(from, to, user).sort_by(&:on)
   end
 
   # Get a log of balances for this user
@@ -20,25 +20,27 @@ class NumberCruncher
     return [] unless bals.any?
     from = bals.first.on
     to = bals.last.on
-    finance_log_between(from, to, user)
+    finance_log_between(from, to, user).sort_by(&:on)
   end
 
 private
 
   # Calculates the predicted balances over time
+  #
+  # Returns an array of FinanceItems
   def self.calculate_balance_forecast date_to_transfers, latest_balance
     # let us only consider transfers that occur after the last balance update
-    date_to_transfers = date_to_transfers.select { |day, _| day > latest_balance.on }
-    monthly_transfers = trans_per_month(date_to_transfers)
+    date_to_transfers = date_to_transfers.select { |day, _| day > latest_balance.on }.sort
+    monthly_transfers = trans_per_month date_to_transfers
     balance_value = latest_balance.value
     forecast = []
     date_to_transfers.each do |day, tra|
       # sum all outgoing transfers
-      out_vals = tra.select { |tr| tr.outgoing }.map(&:amount).inject(:+)
+      out_vals = Transfer.sum_outgoing tra
       # sum all incoming transfers
-      in_vals = tra.select { |tr| !tr.outgoing }.map(&:amount).inject(:+)
+      in_vals = Transfer.sum_incoming tra
 
-      total = -(out_vals||0) + (in_vals||0)
+      total = -out_vals + in_vals
 
       balance_value += total
       month_diff = nil
@@ -47,39 +49,41 @@ private
       last_transfers = last_date_trans_of_mon.map { |_, dat_tran| dat_tran }.flatten
 
       if day == last_date
-        incomings = last_transfers.select { |trans| !trans.outgoing }.map(&:amount).inject(:+).to_f
-        outgoings = last_transfers.select { |trans| trans.outgoing }.map(&:amount).inject(:+).to_f
+        incomings = Transfer.sum_incoming last_transfers
+        outgoings = Transfer.sum_outgoing last_transfers
         month_diff = incomings - outgoings
       end
 
-      forecast << FinanceItem.new(day.day_s, balance_value, total, month_diff)
+      forecast << FinanceItem.new(day, balance_value, total, month_diff)
     end
     forecast
   end
 
   # Group transfers by the day they will take place on
   # A transfer can be registered once, but may have a recurrence that means it will occur repeatedly (every mnonth say)
+  #
+  # Returns a hash mappping dates to the transfers that occur
   def self.group_transfers_by_date transfers, start_date, end_date
-    return {} unless transfers.any? && end_date > start_date
+    return {} unless transfers.any? && end_date >= start_date
 
     date_to_transfers = {}
 
     transfers.each do |trans|
-      sym = trans.recurrence.to_sym
-      if sym == :no && (trans.on >= start_date && trans.on <= end_date)
-        (date_to_transfers[trans.on]||=[]) << trans
-      elsif sym == :daily && trans.on <= end_date
-        (end_date.to_date - trans.on.to_date).to_i.times do |day_to_add|
-          (date_to_transfers[trans.on + day_to_add.days]||=[]) << trans
+      on = trans.on.to_date
+      recurrence = trans.recurrence.to_sym
+      if recurrence == :no && (on >= start_date && on <= end_date)
+        (date_to_transfers[on]||=[]) << trans
+      elsif recurrence == :daily && on <= end_date
+        ((end_date - on).to_i + 1).times do |day_to_add|
+          (date_to_transfers[on + day_to_add.days]||=[]) << trans
         end
-      elsif sym == :weekly && trans.on <= end_date
-        ((end_date.to_date - trans.on.to_date) / 7).floor.to_i.times do |wk|
-          (date_to_transfers[trans.on + wk.weeks]||=[]) << trans
+      elsif recurrence == :weekly && on <= end_date
+        (((end_date - on) / 7).to_i + 1).times do |wk|
+          (date_to_transfers[on + wk.weeks]||=[]) << trans
         end
-      elsif sym == :monthly && trans.on <= end_date
-        (trans.on.months_between(end_date)).to_i.times do |mt|
-
-          (date_to_transfers[trans.on + mt.months]||=[]) << trans
+      elsif recurrence == :monthly && on <= end_date
+        ((on.months_between(end_date)).to_i + 1).times do |mt|
+          (date_to_transfers[on + mt.months]||=[]) << trans
         end
       end
     end
@@ -96,15 +100,9 @@ private
 
   # creates a list of FinanceItems based on calculations from saved transfers
   def self.balance_forecast_between(start_date, end_date, user)
-    # the last balance
-    bal = user.balance
     # get a hash that maps dates to an array of transfers, {date1 => [transfer, transfer], date2 => [transfer, transfer]}
     date_to_transfers = group_transfers_by_date user.transfers, start_date, end_date
-    # order the elements by the date they occur
-    date_to_transfers = date_to_transfers.sort_by { |day, _| day }
-
-    latest_balance = user.balance
-    calculate_balance_forecast date_to_transfers, latest_balance
+    calculate_balance_forecast date_to_transfers, user.balance
   end
 
   # creates a list of FinanceItems based on *saved* balance updates
@@ -114,17 +112,18 @@ private
     # pointless going any further if there are no balance updates associated with this user
     return [] if !user.balances.any? || end_date < start_date
 
-    relevant_balances = user.balances.where(on: start_date..end_date+1)
+    relevant_balances = user.balances.select { |b| b.on.between? start_date, end_date }
     # no balances for these dates
     return [] unless relevant_balances.any?
 
     log = []
     balance_groups = relevant_balances.group_by { |bal| bal.on.day_s }
     balance_groups.each do |day, bals|
-      on = bals.last.on.day_s
-      bal = bals.sort_by { |bal| bal[:on] }.last
+      bals = bals.sort_by { |bal| bal.on }
+      bal = bals.last
+      on = bal.on
       month_diff = bals.last.last_of_month? ? bals.last.month_diff : nil
-      log << FinanceItem.new(on, bal.value, bal.diff_from_previous_balance, month_diff)
+      log << FinanceItem.new(on, bal.value, bal.diff_from_previous_day, month_diff)
     end
     log
   end
