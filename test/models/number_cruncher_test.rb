@@ -4,9 +4,10 @@ class NumberCruncherTest < ActiveSupport::TestCase
 
   def setup
     @user = users(:andy)
-    @finance_log = NumberCruncher.finance_log @user
-    @finance_forecast = NumberCruncher.finance_forecast @user
+    @finance_log = finance_log @user
+    @finance_forecast = finance_forecast @user
     @all_transfers = @user.transfers.order(:on)
+    @number_cruncher = NumberCruncher.new(@user)
   end
 
   test "logged balances should not take into account forecasting" do
@@ -19,7 +20,7 @@ class NumberCruncherTest < ActiveSupport::TestCase
   end
 
   test "future balances should be forecasted" do
-    date_to_transfers = NumberCruncher.group_transfers_by_date(@all_transfers, @all_transfers.first.on.to_date,
+    date_to_transfers = Transfer.group_transfers_by_date(@all_transfers, @all_transfers.first.on.to_date,
      @all_transfers.last.on.to_date+1.year)
     .select { |day, _| day > @user.balance.on }
 
@@ -84,93 +85,6 @@ class NumberCruncherTest < ActiveSupport::TestCase
     balances = @user.balances.group_by { |b| b.on.to_date }
     @finance_log.each do |item|
       assert_equal item.balance, balances[item.on].sort_by { |b| b.on }.last.value
-    end
-  end
-
-  test "group_transfers_by_date correctly forecasts non-recurring transfers" do
-    non_recurring_transfers = @user.transfers.select { |tr| tr.recurrence.to_sym == :no }
-    date_transfers = NumberCruncher.group_transfers_by_date @user.transfers, @all_transfers.first.on.to_date,
-                        @all_transfers.last.on.to_date+1.year
-
-    # check that the transfers are occuring on their specified date
-    non_recurring_transfers.each do |tr|
-      assert date_transfers[tr.on.to_date].include? tr
-    end
-
-    # reject elements that have same date as non-recurring transfers
-    # non-recurring transfers, should never appear now
-    date_transfers.reject { |date, trs| (non_recurring_transfers.map{|tr| tr.on.to_date } & [date]).present? }.each do |date, trs|
-      # interset non_recurring with transfers for this day
-      # the result should be empty always
-      assert (non_recurring_transfers & trs).empty?
-    end
-
-  end
-
-  # daily = [trans1, trans3]
-  # all = [trans1, trans2, trans3]
-  # day_trans = {day1 => [trans1, trans3], day2 => [trans1, trans2, trans3]}
-  # for every day
-  #  daily - day_trans[day] should be empty
-  test "group_transfers_by_date correctly forecasts daily transfers" do
-    # get the daily transfers
-    daily_transfers = @user.transfers.select { |tr| tr.recurrence.to_sym == :daily }
-    # get a hash, mapping dates to transfers
-    date_transfers = NumberCruncher.group_transfers_by_date @user.transfers, @all_transfers.first.on.to_date,
-                        @all_transfers.last.on.to_date+1.year
-
-    date_transfers.each do |date, trs|
-      # get the daily transfers that should appear on this date
-      # if a transfer starts after the date we're looking at, then it shouldn't appear
-      relevant_daily_transfers = daily_transfers.select { |daily_tr| daily_tr.on <= date }
-      assert (relevant_daily_transfers - trs).empty?
-    end
-  end
-
-  test "group_transfers_by_date correctly forecasts weekly transfers" do
-    weekly_transfers = @user.transfers.select { |tr| tr.recurrence.to_sym == :weekly }
-    date_transfers = NumberCruncher.group_transfers_by_date @user.transfers, @all_transfers.first.on.to_date,
-                        @all_transfers.last.on.to_date+1.year
-
-    # every weekly transfer should occur every week in the date_transfers hash
-    weekly_transfers.each do |tr|
-      week_date = tr.on.to_date
-      loop do
-        assert date_transfers[week_date].include? tr
-        week_date+= 7.days
-        break if week_date >= date_transfers.sort_by { |d, _| d }.last[0]
-      end
-    end
-
-    # for every weekly transfer
-    # remove the transfer from every week it should occur
-
-    weekly_transfers.each do |tr|
-      week_date = tr.on.to_date
-      loop do
-        date_transfers[week_date].delete tr
-        week_date+= 7.days
-        break if week_date >= date_transfers.sort_by { |d, _| d }.last[0]
-      end
-    end
-    # intersect of flattened transfers from date_transfers with weekly_transfers should be empty
-    assert_equal (date_transfers.values.flatten & weekly_transfers), []
-  end
-
-  test "group_transfers_by_date correctly forecasts monthly transfers" do
-    monthly_transfers = @user.transfers.select { |tr| tr.recurrence.to_sym == :monthly }
-    date_transfers = NumberCruncher.group_transfers_by_date @user.transfers, @all_transfers.first.on.to_date,
-                        @all_transfers.last.on.to_date+1.year
-    months_to_add = 0;
-    monthly_transfers.each do |tr|
-      month_date = tr.on.to_date
-      loop do
-        assert date_transfers[month_date].include? tr
-        month_date = tr.on.to_date+months_to_add.months
-        # you can't just say month_date+=1.month because 30+1.month => 29+1.month => 29+1.month is wrong, we sould go back to 30
-        months_to_add+=1;
-        break if month_date >= date_transfers.sort_by { |d, _| d }.last[0]
-      end
     end
   end
 
