@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
 
   attr_accessor :remember_token
 
+  def number_cruncher
+    @number_cruncher ||= NumberCruncher.new self
+  end
+
   def incoming
     transfers.where(outgoing: false)
   end
@@ -34,12 +38,19 @@ class User < ActiveRecord::Base
   end
 
   def finance_log
-    NumberCruncher.finance_log self
+    bals = balances.order(:on)
+    return [] unless bals.any?
+    from = bals.first.on
+    to = bals.last.on
+    number_cruncher.finance_log_between(from, to).sort_by(&:on)
   end
 
-
   def finance_forecast
-    NumberCruncher.finance_forecast self
+    trans = transfers.order(:on)
+    return [] unless trans.any?
+    from = trans.first.on.to_date
+    to = trans.last.on.to_date+1.year
+    number_cruncher.balance_forecast_between(from, to).sort_by(&:on)
   end
 
   def balance
