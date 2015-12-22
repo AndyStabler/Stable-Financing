@@ -23,13 +23,8 @@ class User < ActiveRecord::Base
     @number_cruncher ||= NumberCruncher.new self
   end
 
-  def incoming
-    transfers.where(outgoing: false)
-  end
-
-  def outgoing
-    transfers.where(outgoing: true)
-  end
+  scope :incoming, -> { where :outoing => false }
+  scope :outgoing, -> { where :outoing => true }
 
   def finance_data
     bal_log = balance_log
