@@ -1,38 +1,17 @@
 class NumberCruncher
 
-  # Get a balance forecast for this user
-  #
-  # Predicts future bank balances based on the incomings/outgoings
-  # returns an array FinanceItems
-  def self.finance_forecast user
-    trans = user.transfers.order(:on)
-    return [] unless trans.any?
-    from = trans.first.on.to_date
-    to = trans.last.on.to_date+1.year
-    balance_forecast_between(from, to, user).sort_by(&:on)
+  def initialize user
+    @user = user
   end
-
-  # Get a log of balances for this user
-  #
-  # Returns an array of FinanceItems based on the user's logged balances
-  def self.finance_log user
-    bals = user.balances.order(:on)
-    return [] unless bals.any?
-    from = bals.first.on
-    to = bals.last.on
-    finance_log_between(from, to, user).sort_by(&:on)
-  end
-
-private
 
   # Calculates the predicted balances over time
   #
   # Returns an array of FinanceItems
-  def self.calculate_balance_forecast date_to_transfers, latest_balance
+  def calculate_balance_forecast date_to_transfers
     # let us only consider transfers that occur after the last balance update
-    date_to_transfers = date_to_transfers.select { |day, _| day > latest_balance.on }.sort
+    date_to_transfers = date_to_transfers.select { |day, _| day > @user.balance.on }.sort
     monthly_transfers = trans_per_month date_to_transfers
-    balance_value = latest_balance.value
+    balance_value = @user.balance.value
     forecast = []
     date_to_transfers.each do |day, tra|
       # sum all outgoing transfers
@@ -59,60 +38,29 @@ private
     forecast
   end
 
-  # Group transfers by the day they will take place on
-  # A transfer can be registered once, but may have a recurrence that means it will occur repeatedly (every mnonth say)
-  #
-  # Returns a hash mappping dates to the transfers that occur
-  def self.group_transfers_by_date transfers, start_date, end_date
-    return {} unless transfers.any? && end_date >= start_date
-
-    date_to_transfers = {}
-
-    transfers.each do |trans|
-      on = trans.on.to_date
-      recurrence = trans.recurrence.to_sym
-      if recurrence == :no && (on >= start_date && on <= end_date)
-        (date_to_transfers[on]||=[]) << trans
-      elsif recurrence == :daily && on <= end_date
-        ((end_date - on).to_i + 1).times do |day_to_add|
-          (date_to_transfers[on + day_to_add.days]||=[]) << trans
-        end
-      elsif recurrence == :weekly && on <= end_date
-        (((end_date - on) / 7).to_i + 1).times do |wk|
-          (date_to_transfers[on + wk.weeks]||=[]) << trans
-        end
-      elsif recurrence == :monthly && on <= end_date
-        ((on.months_between(end_date)).to_i + 1).times do |mt|
-          (date_to_transfers[on + mt.months]||=[]) << trans
-        end
-      end
-    end
-    date_to_transfers
-  end
-
   # Group a date_to_transfer hash by the month the transfers take place
   # e.g. {month1 => {date1 => [trans1, trans2], date2 => [trans2, trans3]}, month2 => {date1 => [trans1]}, ...}
-  def self.trans_per_month date_to_transfers
+  def trans_per_month date_to_transfers
     date_to_transfers.group_by do |date, _|
       date.beginning_of_month
     end
   end
 
   # creates a list of FinanceItems based on calculations from saved transfers
-  def self.balance_forecast_between(start_date, end_date, user)
+  def balance_forecast_between(start_date, end_date)
     # get a hash that maps dates to an array of transfers, {date1 => [transfer, transfer], date2 => [transfer, transfer]}
-    date_to_transfers = group_transfers_by_date user.transfers, start_date, end_date
-    calculate_balance_forecast date_to_transfers, user.balance
+    date_to_transfers = Transfer.group_transfers_by_date @user.transfers, start_date, end_date
+    calculate_balance_forecast date_to_transfers
   end
 
   # creates a list of FinanceItems based on *saved* balance updates
   # Note: This does not take into account balance predictions
   #
-  def self.finance_log_between(start_date, end_date, user)
+  def finance_log_between(start_date, end_date)
     # pointless going any further if there are no balance updates associated with this user
-    return [] if !user.balances.any? || end_date < start_date
+    return [] if !@user.balances.any? || end_date < start_date
 
-    relevant_balances = user.balances.select { |b| b.on.between? start_date, end_date }
+    relevant_balances = @user.balances.select { |b| b.on.between? start_date, end_date }
     # no balances for these dates
     return [] unless relevant_balances.any?
 
