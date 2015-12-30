@@ -4,4 +4,4 @@ rvm:
 env:
   - RAILS_ENV=test
 script:
-  - bundle exec rake db:migrate test
+  - bundle exec rake db:schema:load db:migrate test
