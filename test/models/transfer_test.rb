@@ -82,22 +82,24 @@ class TransferTest < ActiveSupport::TestCase
       loop do
         assert date_transfers[week_date].include? tr
         week_date+= 7.days
-        break if week_date >= date_transfers.sort_by { |d, _| d }.last[0]
+        break if week_date > date_transfers.sort_by { |d, _| d }.last[0].to_date
       end
     end
 
     # for every weekly transfer
     # remove the transfer from every week it should occur
-
+    # After this, date_transfers should contain no weekly transfers
     weekly_transfers.each do |tr|
       week_date = tr.on.to_date
       loop do
         date_transfers[week_date].delete tr
         week_date+= 7.days
-        break if week_date >= date_transfers.sort_by { |d, _| d }.last[0]
+        break if week_date > date_transfers.sort_by { |d, _| d }.last[0].to_date
       end
     end
     # intersect of flattened transfers from date_transfers with weekly_transfers should be empty
+    # we deleted each weekly transfer from the hash on the date we'd expect it to occur. let's check that it is not the case
+    # that any weekly transfers occured on any other date.
     assert_equal (date_transfers.values.flatten & weekly_transfers), []
   end
 
@@ -113,7 +115,7 @@ class TransferTest < ActiveSupport::TestCase
         month_date = tr.on.to_date+months_to_add.months
         # you can't just say month_date+=1.month because 30+1.month => 29+1.month => 29+1.month is wrong, we sould go back to 30
         months_to_add+=1;
-        break if month_date >= date_transfers.sort_by { |d, _| d }.last[0]
+        break if month_date > date_transfers.sort_by { |d, _| d }.last[0]
       end
     end
   end
