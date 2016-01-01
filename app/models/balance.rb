@@ -39,7 +39,7 @@ class Balance < ActiveRecord::Base
   end
 
   def month_diff
-    bals = user.balances.where(on: on.beginning_of_month..on.end_of_month)
+    bals = user.balances.select {|b| b.on >= on.beginning_of_month && b.on <= on.end_of_month }
     bals.map(&:diff_from_previous_balance).inject(:+)
   end
 
