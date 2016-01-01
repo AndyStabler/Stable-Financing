@@ -70,7 +70,7 @@ class NumberCruncher
       bals = bals.sort_by { |bal| bal.on }
       bal = bals.last
       on = bal.on
-      month_diff = bals.last.last_of_month? ? bals.last.month_diff : nil
+      month_diff = bal.last_of_month? ? bal.month_diff : nil
       log << FinanceItem.new(on, bal.value, bal.diff_from_previous_day, month_diff)
     end
     log
