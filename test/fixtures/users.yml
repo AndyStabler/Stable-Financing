@@ -1,19 +1,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 andy:
-  username: andystabler
   name: Andy Stabler
   email: andystabler@hotmail.co.uk
   password_digest: <%= User.digest "pwd" %>
 
 fiona:
-  username: fionabarron
   name: Fiona Barron
   email: fionabarron@hotmail.co.uk
   password_digest: <%= User.digest "password" %>
 
 misty:
-  username: mistykitty
   name: Misty Barron
   email: misty@theinternet.com
   password_digest: <%= User.digest "catz" %>

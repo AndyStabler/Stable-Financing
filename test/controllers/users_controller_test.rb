@@ -8,7 +8,7 @@ class UsersControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success
-    assert_equal User.all.map(&:username), assigns(:users).map(&:username)
+    assert_equal User.all.map(&:email), assigns(:users).map(&:email)
   end
 
   test "should get new" do
@@ -18,7 +18,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test "should create user" do
     assert_difference('User.count') do
-      post :create, user: {name: "Homer Simpson", username: "hsimpson", password: "doughnuts", email: "h.simpson@aol.com"}
+      post :create, user: {name: "Homer Simpson", password: "doughnuts", email: "h.simpson@aol.com"}
     end
 
     assert_redirected_to user_path(assigns(:user))
@@ -35,7 +35,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test "should update user" do
-    patch :update, id: @user, user: {name: "Homer Simpson", username: "hsimpson", password: "doughnuts", email: "h.simpson@aol.com"}
+    patch :update, id: @user, user: {name: "Homer Simpson", password: "doughnuts", email: "h.simpson@aol.com"}
     assert_redirected_to user_path(assigns(:user))
   end
 

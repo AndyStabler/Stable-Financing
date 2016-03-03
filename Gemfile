@@ -23,7 +23,6 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'friendly_id', '~> 5.1.0'
 gem 'jquery-ui-rails'
 
 # Use ActiveModel has_secure_password

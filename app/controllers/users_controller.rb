@@ -97,7 +97,7 @@ class UsersController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = User.friendly.find(params[:id])
+    @user = User.find(params[:id])
   end
 
   # TODO: this is the exact same function as is in the transaction controller. Make less DRY . . .
@@ -111,6 +111,6 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:name, :username, :password, :password, :password_confirmation, :email, :email_confirmation)
+    params.require(:user).permit(:name, :password, :password, :password_confirmation, :email, :email_confirmation)
   end
 end

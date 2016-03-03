@@ -9,7 +9,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
   test "login with invalid information" do
     get login_path
     assert_template 'sessions/new'
-    post login_path, session: {username: "", password: ""}
+    post login_path, session: {email: "", password: ""}
     assert_template 'sessions/new'
     assert_not flash.empty?
     get root_path
@@ -18,7 +18,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
 
   test "login with valid information" do
     get login_path
-    post login_path, :session => { :username => @user.email, :password => "pwd" }
+    post login_path, :session => { :email => @user.email, :password => "pwd" }
     assert is_logged_in?
     assert_redirected_to @user
     follow_redirect!
@@ -29,7 +29,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
 
   test "login with valid information followed by logout" do
     get login_path
-    post login_path, :session => { :username => @user.email, :password => "pwd" }
+    post login_path, :session => { :email => @user.email, :password => "pwd" }
     assert is_logged_in?
     assert_redirected_to @user
     follow_redirect!

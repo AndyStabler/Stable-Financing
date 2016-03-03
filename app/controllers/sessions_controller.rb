@@ -1,15 +1,15 @@
 class SessionsController < ApplicationController
 
   def new
-  	
+
   end
 
   def  create
-    login_name = params[:session][:username]
-    user = User.find_by(:email => login_name.try(:downcase)) || User.find_by(:username => login_name)
+    email = params[:session][:email]
+    user = User.find_by(:email => email.try(:downcase))
     if user && user.authenticate(params[:session][:password])
-  		# log user in
-  		# render user page
+      # log user in
+      # render user page
       log_in user
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       redirect_to user

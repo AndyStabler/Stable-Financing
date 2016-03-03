@@ -1,17 +1,11 @@
 class User < ActiveRecord::Base
 
-  extend FriendlyId
-
-  friendly_id :username
-
   has_many :transfers
   # many balances over time - store them so the user can see what's going on
   has_many :balances
 
-  validates_format_of :username, with: /\A[a-z0-9\-_]+\z/i, length: { maximum: 50 }
   validates_format_of :email, with: /\A\S+@.+\.\S+\z/
-  validates_uniqueness_of :username
-  validates :name, :username, :email, :password, presence: true
+  validates :name, :email, :password, presence: true
   validates :email, confirmation: true, uniqueness: { case_sensitive: false }
   before_save { self.email = email.downcase }
   has_secure_password

@@ -6,8 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 User.delete_all
-users = [{name: 'Andy Stabler', username: "andystabler", email: "andy_60@hotmail.co.uk", password: "password"},
-         {name: 'Fiona Barron', username: "fionabarron", email: "fionabarron@hotmail.co.uk", password: "password"}]
+users = [{name: 'Andy Stabler', email: "andy_60@hotmail.co.uk", password: "password"},
+         {name: 'Fiona Barron', email: "fionabarron@hotmail.co.uk", password: "password"}]
 User.create!(users)
 
 Transfer.delete_all
