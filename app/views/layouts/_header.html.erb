@@ -1,18 +1,21 @@
 <header id="header">
-    <nav>
-        <ul id="header-settings">
-            <li>
-                Settings
-                <ul>
-                    <% if logged_in? %>
-                    <li><%= link_to "Log out", logout_path, :method => :delete %></li>
-                    <% else %>
-                    <li><%= link_to "Log in", login_path %></li>
-                    <% end %>
-                </ul>
-            </li>
-            <li>&#9829;</li>
+  <% if user_signed_in? %>
+    <p style="position:absolute;">Logged in as <%= current_user.name %></p>
+  <% end %>
+  <nav>
+    <ul id="header-settings">
+      <li>
+        Settings
+        <ul>
+          <% if user_signed_in? %>
+            <li><%= link_to "Log out", destroy_user_session_path, :method => :delete %></li>
+          <% else %>
+            <li><%= link_to "Log in", new_user_session_path %></li>
+          <% end %>
         </ul>
-    </nav>
-    <div style="clear: both;"></div>
+      </li>
+      <li>&#9829;</li>
+    </ul>
+  </nav>
+  <div style="clear: both;"></div>
 </header>
