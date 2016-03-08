@@ -1,9 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :users, :controllers => {:registrations => 'registrations'}
   root 'home#index'
-  get 'login' => 'sessions#new'
-  post 'login' => 'sessions#create'
-  delete 'logout' => 'sessions#destroy'
-  get 'signup' => 'users#new'
 
   resources :balances
   resources :transfers
