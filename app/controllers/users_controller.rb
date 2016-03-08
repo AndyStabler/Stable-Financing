@@ -97,7 +97,8 @@ class UsersController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
-    @user = User.find(params[:id])
+    not_found unless current_user.id.to_s == params[:id].to_s
+    @user = current_user
   end
 
   # TODO: this is the exact same function as is in the transaction controller. Make less DRY . . .
