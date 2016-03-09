@@ -90,6 +90,4 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 
-  config.include Devise::TestHelpers, type: :controller
-  config.include Devise::TestHelpers, type: :view
 end
