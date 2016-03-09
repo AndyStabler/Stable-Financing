@@ -2,6 +2,8 @@ require 'test_helper'
 
 class TransfersControllerTest < ActionController::TestCase
   setup do
+    @user = users(:andy)
+    sign_in @user
     @transfer = transfers(:one)
   end
 

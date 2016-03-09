@@ -2,6 +2,8 @@ require 'test_helper'
 
 class BalancesControllerTest < ActionController::TestCase
   setup do
+    @user = users(:andy)
+    sign_in @user
     @balance = balances(:one)
   end
 
