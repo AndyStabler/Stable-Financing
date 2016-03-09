@@ -8,22 +8,6 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 
-  def is_logged_in?
-    !session[:user_id].nil?
-  end
-
-  def log_in_as(user, options = {})
-    password = options[:password] || "pwd"
-    remember_me = options[:remember_me] || '1'
-    if integration_test?
-        post login_path, :session => { :email => user.email,
-                                        :password => password,
-                                        :remember_me => remember_me }
-    else
-        session[:user_id] = user.id
-    end
-  end
-
   # Get a balance forecast for this user
   #
   # Predicts future bank balances based on the incomings/outgoings
@@ -47,10 +31,8 @@ class ActiveSupport::TestCase
     NumberCruncher.new(user).finance_log_between(from, to).sort_by(&:on)
   end
 
+end
 
-  private
-
-    def integration_test?
-        defined?(post_via_redirect)
-    end
+class ActionController::TestCase
+  include Devise::TestHelpers
 end
