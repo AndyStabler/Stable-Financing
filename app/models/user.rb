@@ -12,7 +12,13 @@ class User < ActiveRecord::Base
   validates :name, :email, :password, presence: true
   validates :email, confirmation: true, uniqueness: { case_sensitive: false }
   before_save { self.email = email.downcase }
+  after_create :initialize_balance
   validates :password, presence: true, length: { minimum: 6 }
+
+  def initialize_balance
+    initial_balance = Balance.new({:value => 0.0, :on => Time.zone.now, :user => self})
+    initial_balance.save
+  end
 
   def number_cruncher
     @number_cruncher ||= NumberCruncher.new self
