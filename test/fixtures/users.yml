@@ -3,14 +3,14 @@
 andy:
   name: Andy Stabler
   email: andystabler@hotmail.co.uk
-  password_digest: <%= User.digest "pwd" %>
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'pwd') %>
 
 fiona:
   name: Fiona Barron
   email: fionabarron@hotmail.co.uk
-  password_digest: <%= User.digest "password" %>
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
 
 misty:
   name: Misty Barron
   email: misty@theinternet.com
-  password_digest: <%= User.digest "catz" %>
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'catz') %>
