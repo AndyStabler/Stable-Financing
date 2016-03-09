@@ -21,7 +21,7 @@ class Balance < ActiveRecord::Base
     # get the balances that have an on date less than the current balance's
     previous_balance = date_bals.select { |date, bals| date < on.to_date }.sort_by {|date, bals| date}
     # if there are no balances with an on date less than the current balance, return the current balance's value
-    return value if previous_balance == nil
+    return value if previous_balance.blank?
     # previous_balance is an ordered Hash. Get the last hash item as an array, then get the last element (the hash value- an array of balances)
     # order these balances, and get the last's value
     value - previous_balance.last.last.sort_by {|b| b.on}.last.value
