@@ -35,6 +35,7 @@ gem 'devise'
 
 group :test do
   gem "factory_girl_rails", "~> 4.0"
+  gem 'simplecov', :require => false
 end
 
 group :development, :test do
