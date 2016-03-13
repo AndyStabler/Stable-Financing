@@ -32,14 +32,14 @@ class Balance < ActiveRecord::Base
   def diff_from_previous_balance
     bals = user.balances.order(:on)
     ind = bals.index self
-    return value unless ind != 0
+    return value if ind == 0
     # if the month is different to the previous balance's, then the diff is 0
     # previous balance is from same month? diff is balance - old balance
     bals[ind].value - bals[ind-1].value
   end
 
   def month_diff
-    bals = user.balances.select {|b| b.on >= on.beginning_of_month && b.on <= on.end_of_month }
+    bals = user.balances.select { |b| b.on >= on.beginning_of_month && b.on <= on.end_of_month }
     bals.map(&:diff_from_previous_balance).inject(:+)
   end
 
