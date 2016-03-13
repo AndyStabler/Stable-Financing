@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }
 
   def initialize_balance
-    initial_balance = Balance.new({:value => 0.0, :on => Time.zone.now, :user => self})
+    initial_balance = Balance.new(:value => 0.0, :on => Time.zone.now, :user => self)
     initial_balance.save
   end
 
