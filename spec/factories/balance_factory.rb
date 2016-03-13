@@ -1,11 +1,19 @@
 FactoryGirl.define do
 
-  factory :balance do | bal |
+  factory :balance do
 
     trait :empty do
-      bal.value 0.0
-      bal.on DateTime.now
+      value 0.0
     end
+
+    trait :today do
+      on DateTime.now
+    end
+
+    trait :yesterday do
+      on DateTime.now-1.day
+    end
+
   end
 
 end
