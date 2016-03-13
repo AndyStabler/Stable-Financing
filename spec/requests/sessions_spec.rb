@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Sessions", type: :request do
 
-  before :each do
-    @user = FactoryGirl.create(:user, :with_empty_balance)
-  end
+  let(:user) { FactoryGirl.create(:user, :homer) }
 
   describe "sign in" do
 
@@ -47,21 +45,21 @@ RSpec.describe "Sessions", type: :request do
     end
 
     it "should not be able to see user page" do
-      get_via_redirect user_path @user
+      get_via_redirect user_path user
       expect(response).to render_template('devise/sessions/new')
     end
   end
 
   context "not signed in" do
     it "should not be able to see user page" do
-      get_via_redirect user_path @user
+      get_via_redirect user_path user
       expect(response).to render_template('devise/sessions/new')
     end
   end
 
   def sign_in
     get new_user_session_path
-    post_via_redirect user_session_path, 'user[email]' => @user.email, 'user[password]' => @user.password
+    post_via_redirect user_session_path, 'user[email]' => user.email, 'user[password]' => user.password
   end
 
   def sign_out
