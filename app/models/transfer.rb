@@ -7,7 +7,6 @@ class Transfer < ActiveRecord::Base
   validates :outgoing, inclusion: [true, false]
   validates :amount, numericality: true
 
-
   def self.all_incoming(transfers)
     transfers.select { |tr| !tr.outgoing }
   end
@@ -39,15 +38,18 @@ class Transfer < ActiveRecord::Base
       if recurrence == :no && (on >= start_date && on <= end_date)
         (date_to_transfers[on]||=[]) << trans
       elsif recurrence == :daily && on <= end_date
-        ((end_date - on).to_i + 1).times do |day_to_add|
+        days = (end_date - on).to_i + 1
+        days.times do |day_to_add|
           (date_to_transfers[on + day_to_add.days]||=[]) << trans
         end
       elsif recurrence == :weekly && on <= end_date
-        (((end_date - on) / 7).to_i + 1).times do |wk|
+        weeks = ((end_date - on) / 7
+        weeks.to_i + 1).times do |wk|
           (date_to_transfers[on + wk.weeks]||=[]) << trans
         end
       elsif recurrence == :monthly && on <= end_date
-        ((on.months_between(end_date)).to_i + 1).times do |mt|
+        months = (on.months_between(end_date)).to_i + 1
+        months.times do |mt|
           (date_to_transfers[on + mt.months]||=[]) << trans
         end
       end
