@@ -43,8 +43,8 @@ class Transfer < ActiveRecord::Base
           (date_to_transfers[on + day_to_add.days]||=[]) << trans
         end
       elsif recurrence == :weekly && on <= end_date
-        weeks = ((end_date - on) / 7
-        weeks.to_i + 1).times do |wk|
+        weeks = (((end_date - on) / 7).to_i + 1)
+        weeks.times do |wk|
           (date_to_transfers[on + wk.weeks]||=[]) << trans
         end
       elsif recurrence == :monthly && on <= end_date
