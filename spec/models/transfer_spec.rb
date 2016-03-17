@@ -102,7 +102,7 @@ RSpec.describe Transfer, type: :model do
     end
   end
 
-  describe "group_transfers_by_date" do
+  describe ".group_transfers_by_date" do
     context "when there are no transfers" do
     end
 
