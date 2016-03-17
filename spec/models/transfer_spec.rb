@@ -6,7 +6,7 @@ RSpec.describe Transfer, type: :model do
     FactoryGirl.create(:user, :homer)
   end
 
-  describe "all_incoming" do
+  describe ".all_incoming" do
     context "when there are no incoming transfers" do
       it "should be empty" do
         expect(Transfer.all_incoming(homer.transfers)).to be_empty
@@ -37,7 +37,7 @@ RSpec.describe Transfer, type: :model do
    end
  end
 
- describe "sum_incoming" do
+ describe ".sum_incoming" do
     context "when there are no transfers" do
       it "should return 0" do
         expect(Transfer.sum_incoming(homer.transfers)).to be_zero
@@ -85,7 +85,7 @@ RSpec.describe Transfer, type: :model do
     end
   end
 
-  describe "sum_outgoing" do
+  describe ".sum_outgoing" do
     context "when there are no transfers" do
       it "should return 0" do
         expect(Transfer.sum_incoming(homer.transfers)).to be_zero
