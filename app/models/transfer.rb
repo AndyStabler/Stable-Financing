@@ -40,12 +40,16 @@ class Transfer < ActiveRecord::Base
       elsif recurrence == :daily && on <= end_date
         days = (end_date - on).to_i + 1
         days.times do |day_to_add|
-          (date_to_transfers[on + day_to_add.days]||=[]) << trans
+          date_of_transfer = on + day_to_add.days
+          next if date_of_transfer < start_date
+          (date_to_transfers[date_of_transfer]||=[]) << trans
         end
       elsif recurrence == :weekly && on <= end_date
         weeks = (((end_date - on) / 7).to_i + 1)
         weeks.times do |wk|
-          (date_to_transfers[on + wk.weeks]||=[]) << trans
+          date_of_transfer = on + wk.weeks
+          next if date_of_transfer < start_date
+          (date_to_transfers[date_of_transfer]||=[]) << trans
         end
       elsif recurrence == :monthly && on <= end_date
         months = (on.months_between(end_date)).to_i + 1
