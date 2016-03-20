@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160305184941) do
+ActiveRecord::Schema.define(version: 20160320222714) do
 
   create_table "balances", force: :cascade do |t|
     t.decimal  "value"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20160305184941) do
     t.string   "reference"
     t.datetime "on"
     t.integer  "recurrence", default: 1
+    t.string   "type"
   end
 
   add_index "transfers", ["user_id"], name: "index_transfers_on_user_id"
