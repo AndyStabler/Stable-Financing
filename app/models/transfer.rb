@@ -1,11 +1,13 @@
 class Transfer < ActiveRecord::Base
   belongs_to :user
 
-  enum recurrence: [:no, :daily, :weekly, :monthly]
-
   validates :amount, :user, :on, :recurrence, presence: true
   validates :outgoing, inclusion: [true, false]
   validates :amount, numericality: true
+
+  def forecast
+    fail NotImplementedError, "Abstract method forecast needs implementing"
+  end
 
   def self.all_incoming(transfers)
     transfers.select { |tr| !tr.outgoing }
