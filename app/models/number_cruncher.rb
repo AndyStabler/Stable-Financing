@@ -65,7 +65,7 @@ class NumberCruncher
     return [] unless relevant_balances.any?
 
     log = []
-    balance_groups = relevant_balances.group_by { |bal| bal.on.day_s }
+    balance_groups = relevant_balances.group_by { |bal| bal.on.to_date.to_s(:db) }
     balance_groups.each do |day, bals|
       bals = bals.sort_by { |bal| bal.on }
       bal = bals.last
