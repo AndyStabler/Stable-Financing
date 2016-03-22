@@ -10,20 +10,21 @@ FactoryGirl.define do
       outgoing true
     end
 
-    trait :no_recurrence do
-      recurrence Transfer.recurrences[:no]
+    trait :today do
+      on DateTime.now
     end
 
-    trait :daily do
-      recurrence Transfer.recurrences[:daily]
+    trait :yesterday do
+      on DateTime.now-1.day
     end
+  end
 
-    trait :weekly do
-      recurrence Transfer.recurrences[:weekly]
-    end
+  factory :transfer_daily, class: TransferDaily, parent: :transfer do
+  end
 
-    trait :monthly do
-      recurrence Transfer.recurrences[:monthly]
-    end
+  factory :transfer_weekly, class: TransferWeekly, parent: :transfer do
+  end
+
+  factory :transfer_monthly, class: TransferMonthly, parent: :transfer do
   end
 end
