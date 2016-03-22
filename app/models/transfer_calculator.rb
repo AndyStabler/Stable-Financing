@@ -1,9 +1,26 @@
 class TransferCalculator
 
   def initialize(transfers)
+    @transfers = transfers
   end
 
   def all_transfers_on(date)
+  end
+
+  def incoming
+    @incoming ||= @transfers.select { |tr| !tr.outgoing }
+  end
+
+  def outgoing
+    @outgoing ||= @transfers.select { |tr| tr.outgoing }
+  end
+
+  def total_incoming
+    @total_incoming ||= incoming.map(&:amount).inject(:+) || 0.0
+  end
+
+  def total_outgoing
+    @total_outgoing ||= outgoing.map(&:amaount).inject(:+) || 0.0
   end
 
   # Public: all transfers
