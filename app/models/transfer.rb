@@ -54,7 +54,7 @@ class Transfer < ActiveRecord::Base
           (date_to_transfers[date_of_transfer]||=[]) << trans
         end
       elsif recurrence == :monthly && on <= end_date
-        months = (on.months_between(end_date)).to_i + 1
+        months = (Util::DateTimeUtil.months_between(on, end_date)).to_i + 1
         months.times do |mt|
           date_of_transfer = on + mt.months
           next if date_of_transfer < start_date
