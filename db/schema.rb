@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160320222714) do
+ActiveRecord::Schema.define(version: 20160320225357) do
 
   create_table "balances", force: :cascade do |t|
     t.decimal  "value"
@@ -26,12 +26,11 @@ ActiveRecord::Schema.define(version: 20160320222714) do
   create_table "transfers", force: :cascade do |t|
     t.decimal  "amount"
     t.integer  "user_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean  "outgoing"
     t.string   "reference"
     t.datetime "on"
-    t.integer  "recurrence", default: 1
     t.string   "type"
   end
 

@@ -11,21 +11,21 @@ users = [{name: 'Andy Stabler', email: "andy_60@hotmail.co.uk", password: "passw
 User.create!(users)
 
 Transfer.delete_all
-transfers = [{on: Date.today - 5.days, reference: 'init', amount: 3000.00, recurrence: 0, user: User.find_by_name("Fiona Barron"), outgoing: false},
-             {on: Date.today - 2.days, reference: 'car insurance', amount: 30, recurrence: 1, user: User.find_by_name("Fiona Barron"), outgoing: true},
-             {on: Date.today, reference: 'mobile', amount: 24, recurrence: 2, user: User.find_by_name("Fiona Barron"), outgoing: true},
-             {on: Date.today, reference: 'gas', amount: 37, recurrence: 3, user: User.find_by_name("Fiona Barron"), outgoing: true},
-             {on: Date.today, reference: 'phone', amount: 24.00, recurrence: 3, user: User.find_by_name("Andy Stabler"), outgoing: true},
-             {on: Date.today, reference: 'petrol', amount: 40, recurrence: 3, user: User.find_by_name("Andy Stabler"), outgoing: true},
-             {on: Date.today, reference: 'food', amount: 30, recurrence: 2, user: User.find_by_name("Andy Stabler"), outgoing: true},
-             {on: Date.today, reference: 'gas', amount: 80, recurrence: 3, user: User.find_by_name("Andy Stabler"), outgoing: true},
-             {on: Date.today, reference: 'electricity', amount: 35, recurrence: 3, user: User.find_by_name("Andy Stabler"), outgoing: true},
-             {on: Date.today, reference: 'water', amount: 41, recurrence: 3, user: User.find_by_name("Andy Stabler"), outgoing: true},
-             {on: Date.today, reference: 'internet', amount: 24, recurrence: 3, user: User.find_by_name("Andy Stabler"), outgoing: true},
-             {on: Date.today, reference: 'car', amount: 200.00, recurrence: :monthly, user: User.find_by_name("Andy Stabler"), outgoing: true},
-             {on: Date.today+1.month, reference: 'Council Tax', amount: 1200, recurrence: :no, user: User.find_by_name("Andy Stabler"), outgoing: true},
-             {on: Date.today, reference: 'Rent', amount: 390, recurrence: :monthly, user: User.find_by_name("Andy Stabler"), outgoing: true},
-             {on: Date.today, reference: 'wages', amount: 1602.48, recurrence: 3, user: User.find_by_name("Andy Stabler"), outgoing: false}]
+transfers = [{on: Date.today - 5.days, reference: 'init', amount: 3000.00, user: User.find_by_name("Fiona Barron"), outgoing: false},
+             {on: Date.today - 2.days, reference: 'car insurance', amount: 30, user: User.find_by_name("Fiona Barron"), outgoing: true},
+             {on: Date.today, reference: 'mobile', amount: 24, user: User.find_by_name("Fiona Barron"), outgoing: true},
+             {on: Date.today, reference: 'gas', amount: 37, user: User.find_by_name("Fiona Barron"), outgoing: true},
+             {on: Date.today, reference: 'phone', amount: 24.00, user: User.find_by_name("Andy Stabler"), outgoing: true},
+             {on: Date.today, reference: 'petrol', amount: 40, user: User.find_by_name("Andy Stabler"), outgoing: true},
+             {on: Date.today, reference: 'food', amount: 30, user: User.find_by_name("Andy Stabler"), outgoing: true},
+             {on: Date.today, reference: 'gas', amount: 80, user: User.find_by_name("Andy Stabler"), outgoing: true},
+             {on: Date.today, reference: 'electricity', amount: 35, user: User.find_by_name("Andy Stabler"), outgoing: true},
+             {on: Date.today, reference: 'water', amount: 41, user: User.find_by_name("Andy Stabler"), outgoing: true},
+             {on: Date.today, reference: 'internet', amount: 24, user: User.find_by_name("Andy Stabler"), outgoing: true},
+             {on: Date.today, reference: 'car', amount: 200.00, user: User.find_by_name("Andy Stabler"), outgoing: true},
+             {on: Date.today+1.month, reference: 'Council Tax', amount: 1200, user: User.find_by_name("Andy Stabler"), outgoing: true},
+             {on: Date.today, reference: 'Rent', amount: 390, user: User.find_by_name("Andy Stabler"), outgoing: true},
+             {on: Date.today, reference: 'wages', amount: 1602.48, user: User.find_by_name("Andy Stabler"), outgoing: false}]
 
 Transfer.create!(transfers)
 
