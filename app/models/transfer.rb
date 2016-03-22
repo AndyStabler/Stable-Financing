@@ -1,4 +1,5 @@
 class Transfer < ActiveRecord::Base
+
   belongs_to :user
 
   validates :amount, :user, :on, :recurrence, presence: true
@@ -9,21 +10,8 @@ class Transfer < ActiveRecord::Base
     fail NotImplementedError, "Abstract method forecast needs implementing"
   end
 
-  def self.all_incoming(transfers)
-    transfers.select { |tr| !tr.outgoing }
-  end
 
-  def self.sum_incoming(transfers)
-    all_incoming(transfers).map(&:amount).inject(:+) || 0.0
-  end
 
-  def self.all_outgoing(transfers)
-    transfers.select { |tr| tr.outgoing }
-  end
-
-  def self.sum_outgoing(transfers)
-    all_outgoing(transfers).map(&:amount).inject(:+) || 0.0
-  end
 
   # Group transfers by the day they will take place on
   # A transfer can be registered once, but may have a recurrence that means it will occur repeatedly (every mnonth say)
