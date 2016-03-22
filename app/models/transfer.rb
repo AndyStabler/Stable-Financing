@@ -5,7 +5,7 @@ class Transfer < ActiveRecord::Base
   validates :outgoing, inclusion: [true, false]
   validates :amount, numericality: true
 
-  def forecast
+  def forecast(from, to)
     fail NotImplementedError, "Abstract method forecast needs implementing"
   end
 
