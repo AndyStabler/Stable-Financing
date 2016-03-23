@@ -13,5 +13,15 @@ module Util::DateTime
     def days_between_inclusive(from, to)
       (to - from).to_i + 1
     end
+
+    # Public: calculates the number of inclusive days between two dates
+    #
+    # Examples
+    #
+    #   weeks_between_inclusve(1, 5)
+    #   # => 5
+    def weeks_between_inclusive(from, to)
+      ((to - from) / 7).to_i + 1
+    end
   end
 end
