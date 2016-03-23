@@ -21,10 +21,6 @@
       <%= f.text_field :amount, type: "text" %>
     </div>
     <div class="field">
-      <%= f.label :recurrence %><br>
-      <%= f.select(:recurrence, options_for_select(Transfer.recurrences.keys.to_a)) %>
-    </div>
-    <div class="field">
       <%= f.label :outgoing %><br>
       <%= f.radio_button :outgoing, true, checked: true %>
       <%= f.label :outgoing, "Yes", value: true %>
