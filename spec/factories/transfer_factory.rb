@@ -27,4 +27,8 @@ FactoryGirl.define do
 
   factory :transfer_monthly, class: TransferMonthly, parent: :transfer do
   end
+
+  factory :transfer_no_recurrence, class: TransferNoRecurrence, parent: :transfer do
+  end
+
 end
