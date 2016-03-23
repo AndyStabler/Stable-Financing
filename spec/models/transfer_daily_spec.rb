@@ -6,7 +6,7 @@ RSpec.describe TransferDaily, type: :model do
 
   describe "#forecast" do
 
-    it "should show the transfer occuring every day" do
+    it "should show the transfer occurring every day" do
       transfer_date = Date.today
       to_date = transfer_date+1.week
 
@@ -32,7 +32,7 @@ RSpec.describe TransferDaily, type: :model do
 
         transfer = FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer", on: transfer_date, amount: 20)
         expect(transfer.forecast(to_date).count).to eq 8
-        end
+      end
     end
 
     context "when the from date is greater than the to date" do
