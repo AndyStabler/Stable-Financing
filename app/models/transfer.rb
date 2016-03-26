@@ -2,7 +2,7 @@ class Transfer < ActiveRecord::Base
 
   belongs_to :user
 
-  validates :amount, :user, :on, :recurrence, presence: true
+  validates :amount, :user, :on, presence: true
   validates :outgoing, inclusion: [true, false]
   validates :amount, numericality: true
 
