@@ -1,7 +1,8 @@
 module Util::DateTime
   class << self
-    def months_between(from, to)
-      (to.year - from.year) * 12 + to.month - from.month - (to.day >= from.day ? 0 : 1)
+
+    def months_between_inclusive(from, to)
+      (to.year - from.year) * 12 + to.month - from.month - (to.day >= from.day ? 0 : 1) + 1
     end
 
     # Public: calculates the number of inclusive days between two dates
