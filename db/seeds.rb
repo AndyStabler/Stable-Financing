@@ -27,7 +27,7 @@ transfers = [{on: Date.today - 5.days, reference: 'init', amount: 3000.00, user:
              {on: Date.today, reference: 'Rent', amount: 390, user: User.find_by_name("Andy Stabler"), outgoing: true},
              {on: Date.today, reference: 'wages', amount: 1602.48, user: User.find_by_name("Andy Stabler"), outgoing: false}]
 
-Transfer.create!(transfers)
+TransferDaily.create!(transfers)
 
 Balance.delete_all
 Balance.create!([{id: 1, value: 500, on: Date.today-5.weeks, user: User.find_by_name("Andy Stabler")},
