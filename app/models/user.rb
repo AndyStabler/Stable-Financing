@@ -20,8 +20,8 @@ class User < ActiveRecord::Base
     initial_balance.save
   end
 
-  def number_cruncher
-    @number_cruncher ||= NumberCruncher.new self
+  def balance_calculator
+    @balance_calculator ||= BalanceCalculator.new self
   end
 
   scope :incoming, -> { where :outoing => false }
@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
     return [] unless bals.any?
     from = bals.first.on
     to = bals.last.on
-    number_cruncher.finance_log_between(from, to).sort_by(&:on)
+    balance_calculator.finance_log_between(from, to).sort_by(&:on)
   end
 
   def finance_forecast
@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
     return [] unless trans.any?
     from = trans.first.on.to_date
     to = trans.last.on.to_date+1.year
-    number_cruncher.balance_forecast_between(from, to).sort_by(&:on)
+    balance_calculator.forecast_balance_between(from, to).sort_by(&:on)
   end
 
   def balance
