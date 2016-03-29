@@ -31,9 +31,10 @@ class TransferCalculator
   #
   # returns an array of transfers occuring between from and to (inclusive)
   def all_transfers(from = nil, to)
+
   end
 
-  # Public: every date that a transfer is registered to occur on
+  # Public: forecasts every transfer
   #
   # from  - used to get transfers occurring on or after this date (optional)
   #   if this value is not supplied, the date for the oldest transfer will be used
@@ -41,6 +42,14 @@ class TransferCalculator
   #
   # returns an array of dates transfers are registered to occur on between from and to (inclusive)
   def all_transfer_dates(from = nil, to)
+    @user.transfers.map { |transfer| transfer.forecast(from, to) }.flatten.uniq
   end
 
+  def transfers_occurring_on(date)
+    @user.transfers.select { | transfer| transfer.forecast(date).include? date }
+  end
+
+  def self.total_difference(transfers)
+    transfers.map { |transfer| transfer.difference }.inject :+
+  end
 end
