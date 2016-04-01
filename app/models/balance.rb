@@ -45,6 +45,7 @@ class Balance < ActiveRecord::Base
     bals = user.balances.all.select { |b| b.on >= on.beginning_of_month - 1.day && b.on <= on.end_of_month }
     bals.sort_by(&:on)
     puts "-------------"
+    puts "user.balances.count : #{user.balances.count}"
     puts "first balance is #{bals.first.to_json}"
     puts "last balance is #{bals.last.to_json}"
     puts "last.value(#{bals.last.value}) - first.value(#{bals.first.value}) = #{bals.last.value - bals.first.value}"
