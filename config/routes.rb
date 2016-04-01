@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   resources :balances
   resources :transfers
+  resources :transfer_daily, :controller => 'transfers'
+  resources :transfer_weekly, :controller => 'transfers'
+  resources :transfer_monthly, :controller => 'transfers'
+  resources :transfer_no_recurrence, :controller => 'transfers'
   resources :users
 
   post 'users/:id/new/transfer', to: 'users#new_transfer'
