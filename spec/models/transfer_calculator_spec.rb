@@ -21,9 +21,9 @@ RSpec.describe TransferCalculator, type: :model do
     context "when there are only incoming transfers" do
       it "should return all transfers" do
         expected_transfers = []
-        expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: DateTime.now, amount: 20.0)
-        expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 2", on: DateTime.now, amount: 20.0)
-        expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 3", on: DateTime.now, amount: 20.0)
+        expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: DateTime.current, amount: 20.0)
+        expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 2", on: DateTime.current, amount: 20.0)
+        expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 3", on: DateTime.current, amount: 20.0)
         expect(transfer_calculator.incoming).to eql expected_transfers
       end
     end
@@ -31,12 +31,12 @@ RSpec.describe TransferCalculator, type: :model do
     context "when there are a mix of incoming and outgoing transfers" do
       it "should return only the incoming transfers" do
        expected_transfers = []
-       expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: DateTime.now, amount: 20.0)
-       expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 2", on: DateTime.now, amount: 20.0)
-       expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 3", on: DateTime.now, amount: 20.0)
-       FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 4", on: DateTime.now, amount: 20.0)
-       FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 5", on: DateTime.now, amount: 20.0)
-       FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 6", on: DateTime.now, amount: 20.0)
+       expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: DateTime.current, amount: 20.0)
+       expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 2", on: DateTime.current, amount: 20.0)
+       expected_transfers << FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 3", on: DateTime.current, amount: 20.0)
+       FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 4", on: DateTime.current, amount: 20.0)
+       FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 5", on: DateTime.current, amount: 20.0)
+       FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 6", on: DateTime.current, amount: 20.0)
        expect(transfer_calculator.incoming).to eql expected_transfers
      end
    end
@@ -51,9 +51,9 @@ RSpec.describe TransferCalculator, type: :model do
 
     context "when there are some transfers" do
       it "should return the total" do
-        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: DateTime.now, amount: 20.0)
-        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 2", on: DateTime.now, amount: 20.0)
-        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 3", on: DateTime.now, amount: 20.0)
+        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: DateTime.current, amount: 20.0)
+        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 2", on: DateTime.current, amount: 20.0)
+        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 3", on: DateTime.current, amount: 20.0)
         expect(transfer_calculator.total_incoming).to eql(60)
       end
     end
@@ -69,9 +69,9 @@ RSpec.describe TransferCalculator, type: :model do
     context "when there are only outgoing transfers" do
       it "should return all transfers" do
         expected_transfers = []
-        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 1", on: DateTime.now, amount: 20.0)
-        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 2", on: DateTime.now, amount: 20.0)
-        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 3", on: DateTime.now, amount: 20.0)
+        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 1", on: DateTime.current, amount: 20.0)
+        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 2", on: DateTime.current, amount: 20.0)
+        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 3", on: DateTime.current, amount: 20.0)
         expect(transfer_calculator.outgoing).to eql expected_transfers
       end
     end
@@ -79,12 +79,12 @@ RSpec.describe TransferCalculator, type: :model do
     context "when there are a mix of outgoing and incoming transfers" do
       it "should return only the outgoing transfers" do
         expected_transfers = []
-        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: DateTime.now, amount: 20.0)
-        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 2", on: DateTime.now, amount: 20.0)
-        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 3", on: DateTime.now, amount: 20.0)
-        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 4", on: DateTime.now, amount: 20.0)
-        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 5", on: DateTime.now, amount: 20.0)
-        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 6", on: DateTime.now, amount: 20.0)
+        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: DateTime.current, amount: 20.0)
+        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 2", on: DateTime.current, amount: 20.0)
+        FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 3", on: DateTime.current, amount: 20.0)
+        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 4", on: DateTime.current, amount: 20.0)
+        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 5", on: DateTime.current, amount: 20.0)
+        expected_transfers << FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 6", on: DateTime.current, amount: 20.0)
         expect(transfer_calculator.outgoing).to eql expected_transfers
       end
     end
@@ -99,9 +99,9 @@ RSpec.describe TransferCalculator, type: :model do
 
     context "when there are some transfers" do
       it "should return the total" do
-        FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 1", on: DateTime.now, amount: 20.0)
-        FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 2", on: DateTime.now, amount: 20.0)
-        FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 3", on: DateTime.now, amount: 20.0)
+        FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 1", on: DateTime.current, amount: 20.0)
+        FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 2", on: DateTime.current, amount: 20.0)
+        FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 3", on: DateTime.current, amount: 20.0)
         expect(transfer_calculator.total_outgoing).to eql(60)
       end
     end
@@ -109,7 +109,7 @@ RSpec.describe TransferCalculator, type: :model do
 
   describe "#transfers_occurring_on" do
     it "should be the transfers occurring on this day" do
-      on = DateTime.now
+      on = DateTime.current
       FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: on - 1.day, amount: 20.0)
       FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 2", on: on, amount: 20.0)
       FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 3", on: on, amount: 20.0)

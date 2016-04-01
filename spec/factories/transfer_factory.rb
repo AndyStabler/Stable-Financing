@@ -11,11 +11,11 @@ FactoryGirl.define do
     end
 
     trait :today do
-      on DateTime.now
+      on DateTime.current
     end
 
     trait :yesterday do
-      on DateTime.now-1.day
+      on DateTime.current-1.day
     end
   end
 

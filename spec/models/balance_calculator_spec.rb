@@ -13,7 +13,7 @@ RSpec.describe BalanceCalculator, type: :model do
   describe "#forecast_balance" do
     context "to is before any transfers" do
       it "should be empty" do
-        date = DateTime.now-1.day
+        date = DateTime.current-1.day
         # make the initial balance be yesterday so it doesn't get in the way
         homer.balance.update_attributes(:on => DateTime.yesterday)
         FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: date + 1.day, amount: 20.0)
@@ -26,7 +26,7 @@ RSpec.describe BalanceCalculator, type: :model do
     end
 
     it "should add a BalanceForecast for all transfers occurung on the dates" do
-      first_date = DateTime.now
+      first_date = DateTime.current
       second_date = first_date+1.day
       # make the initial balance be yesterday so it doesn't get in the way
       homer.balance.update_attributes(:on => DateTime.yesterday)
@@ -43,14 +43,14 @@ RSpec.describe BalanceCalculator, type: :model do
 
   describe "#forecast_balance_between" do
     before(:each) do
-      FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: DateTime.now.end_of_month+1.week, amount: 20.0)
-      FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 2", on: DateTime.now.end_of_month+2.weeks, amount: 20.0)
+      FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 1", on: DateTime.current.end_of_month+1.week, amount: 20.0)
+      FactoryGirl.create(:transfer_daily, :incoming, user: homer, reference: "transfer 2", on: DateTime.current.end_of_month+2.weeks, amount: 20.0)
     end
 
     context "end_date is earlier than start_date" do
       it "should be empty" do
-        from = DateTime.now
-        to = DateTime.now-1.week
+        from = DateTime.current
+        to = DateTime.current-1.week
         expect(balance_calculator.forecast_balance_between(from, to)).to be_empty
       end
     end
@@ -75,7 +75,7 @@ RSpec.describe BalanceCalculator, type: :model do
   describe "#balance_log" do
     context "when there are multiple balances per day" do
       it "shows the last balance of the day" do
-        first_time = DateTime.now.beginning_of_day+1.hour
+        first_time = DateTime.current.beginning_of_day+1.hour
         second_time = first_time+1.day
         # get rid of the initial balance
         homer.balances.destroy_all
@@ -89,6 +89,71 @@ RSpec.describe BalanceCalculator, type: :model do
         expect(balance_log.count).to eq 2
         expect(balance_log.first.value).to eq 50
         expect(balance_log[1].value).to eq 10
+      end
+    end
+  end
+
+  describe "#month_diff" do
+    it "should be 0 when there is only the initial balance" do
+      expect(balance_calculator.month_diff(homer.balance.on)).to be_zero
+    end
+
+    context "when there are no balances for the previous month" do
+      before(:each) do
+        # get rid of the initial balance of 0 that occurs on the day the user is created
+        homer.balances.destroy_all
+      end
+
+      it "should calculate the difference correctly" do
+        # put the initial balance of 0 back in, but give it a consistent date
+        FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+1.hour, user: homer, :value => 0.0)
+        FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+2.hour, user: homer, :value => 20.0)
+        FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+1.day, user: homer, :value => 50.0)
+        FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+2.days, user: homer, :value => 5.0)
+        expected_month_diff = 5.0
+        expect(balance_calculator.month_diff(homer.balance.on)).to eql expected_month_diff
+      end
+
+      context "and there are balances for the next month" do
+        it "should calculate the diff and ignore the next month's balances" do
+          # put the initial balance of 0 back in, but give it a consistent date
+          FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+1.hour, user: homer, :value => 0.0)
+          FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+2.hours, user: homer, :value => 100.0)
+          FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+1.day, user: homer, :value => 20.0)
+          FactoryGirl.create(:balance, on: DateTime.current.end_of_month+1.day, user: homer, :value => 20.0)
+          expected_month_diff = 20.0
+          expect(balance_calculator.month_diff(homer.balances.all.first.on)).to eql expected_month_diff
+        end
+      end
+    end
+
+    context "when there are balances for previous month" do
+      before(:each) do
+        # get rid of the initial balance of 0 that occurs on the day the user is created
+        homer.balances.destroy_all
+      end
+
+      it "should calculate the diff based on last balance of previous month" do
+        # put the initial balance of 0 back in, but give it a consistent date
+        FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month-1.day, user: homer, :value => 0.0)
+        FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month-1.day+3.hour, user: homer, :value => 5.0)
+        first = FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+1.hour, user: homer, :value => 100.0)
+        FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+1.day, user: homer, :value => 20.0)
+        expected_month_diff = 15.0
+        expect(balance_calculator.month_diff(first.on)).to eql expected_month_diff
+      end
+
+      context "and there are balances for the next month" do
+        it "should calculate the diff and ignore the next month's balances" do
+          # put the initial balance of 0 back in, but give it a consistent date
+          FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month-1.day, user: homer, :value => 0.0)
+          FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month-1.day + 3.hour, user: homer, :value => 5.0)
+          FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+1.hour, user: homer, :value => 100.0)
+          FactoryGirl.create(:balance, on: DateTime.current.beginning_of_month+1.day, user: homer, :value => 20.0)
+          FactoryGirl.create(:balance, on: DateTime.current.end_of_month+1.day, user: homer, :value => 20.0)
+          expected_month_diff = 15.0
+          expect(balance_calculator.month_diff(homer.balances.all[2].on)).to eql expected_month_diff
+        end
       end
     end
   end
