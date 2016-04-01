@@ -44,9 +44,8 @@ class User < ActiveRecord::Base
   def finance_forecast
     trans = transfers.order(:on)
     return [] unless trans.any?
-    from = trans.first.on.to_date
     to = trans.last.on.to_date+1.year
-    balance_calculator.forecast_balance_between(from, to).sort_by(&:on)
+    balance_calculator.forecast_balance(to).sort_by(&:date)
   end
 
   def balance
