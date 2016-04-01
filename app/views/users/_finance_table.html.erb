@@ -6,32 +6,16 @@
   <th>Balance</th>
   </thead>
   <tbody>
-
-  <% values = user.finance_log %>
-  <% if values %>
-      <% values.map { |log| {:date => log.on.to_date, :balance => log.value } }.each do |log_row| %>
-          <tr>
-            <td><%= log_row[:date] %></td>
-            <td></td>
-            <td></td>
-            <td><%= log_row[:balance] %></td>
-          </tr>
-      <% end %>
-
+  <% values = user.balance_data || [] %>
+  <% values.each_with_index do |balance_data, index| %>
+    <tr>
+      <td><%= balance_data[:date] %></td>
+      <td>£<%= index > 0 ? balance_data[:value] - values[index - 1][:value]  : 0.0 %></td>
+      <td></td>
+      <td>£<%= balance_data[:value] %></td>
+    </tr>
   <% end %>
   <tr></tr>
-  <% values = user.finance_forecast %>
-  <% if values %>
-      <% values.map { |forecast| {:date => forecast.date, :balance => forecast.balance } }.each do |forecast_row| %>
-          <tr>
-            <td><%= forecast_row[:date] %></td>
-            <td></td>
-            <td></td>
-            <td><%= forecast_row[:balance] %></td>
-          </tr>
-      <% end %>
-      <tr></tr>
-  <% end %>
   </tbody>
 </table>
 
