@@ -25,9 +25,23 @@ class BalanceCalculator
     forecast_balance(end_date).reject { |forecast| forecast.date < start_date }
   end
 
+  def balance_log(from = nil, to)
+    from ||= @user.balances.first
+    balance_dates = @user.balances.all
+      .select { |balance| balance.on >= from && balance.on <= to }
+      .map { |balance| balance.on.to_date }
+      .uniq
+    balance_dates.map { |balance_date| last_balance_of_day balance_date }
+  end
+
   private
 
   def transfer_calculator
     @transfer_calculator ||= TransferCalculator.new(@user)
+  end
+
+  def last_balance_of_day date
+    balances = @user.balances.all.select { |balance| balance.on.to_date == date }
+    balances.sort_by { |balance| balance.on }.last
   end
 end
