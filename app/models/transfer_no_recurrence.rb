@@ -1,6 +1,7 @@
 class TransferNoRecurrence < Transfer
 
-  def forecast
-    puts "No recurrence here!"
+  def forecast(from = nil, to)
+    from ||= on.to_date
+    (from..to).include?(on.to_date) ? [self] : []
   end
 end
