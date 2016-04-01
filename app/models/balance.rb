@@ -38,19 +38,4 @@ class Balance < ActiveRecord::Base
     bals[ind].value - bals[ind-1].value
   end
 
-  # TODO: refactor this into balance_calculator
-  def month_diff
-    # - 1 day here so we can get the last balance from the previous month
-    # diff = last of this month - last of last month
-    bals = user.balances.all.select { |b| b.on >= on.beginning_of_month - 1.day && b.on <= on.end_of_month }
-    bals.sort_by(&:on)
-    puts "-------------"
-    puts "user.balances.count : #{user.balances.count}"
-    puts "first balance is #{bals.first.to_json}"
-    puts "last balance is #{bals.last.to_json}"
-    puts "last.value(#{bals.last.value}) - first.value(#{bals.first.value}) = #{bals.last.value - bals.first.value}"
-    puts "-------------"
-    bals.last.value - bals.first.value
-  end
-
 end
