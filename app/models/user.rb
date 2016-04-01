@@ -24,13 +24,20 @@ class User < ActiveRecord::Base
     @balance_calculator ||= BalanceCalculator.new self
   end
 
-  scope :incoming, -> { where :outoing => false }
-  scope :outgoing, -> { where :outoing => true }
+  def balance_forecaster
+    @balance_forecaster ||= BalanceForecaster.new self
+  end
 
   def finance_data
     bal_log = balance_log
     bal_forecast = balance_forecast
     bal_log.concat(bal_forecast)
+  end
+
+  def balance_data
+    log = finance_log.map { |balance| {:date => balance.on.to_date, :value => balance.value} }
+    forecast = finance_forecast.map { |forecast| {:date => forecast.date, :value => forecast.balance} }
+    log+forecast
   end
 
   def finance_log
@@ -45,7 +52,7 @@ class User < ActiveRecord::Base
     trans = transfers.order(:on)
     return [] unless trans.any?
     to = trans.last.on.to_date+1.year
-    balance_calculator.forecast_balance(to).sort_by(&:date)
+    balance_forecaster.forecast_balance(to).sort_by(&:date)
   end
 
   def balance
