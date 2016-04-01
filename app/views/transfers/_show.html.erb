@@ -7,7 +7,7 @@
 
   <p><strong>Amount: </strong> <%= number_to_currency(transfer.amount, precision: 2, unit: '£') %></p>
 
-  <p><strong>Recurrence: </strong> <%= transfer.recurrence %></p>
+  <p><strong>Recurrence: </strong> <%= transfer.class %></p>
 
   <%= link_to 'Destroy', transfer, method: :delete, data: {confirm: 'Are you sure?'} %>
 </div>
