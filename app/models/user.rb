@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
     return [] unless bals.any?
     from = bals.first.on
     to = bals.last.on
-    balance_calculator.finance_log_between(from, to).sort_by(&:on)
+    balance_calculator.balance_log(from, to).sort_by(&:on)
   end
 
   def finance_forecast
