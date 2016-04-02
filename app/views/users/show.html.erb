@@ -2,7 +2,7 @@
   <h1 class="user-title"><%= link_to @user.name, @user %></h1>
 
   <div class="balance-update">
-    <%= render 'balance_update', balance: defined?(@balance) ? @balance : Balance.new, user: @user %>
+    <%= render 'balance_update', balance: @balance, user: @user %>
   </div>
 </div>
 
