@@ -10,6 +10,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @balance = Balance.new
+    respond_to do |format|
+      format.html { render :show }
+      format.js { render partial: 'finance_table', locals: { balance_data: @user.balance_data } }
+    end
   end
 
   # GET /users/new
