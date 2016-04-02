@@ -5,17 +5,15 @@
   <th>Monthly Change</th>
   <th>Balance</th>
   </thead>
-  <tbody>
-  <% values = user.balance_data || [] %>
-  <% values.each_with_index do |balance_data, index| %>
-    <tr>
-      <td><%= balance_data[:date] %></td>
-      <td>£<%= index > 0 ? balance_data[:value] - values[index - 1][:value]  : 0.0 %></td>
-      <td></td>
-      <td>£<%= balance_data[:value] %></td>
-    </tr>
-  <% end %>
-  <tr></tr>
+  <tbody id="user-finances-body">
+    <% balance_data.each_with_index do |balance, index| %>
+      <tr>
+        <td><%= balance[:date] %></td>
+        <td>£<%= index > 0 ? balance[:value] - balance_data[index - 1][:value]  : 0.0 %></td>
+        <td></td>
+        <td>£<%= balance[:value] %></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 
