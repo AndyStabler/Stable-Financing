@@ -5,9 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Balance.delete_all
+
 User.delete_all
-users = [{name: 'Andy Stabler', email: "andy_60@hotmail.co.uk", password: "password"},
-         {name: 'Fiona Barron', email: "fionabarron@hotmail.co.uk", password: "password"}]
+users = [{name: 'Andy Stabler', email: "andy_60@hotmail.co.uk", password: "password", password_confirmation: "password"},
+         {name: 'Fiona Barron', email: "fionabarron@hotmail.co.uk", password: "password", password_confirmation: "password"}]
 User.create!(users)
 
 Transfer.delete_all
@@ -27,14 +30,25 @@ transfers = [{on: Date.today - 5.days, reference: 'init', amount: 3000.00, user:
              {on: Date.today, reference: 'Rent', amount: 390, user: User.find_by_name("Andy Stabler"), outgoing: true},
              {on: Date.today, reference: 'wages', amount: 1602.48, user: User.find_by_name("Andy Stabler"), outgoing: false}]
 
-TransferDaily.create!(transfers)
+transfers_monthly = [{on: Date.current.beginning_of_month + 25.days, reference: "Wages", amount: 1671.83, user: User.find_by(:name => "Andy Stabler"), outgoing: false},
+                     {on: Date.current.beginning_of_month + 7.days, reference: "Rent", amount: 300.00, user: User.find_by(:name => "Andy Stabler"), outgoing: true},
+                     {on: Date.current.beginning_of_month + 29.days, reference: "Scottish Power", amount: 81.00, user: User.find_by(:name => "Andy Stabler"), outgoing: true},
+                     {on: Date.current.beginning_of_month + 8.days, reference: "Virgin Media", amount: 35.00, user: User.find_by(:name => "Andy Stabler"), outgoing: true},
+                     {on: Date.current.beginning_of_month + 25.days, reference: "Premium Bonds", amount: 500, user: User.find_by(:name => "Andy Stabler"), outgoing: true}]
+TransferMonthly.create! transfers_monthly
 
-Balance.delete_all
-Balance.create!([{id: 1, value: 500, on: Date.today-5.weeks, user: User.find_by_name("Andy Stabler")},
-                 {id: 2, value: 30, on: Date.today-3.weeks, user: User.find_by_name("Andy Stabler")},
-                 {id: 3, value: 100, on: Date.today-2.weeks, user: User.find_by_name("Andy Stabler")},
-                 {id: 4, value: 50, on: Date.today-5, user: User.find_by_name("Andy Stabler")},
-                 {id: 5, value: 300, on: Date.today-3, user: User.find_by_name("Andy Stabler")},
-                 {id: 6, value: 1000, on: Date.today-2, user: User.find_by_name("Andy Stabler")},
-                 {id: 7, value: 3000, on: Date.today-10.days, user: User.find_by_name("Fiona Barron")},
-                 {id: 8, value: 2900, on: Date.today-5.days, user: User.find_by_name("Fiona Barron")}])
+
+transfers_weekly = [{on: Date.current.beginning_of_week, reference: "Food", amount: 25, user: User.find_by(:name => "Andy Stabler"), outgoing: true},
+                    {on: Date.current.end_of_week, reference: "Misc", amount: 15, user: User.find_by(:name => "Andy Stabler"), outgoing: true}]
+TransferWeekly.create! transfers_weekly
+
+
+transfers_daily = [{on: Date.current, reference: "Snacks", amount: 5, user: User.find_by(:name => "Andy Stabler"), outgoing: true}]
+TransferDaily.create! transfers_daily
+
+Balance.create!([{value: 0, on: Date.today-6.weeks, user: User.find_by_name("Andy Stabler")},
+                {value: 100, on: Date.today-5.weeks, user: User.find_by_name("Andy Stabler")},
+                {value: 1000, on: Date.today-4.weeks, user: User.find_by_name("Andy Stabler")},
+                {value: 700, on: Date.today-3.weeks, user: User.find_by_name("Andy Stabler")},
+                {value: 1300, on: DateTime.current, user: User.find_by_name("Andy Stabler")},
+                ])
