@@ -30,9 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def balance_data
-    log = finance_log.map { |balance| {:date => balance.on.to_date, :value => balance.value} }
-    forecast = finance_forecast.map { |forecast| {:date => forecast.date, :value => forecast.balance} }
-    log+forecast
+    [finance_log, finance_forecast]
   end
 
   def finance_log
