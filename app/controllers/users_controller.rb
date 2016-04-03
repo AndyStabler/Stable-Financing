@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @balance = Balance.new
     respond_to do |format|
       format.html { render :show }
-      format.js { render partial: 'finance_table', locals: { balance_data: @user.balance_data } }
+      format.js { render json: @user.balance_data }
     end
   end
 
