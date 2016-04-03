@@ -8,12 +8,8 @@ class User < ActiveRecord::Base
   # many balances over time - store them so the user can see what's going on
   has_many :balances
 
-  validates_format_of :email, with: /\A\S+@.+\.\S+\z/
-  validates :name, :email, :password, presence: true
-  validates :email, confirmation: true, uniqueness: { case_sensitive: false }
-  before_save { self.email = email.downcase }
+  validates :name, presence: true
   after_create :initialize_balance
-  validates :password, presence: true, length: { minimum: 6 }
 
   def initialize_balance
     initial_balance = Balance.new(:value => 0.0, :on => Time.zone.now, :user => self)
