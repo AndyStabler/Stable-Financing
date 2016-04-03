@@ -33,63 +33,90 @@
     </div>
   </div>
 </div>
-<div id="balance-data" style="float: left; width: 70%;">
+<div id="balance-data" style="float: left; width: 70%; height: 500px;">
   <div id="loading-cat">
     <%= image_tag "loading-cat.gif" %>
-    <h1>Sit tight while we chase down these numbers . . .</h1>
+    <h1>Sit tight while we chase down some numbers . . .</h1>
   </div>
 </div>
 <!--Div that will hold the pie chart-->
 <div id="chart_div"></div>
-<%# render "finance_table", user: @user %>
 <!--Load the AJAX API-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 
-  // Load the Visualization API and the corechart package.
-  google.charts.load('current', {'packages':['corechart']});
-
-  // Set a callback to run when the Google Visualization API is loaded.
-  //google.charts.setOnLoadCallback(drawChart);
+  function getBalanceData(){
+    $.ajax({
+        url: "<%= user_path @user %>.js",
+        cache: false,
+        dataType: "json"
+    })
+    .done(function(response){
+      show_chart ? drawChart(response) : $("#balance-data").html(response);
+    })
+    .fail(function(response){
+      $("#balance-data").html("<h1>Eeep! We had trouble getting your balance data 😿</h1>");
+    });
+  }
 
   // Callback that creates and populates a data table,
   // instantiates the pie chart, passes in the data and
   // draws it.
   function drawChart(response) {
-    debugger
-    // Create the data table.
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Topping');
-    data.addColumn('number', 'Slices');
-    data.addRows([
-      ['Mushrooms', 3],
-      ['Onions', 1],
-      ['Olives', 1],
-      ['Zucchini', 1],
-      ['Pepperoni', 2]
-    ]);
+    var jsonData = response;//JSON.parse(response);
+    balanceLog = $.map(jsonData[0], function(balance) {
+      balanceDate = balance.on.toString().split(" ").slice(0,4).join(" ");
+      return [[new Date(balanceDate), parseFloat(balance.value)]];//, "Nay Transfer"]];
+    });
+    balanceForecast = $.map(jsonData[1], function(forecast) {
+      transfers = "some transfer";
+      return [[new Date(forecast.date), parseFloat(forecast.balance)]];//, transfers]];
+    });
+    balanceForecast.unshift(balanceLog[balanceLog.length -1])
 
-    // Set chart options
-    // var options = {'title':'Balance',
-    //                'width':100%,
-    //                'height':300};
-    var options = {};
+    // Create the data table.
+    var balanceData = new google.visualization.DataTable();
+    balanceData.addColumn('date', 'Date');
+    balanceData.addColumn('number', 'Balance');
+    balanceData.addRows(balanceLog);
+
+    // Create the data table.
+    var forecastData = new google.visualization.DataTable();
+    forecastData.addColumn('date', 'Date');
+    forecastData.addColumn('number', 'Forecast');
+    forecastData.addRows(balanceForecast);
+
+    var options = {
+      explorer: {
+        actions: ['dragToZoom', 'rightClickToReset'],
+        keepInBounds: true,
+        colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
+      },
+      series: {
+        0: { lineWidth: 2 }
+      },
+      curveType: 'function',
+      pointSize: 2,
+      colors: ['#e0440e','#15A0C8'],
+      legend: {position: "bottom" }
+    };
+
+    var joinedData = google.visualization.data.join(forecastData, balanceData, 'full', [[0, 0]], [1], [1]);
+
     // Instantiate and draw our chart, passing in some options.
-    var chart = new google.visualization.LineChart(document.getElementById('balance-data'));
-    chart.draw(data, options);
+    var chart = new google.visualization.AreaChart(document.getElementById('balance-data'));
+    chart.draw(joinedData, options);
   }
-</script>
-<script>
-  $.ajax({
-      url: "<%= user_path @user %>.js",
-      cache: false,
-      dataType: "html"
-  })
-  .done(function(response){
-    $("#balance-data").html(response);
-    // drawChart(response);
-  })
-  .fail(function(response){
-    alert("FAIL");
-  });
+
+  show_chart = typeof google !== 'undefined'
+  if (show_chart) {
+    // Load the Visualization API and the corechart package.
+    google.charts.load('current', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.charts.setOnLoadCallback(getBalanceData);
+  } else {
+    getBalanceData();
+  }
+
 </script>
