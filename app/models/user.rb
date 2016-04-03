@@ -12,8 +12,7 @@ class User < ActiveRecord::Base
   after_create :initialize_balance
 
   def initialize_balance
-    initial_balance = Balance.new(:value => 0.0, :on => Time.zone.now, :user => self)
-    initial_balance.save
+    Balance.create(:value => 0.0, :on => Time.zone.now, :user => self)
   end
 
   def balance_calculator
