@@ -12,7 +12,7 @@ class BalanceForecaster
     transfer_dates = transfer_calculator.all_transfer_dates(from, to)
     balance = balance.value
 
-    transfer_dates.each do |transfer_date|
+    transfer_dates.sort.each do |transfer_date|
       transfers = transfer_calculator.transfers_occurring_on transfer_date
       diff = TransferCalculator.total_difference transfers
       balance+= diff
