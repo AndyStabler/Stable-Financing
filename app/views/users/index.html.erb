@@ -2,27 +2,15 @@
 
 <h1>Listing Users</h1>
 
+<table>
+  <th>Name</th>
+  <th>Balance</th>
+  <tbody>
 <% @users.each do |user| %>
-    <h1><%= user.name %></h1>
-    <div class="user-transfers">
-      <div class="options">
-        <p id="options-in" class="selected">In</p>
-
-        <p id="options-out" class="unselected">Out</p>
-      </div>
-      <div id="user-transfers-in">
-        <% user.transfers.where(outgoing: false).each do |tr| %>
-            <%= render "transfers/show", transfer: tr %>
-        <% end %>
-      </div>
-      <div id="user-transfers-out">
-        <% user.transfers.where(outgoing: true).each do |tr| %>
-            <%= render "transfers/show", transfer: tr %>
-        <% end %>
-      </div>
-    </div>
-
-    <%= render "finance_table", user: user %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.balance.value %></td>
+    </tr>
 <% end %>
-
+  </tbody>
 <%= link_to 'New User', new_user_path %>
