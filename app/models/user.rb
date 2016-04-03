@@ -23,12 +23,6 @@ class User < ActiveRecord::Base
     @balance_forecaster ||= BalanceForecaster.new self
   end
 
-  def finance_data
-    bal_log = balance_log
-    bal_forecast = balance_forecast
-    bal_log.concat(bal_forecast)
-  end
-
   def balance_data
     [finance_log, finance_forecast]
   end
