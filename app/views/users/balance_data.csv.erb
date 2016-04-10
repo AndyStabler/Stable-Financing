@@ -1,5 +1,5 @@
 <% require("csv") %>
-<%= CSV.generate_line ["date", "balance"] %>
+<%= CSV.generate_line ["Date", "Balance"] %>
 <% @user.finance_log.each_with_index do |balance, index| %>
   <% row = [balance.on, balance.value] %>
   <% row << "Balance Log" if index == 0 %>
