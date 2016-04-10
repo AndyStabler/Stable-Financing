@@ -14,6 +14,16 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { render :show }
       format.js { render json: @user.balance_data }
+      format.csv do
+        csv_data = render_to_string(:template => "users/balance_data")
+        send_data(
+          csv_data,
+          :type => "text/csv",
+          :disposition => "attachment; filename=#{@user.id}_balance_data.csv",
+          :charset => "iso-8859-1",
+          :header => "present"
+        )
+      end
     end
   end
 
