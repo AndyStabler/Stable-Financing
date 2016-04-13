@@ -50,7 +50,7 @@
 
   function getBalanceData(){
     $.ajax({
-        url: "<%= user_path @user %>.js",
+        url: "<%= user_path @user %>.json",
         cache: false,
         dataType: "json"
     })
