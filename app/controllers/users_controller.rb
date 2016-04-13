@@ -13,7 +13,10 @@ class UsersController < ApplicationController
     @balance = Balance.new
     respond_to do |format|
       format.html { render :show }
-      format.js { render json: @user.balance_data }
+      format.json { render json: @user.balance_data }
+      format.csv do
+        response.headers['Content-Disposition'] = "attachment; filename=balance_data.csv"
+      end
     end
   end
 

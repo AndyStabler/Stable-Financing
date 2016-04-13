@@ -33,6 +33,9 @@
     </div>
   </div>
 </div>
+<div>
+  <%= link_to "Download csv", user_path(@user, :format => :csv) %>
+</div>
 <div id="balance-data" style="float: left; width: 70%; height: 500px;">
   <div id="loading-cat">
     <%= image_tag "loading-cat.gif" %>
@@ -47,7 +50,7 @@
 
   function getBalanceData(){
     $.ajax({
-        url: "<%= user_path @user %>.js",
+        url: "<%= user_path @user %>.json",
         cache: false,
         dataType: "json"
     })
