@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @balance = Balance.new
     respond_to do |format|
       format.html { render :show }
-      format.js { render json: @user.balance_data }
+      format.json { render json: @user.balance_data }
       format.csv do
         csv_data = render_to_string(:template => "users/balance_data")
         send_data(
