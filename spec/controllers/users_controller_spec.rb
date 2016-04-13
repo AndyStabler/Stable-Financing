@@ -13,18 +13,29 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context "when the format is html" do
-      it "should do the thing" do
-        get :show
-        byebug
-        puts response
+      it "should render the html show template" do
+        get :show,:id => homer.id
+        expect(response).to render_template(:show)
+        expect(response.status).to be 200
       end
-
     end
 
     context "when the format is csv" do
+      it "should render a csv output" do
+        get :show, :id => homer.id, :format => "csv"
+        expect(response).to render_template("users/balance_data")
+        expect(response.content_type).to eq("text/csv")
+        expect(response.status).to be 200
+      end
     end
 
     context "when the format is json" do
+      it "should return json data" do
+        get :show,:id => homer.id, :format => "json"
+        expect(response.content_type).to eq("application/json")
+        expect(response.status).to be 200
+      end
     end
+
   end
 end
