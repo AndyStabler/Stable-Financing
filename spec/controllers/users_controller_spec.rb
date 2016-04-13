@@ -23,7 +23,7 @@ RSpec.describe UsersController, type: :controller do
     context "when the format is csv" do
       it "should render a csv output" do
         get :show, :id => homer.id, :format => "csv"
-        expect(response).to render_template("users/balance_data")
+        expect(response).to render_template :show
         expect(response.content_type).to eq("text/csv")
         expect(response.status).to be 200
       end
