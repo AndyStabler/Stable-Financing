@@ -8,7 +8,8 @@ RSpec.describe UsersController, type: :controller do
 
   describe "GET show" do
     before(:each) do
-      sign_in(homer)
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      sign_in homer
     end
 
     context "when the format is html" do
