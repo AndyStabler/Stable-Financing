@@ -49,6 +49,9 @@ drawChart = (balanceData) ->
   chart = new google.visualization.AreaChart(document.getElementById('balance-data'))
   chart.draw(joinedData, options)
 
+drawTable = (balanceData) ->
+  $("#balance-data").html(balanceData.jsonData)
+
 $(document).on 'ready page:load', ->
   document.getElementById('options-in').addEventListener("click", ->
     document.getElementById("user-transfers-in").style.display = "block"
@@ -72,6 +75,6 @@ $(document).on 'ready page:load', ->
     google.charts.load('current', {'packages':['corechart']})
     # Set a callback to run when the Google Visualization API is loaded.
     google.charts.setOnLoadCallback ->
-      getBalanceData (response) -> drawChart(response)
+      getBalanceData (balanceData) -> drawChart(balanceData)
   else
-    getBalanceData (response) -> $("#balance-data").html(response)
+    getBalanceData (balanceData) -> drawTable(balanceData)
