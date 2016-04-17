@@ -16,4 +16,8 @@ class TransferDaily < Transfer
     transfer_occurences
   end
 
+  def recurrence
+    "Daily"
+  end
+
 end

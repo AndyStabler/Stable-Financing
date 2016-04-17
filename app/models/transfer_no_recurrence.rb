@@ -4,4 +4,8 @@ class TransferNoRecurrence < Transfer
     from ||= on.to_date
     (from..to).include?(on.to_date) ? [self] : []
   end
+
+  def recurrence
+    "None"
+  end
 end

@@ -15,4 +15,8 @@ class TransferWeekly < Transfer
     end
     transfer_occurences
   end
+
+  def recurrence
+    "Weekly"
+  end
 end

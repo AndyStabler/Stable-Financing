@@ -15,4 +15,8 @@ class TransferMonthly < Transfer
     end
     transfer_occurences
   end
+
+  def recurrence
+    "Monthly"
+  end
 end
