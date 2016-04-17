@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   post 'users/:id/new/transfer', to: 'users#new_transfer'
   post 'users/:id/update/balance', to: 'users#update_balance'
+  get 'users/:id/transfers', as: 'user_transfers', to: 'users#transfers'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

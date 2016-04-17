@@ -1,5 +1,13 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :new_transfer, :update_balance]
+  before_action :set_user, only: [
+    :show,
+    :edit,
+    :update,
+    :destroy,
+    :new_transfer,
+    :update_balance,
+    :transfers
+  ]
 
   # GET /users
   # GET /users.json
@@ -18,6 +26,11 @@ class UsersController < ApplicationController
         response.headers['Content-Disposition'] = "attachment; filename=balance_data.csv"
       end
     end
+  end
+
+  # GET /users/1/transfers.json
+  def transfers
+    render json: @user.transfers
   end
 
   # GET /users/new
