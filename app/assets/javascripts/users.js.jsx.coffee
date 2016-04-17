@@ -36,14 +36,8 @@ getTransfers = () ->
   $.getJSON(
     $(".user-data").data("transfers-url"),
     { format: "json" })
-  .done(() -> console.log("SUCCESS"))
+  .done((response) -> sfUser.transfers = response)
   .fail(() -> console.log("FAIL"))
-
-
-
-  $.ajax({
-    url: $(".user-data").data("transfers-url")
-    })
 
 createTableFrom = (log, label) ->
   dataTable = new google.visualization.DataTable()
