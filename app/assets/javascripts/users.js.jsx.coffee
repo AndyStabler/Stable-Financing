@@ -2,14 +2,24 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+class BalanceDataItem
+  constructor: (@dateId, @date, @balance) ->
+
 class BalanceData
   constructor: (@jsonData) ->
     @balanceLog = $.map @jsonData[0], (balance) ->
       balanceDate = balance.on.toString().split(" ").slice(0,4).join(" ")
-      [[new Date(balanceDate), parseFloat(balance.value)]]
+      new BalanceDataItem(
+        new Date(balanceDate).toString(),
+        new Date(balanceDate),
+        parseFloat(balance.value)
+      )
     @balanceForecast = $.map @jsonData[1], (forecast) ->
-      [[new Date(forecast.date), parseFloat(forecast.balance)]]
-    @balanceForecast.unshift(@balanceLog[..].pop())
+      new BalanceDataItem(
+        new Date(forecast.date).toString(),
+        new Date(forecast.date),
+        parseFloat(forecast.balance)
+      )
 
 getBalanceData = (success_callback) ->
   $.ajax({
@@ -17,17 +27,33 @@ getBalanceData = (success_callback) ->
     cache: false,
     dataType: "json"
   })
-  .done((response) -> success_callback(new BalanceData(response)))
+  .done((response) ->
+    sfUser.balanceData = new BalanceData(response)
+    success_callback())
   .fail((response) -> $("#balance-data").html("<h1>Eeep! We had trouble getting your balance data 😿</h1>"))
+
+getTransfers = () ->
+  $.getJSON(
+    $(".user-data").data("transfers-url"),
+    { format: "json" })
+  .done(() -> console.log("SUCCESS"))
+  .fail(() -> console.log("FAIL"))
+
+
+
+  $.ajax({
+    url: $(".user-data").data("transfers-url")
+    })
 
 createTableFrom = (log, label) ->
   dataTable = new google.visualization.DataTable()
   dataTable.addColumn('date', 'Date')
   dataTable.addColumn('number', label)
-  dataTable.addRows(log)
+  dataTable.addRows($.map(log, (item) -> [[item.date, item.balance]]))
   dataTable
 
-drawChart = (balanceData) ->
+drawChart = () ->
+  sfUser.balanceData.balanceForecast.unshift(sfUser.balanceData.balanceLog[..].pop())
   options =
     explorer:
       actions: ['dragToZoom', 'rightClickToReset']
@@ -42,17 +68,26 @@ drawChart = (balanceData) ->
     legend:
       position: "bottom"
   # create the data tables
-  balanceDataTable = createTableFrom(balanceData.balanceLog, "Balance")
-  forecastDataTable = createTableFrom(balanceData.balanceForecast, "Forecast")
+  balanceDataTable = createTableFrom(sfUser.balanceData.balanceLog, "Balance")
+  forecastDataTable = createTableFrom(sfUser.balanceData.balanceForecast, "Forecast")
   joinedData = google.visualization.data.join(forecastDataTable, balanceDataTable, 'full', [[0, 0]], [1], [1])
   # Instantiate and draw our chart, passing in some options.
   chart = new google.visualization.AreaChart(document.getElementById('balance-data'))
   chart.draw(joinedData, options)
 
-drawTable = (balanceData) ->
-  $("#balance-data").html(balanceData.jsonData)
+drawTable = () ->
+  names = ["Date", "Balance"]
+  ReactDOM.render(`<BalanceTable balanceData={sfUser.balanceData}/>`, $("#balance-data")[0])
+
+balanceItemSelected = (event) ->
+  dateId = event.currentTarget.attributes["data-date-id"].value
+  selectedForecast = sfUser.balanceData.balanceForecast.find((dataItem) -> dataItem.dateId == dateId)
+  $("#selected-balance-info").html(JSON.stringify(selectedForecast, null, 4))
+
+
 
 $(document).on 'ready page:load', ->
+  window.sfUser = window.sfUser || {}
   document.getElementById('options-in').addEventListener("click", ->
     document.getElementById("user-transfers-in").style.display = "block"
     document.getElementById("user-transfers-out").style.display = "none"
@@ -69,12 +104,13 @@ $(document).on 'ready page:load', ->
   $('.datepicker').datepicker({
     dateFormat: 'dd/mm/yy',
   }).datepicker('setDate', new Date())
+  $(document).on('click', '.balance-table-row', balanceItemSelected)
 
   if google?
     # Load the Visualization API and the corechart package.
     google.charts.load('current', {'packages':['corechart']})
     # Set a callback to run when the Google Visualization API is loaded.
     google.charts.setOnLoadCallback ->
-      getBalanceData (balanceData) -> drawChart(balanceData)
+      getBalanceData () -> drawChart()
   else
-    getBalanceData (balanceData) -> drawTable(balanceData)
+    getBalanceData () -> drawTable()
