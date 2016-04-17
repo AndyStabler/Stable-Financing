@@ -42,9 +42,15 @@
     <h1>Sit tight while we chase down some numbers . . .</h1>
   </div>
 </div>
+<div id="selected-balance-info" style="position: fixed; right: 0;">
+
+</div>
+<div class="user-data"
+  data-json-url="<%= user_path @user %>.json"
+  data-transfers-url="<%= user_transfers_path @user %>">
+</div>
+
 <!--Div that will hold the pie chart-->
 <div id="chart_div"></div>
 <!--Load the AJAX API-->
-<div class="user-data" data-json-url="<%= user_path @user %>.json"></div>
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
