@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/transfers.json
   def transfers
-    render json: @user.transfers
+    render json: @user.transfers.as_json(methods: :recurrence)
   end
 
   # GET /users/new
