@@ -26,6 +26,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'jquery-ui-rails'
 
 gem 'devise'
+gem "react-rails", "~> 1.6.0"
+
 
 # Use Unicorn as the app server
 # gem 'unicorn'
