@@ -23,12 +23,28 @@
   <div class="user-transfers-panel">
     <div id="user-transfers-in">
       <% @user.transfers.where(outgoing: false).each do |tr| %>
-          <%= render "transfers/show", transfer: tr %>
+        <%= react_component('Transfer',
+          {
+            outgoing: tr.outgoing,
+            reference: tr.reference,
+            on: tr.on.to_date,
+            amount: tr.amount,
+            recurrence: tr.recurrence,
+            id: tr.id
+          })
+        %>
       <% end %>
     </div>
     <div id="user-transfers-out">
       <% @user.transfers.where(outgoing: true).each do |tr| %>
-          <%= render "transfers/show", transfer: tr %>
+        <%= react_component('Transfer', {
+          outgoing: tr.outgoing,
+          reference: tr.reference,
+          on: tr.on.to_date,
+          amount: tr.amount,
+          recurrence: tr.recurrence,
+          id: tr.id
+        }) %>
       <% end %>
     </div>
   </div>
@@ -47,7 +63,6 @@
 </div>
 <div class="user-data"
   data-json-url="<%= user_path @user %>.json"
-  data-transfers-url="<%= user_transfers_path @user %>">
 </div>
 
 <!--Div that will hold the pie chart-->
