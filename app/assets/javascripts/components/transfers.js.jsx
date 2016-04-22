@@ -12,3 +12,21 @@ var Transfer = React.createClass({
     )
   }
 });
+
+var Transfers = React.createClass({
+  "render": function() {
+    return (
+      <div>
+        {this.props.transfers.map(function (transfer) {
+          return <Transfer
+            key={transfer.id}
+            outgoing={transfer.outgoing}
+            on={transfer.on}
+            amount={transfer.amount}
+            recurrence={transfer.recurrence}
+            id={transfer.id} />
+        })}
+      </div>
+    )
+  }
+})
