@@ -1,7 +1,3 @@
-Date.prototype.toString = function() {
-  return this.getDate() + "-" + (this.getMonth() + 1) + "-" + this.getFullYear()
-}
-
 var TableHeader = React.createClass({
   "render": function() {
     return (
@@ -15,7 +11,6 @@ var TableHeader = React.createClass({
 
 var TableRow = React.createClass({
   "render": function() {
-    // debugger
     return (
       <tr className="balance-table-row" data-date-id={this.props.date}>
         <td>{this.props.date.toString()}</td>
