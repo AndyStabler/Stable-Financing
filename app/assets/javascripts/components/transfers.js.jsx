@@ -21,6 +21,7 @@ var Transfers = React.createClass({
           return <Transfer
             key={transfer.id}
             outgoing={transfer.outgoing}
+            reference={transfer.reference}
             on={transfer.on}
             amount={transfer.amount}
             recurrence={transfer.recurrence}
