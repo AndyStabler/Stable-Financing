@@ -23,6 +23,10 @@ class User < ActiveRecord::Base
     @balance_forecaster ||= BalanceForecaster.new self
   end
 
+  def transfer_calculator
+    @transfer_calculator ||= TransferCalculator.new self
+  end
+
   def balance_data
     [finance_log, finance_forecast]
   end
