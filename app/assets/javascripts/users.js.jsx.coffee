@@ -85,6 +85,7 @@ balanceItemSelected = (event) ->
 
 $(document).on 'ready page:load', ->
   window.sfUser = window.sfUser || {}
+  getTransfers()
   document.getElementById('options-in').addEventListener("click", ->
     document.getElementById("user-transfers-in").style.display = "block"
     document.getElementById("user-transfers-out").style.display = "none"
