@@ -189,6 +189,15 @@
   }
 }
 
+#selected-balance-info {
+  width: 50%;
+
+  .transfer {
+    float: left;
+    width: 20%;
+  }
+}
+
 .user-transfers-panel {
   background-color: white;
   border: 3px solid #f9f9f9;
