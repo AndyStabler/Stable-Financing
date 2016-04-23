@@ -76,12 +76,20 @@ drawTable = () ->
   names = ["Date", "Balance"]
   ReactDOM.render(`<BalanceTable balanceData={sfUser.balanceData}/>`, $("#balance-data")[0])
 
-balanceItemSelected = (event) ->
-  dateId = event.currentTarget.attributes["data-date-id"].value
+balanceItemSelected = (dateId) ->
   selectedForecast = sfUser.balanceData.balanceForecast.find((dataItem) -> dataItem.dateId == dateId)
-  $("#selected-balance-info").html(JSON.stringify(selectedForecast, null, 4))
-
-
+  if !selectedForecast
+    return
+  transfers = sfUser.transfers.filter((transfer) -> new Date(transfer.on).toString() == dateId)
+  $.getJSON(
+    $(".user-data").data("transfers-url"),
+    {
+      format: "json",
+      transfer: selectedForecast.dateId
+    })
+  .done((response) ->
+    ReactDOM.render(`<Transfers transfers={response} />`, $("#selected-balance-info")[0]))
+  .fail(() -> console.log("FAIL"))
 
 $(document).on 'ready page:load', ->
   window.sfUser = window.sfUser || {}
@@ -102,7 +110,8 @@ $(document).on 'ready page:load', ->
   $('.datepicker').datepicker({
     dateFormat: 'dd/mm/yy',
   }).datepicker('setDate', new Date())
-  $(document).on('click', '.balance-table-row', balanceItemSelected)
+  $(document).on('mouseover', '.balance-table-row', (event) ->
+    balanceItemSelected(event.currentTarget.attributes["data-date-id"].value))
 
   if google?
     # Load the Visualization API and the corechart package.
