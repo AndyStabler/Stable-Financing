@@ -34,6 +34,14 @@ getBalanceData = (success_callback) ->
     success_callback())
   .fail((response) -> $("#balance-data").html("<h1>Eeep! We had trouble getting your balance data 😿</h1>"))
 
+getTransfers = () ->
+  $.getJSON(
+    $(".user-data").data("transfers-url"),
+    { format: "json" })
+  .done((response) ->
+    sfUser.transfers = response)
+  .fail(() -> console.log("Eeep! We had trouble getting the transfers 😿"))
+
 createTableFrom = (log, label) ->
   dataTable = new google.visualization.DataTable()
   dataTable.addColumn('date', 'Date')
