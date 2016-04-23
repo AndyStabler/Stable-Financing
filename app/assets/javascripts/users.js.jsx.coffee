@@ -71,6 +71,15 @@ drawChart = () ->
   # Instantiate and draw our chart, passing in some options.
   chart = new google.visualization.AreaChart(document.getElementById('balance-data'))
   chart.draw(joinedData, options)
+  google.visualization.events.addListener(chart, 'select', () -> chartSelectHandler(chart.getSelection()[0], joinedData));
+  google.visualization.events.addListener(chart, 'onmouseover', (e) -> chartSelectHandler(e, joinedData));
+
+chartSelectHandler = (selection, data) ->
+  # The user selected _all_ the items
+  if !selection || !selection.row
+    return
+  date = data.getValue(selection.row, 0).toString()
+  balanceItemSelected(date)
 
 drawTable = () ->
   names = ["Date", "Balance"]
