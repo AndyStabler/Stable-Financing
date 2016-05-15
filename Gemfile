@@ -35,6 +35,8 @@ gem "react-rails", "~> 1.6.0"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'bootstrap', '~> 4.0.0.alpha3'
+
 group :test do
   gem "factory_girl_rails", "~> 4.0"
   gem 'simplecov', :require => false

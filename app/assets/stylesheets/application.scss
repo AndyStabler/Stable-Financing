@@ -15,9 +15,12 @@
  *= require_self
  */
 
- $error-background: #FDD7E3;
+// Custom bootstrap variables must be set or imported before bootstrap itself.
+@import "bootstrap";
 
- html, body, * {
+$error-background: #FDD7E3;
+
+html, body, * {
   font-family: "Helvetica Neue", "Arial", sans-serif;
   color: #333;
   font-weight: 200;
@@ -126,9 +129,9 @@ input.error {
   -transition: opacity 0.2s;
 }
 
-#header-settings li ul li { 
-  background: #555; 
-  display: block; 
+#header-settings li ul li {
+  background: #555;
+  display: block;
   color: #fff;
   text-shadow: 0 -1px 0 #000;
 }
