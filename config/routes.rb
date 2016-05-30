@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :users
 
   post 'users/:id/new/transfer', to: 'users#new_transfer'
-  post 'users/:id/update/balance', to: 'users#update_balance'
+  post 'users/:id/new/balance', as: "new_balance", to: 'users#new_balance'
   get 'users/:id/transfers', as: 'user_transfers', to: 'users#transfers'
 
 

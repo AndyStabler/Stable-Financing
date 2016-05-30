@@ -4,8 +4,8 @@ class UsersController < ApplicationController
     :edit,
     :update,
     :destroy,
+    :new_balance,
     :new_transfer,
-    :update_balance,
     :transfers
   ]
 
@@ -88,20 +88,10 @@ class UsersController < ApplicationController
     end
   end
 
-  def update_balance
-    @balance = Balance.new(balance_params)
-    @balance.user= @user
-    @balance.on = Time.zone.now
-    respond_to do |format|
-      if @balance.save
-        format.html { redirect_to action: :show }
-        format.json { render json: :no_content }
-      else
-        format.html { render :show }
-        format.json { render json: @balance.errors, status: :unprocessable_entity }
-      end
-
-    end
+  def new_balance
+    @balance = Balance.new({ :user => @user, :on => Time.zone.now }.merge balance_params)
+    @balance.save
+    render :partial => "new_balance.js.coffee"
   end
 
   private
