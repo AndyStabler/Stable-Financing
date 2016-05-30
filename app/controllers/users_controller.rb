@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @balance = Balance.new
+    @balance = @user.balance
     respond_to do |format|
       format.html { render :show }
       format.json { render json: @user.balance_data }
