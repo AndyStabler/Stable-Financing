@@ -88,6 +88,7 @@ class UsersController < ApplicationController
     end
   end
 
+  #POST /users/:id/new/balance
   def new_balance
     @balance = Balance.new({ :user => @user, :on => Time.zone.now }.merge balance_params)
     @balance.save
@@ -95,13 +96,12 @@ class UsersController < ApplicationController
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
+
   def set_user
     not_found unless current_user.id.to_s == params[:id].to_s
     @user = current_user
   end
 
-  # TODO: this is the exact same function as is in the transaction controller. Make less DRY . . .
   def trans_params
     params.require(:transfer).permit(:on, :amount, :recurrence, :user_id, :outgoing, :reference)
   end
@@ -110,7 +110,6 @@ class UsersController < ApplicationController
     params.require(:balance).permit(:value)
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(:name, :password, :password, :password_confirmation, :email, :email_confirmation)
   end
