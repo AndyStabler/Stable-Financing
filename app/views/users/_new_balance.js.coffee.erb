@@ -1,0 +1,12 @@
+<% result_class = @balance.valid? ? "has-success" : "has-error" %>
+
+$("#main-nav").replaceWith("<%= escape_javascript(render 'nav_bar', :balance => @balance) %>")
+
+$("#balance-update-container").addClass("<%= result_class %>");
+setTimeout(function() { $("#balance-update-container").removeClass("<%= result_class %>");}, 1000);
+
+<% if @balance.valid? %>
+  sfUser.drawChartOrFallbackTable();
+<% end %>
+
+

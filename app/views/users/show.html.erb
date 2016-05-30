@@ -1,10 +1,4 @@
-<div class="user-header">
-  <h1 class="user-title"><%= link_to @user.name, @user %></h1>
-
-  <div class="balance-update">
-    <%= render 'balance_update', balance: @balance, user: @user %>
-  </div>
-</div>
+<%= render 'nav_bar', :balance => @balance %>
 
 <p id="notice"><%= notice %></p>
 <div class="user-transfers">
@@ -53,10 +47,6 @@
   <%= link_to "Download csv", user_path(@user, :format => :csv) %>
 </div>
 <div id="balance-data" style="float: left; width: 50%; height: 250px; overflow-y: scroll;">
-  <div id="loading-cat">
-    <%= image_tag "loading-cat.gif" %>
-    <h1>Sit tight while we chase down some numbers . . .</h1>
-  </div>
 </div>
 <div id="selected-balance-info" style="float:left;">
 </div>
