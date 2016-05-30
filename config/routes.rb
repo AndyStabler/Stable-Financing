@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {:registrations => 'registrations'}
   root 'home#index'
 
-  resources :balances
   resources :transfers
   resources :transfer_daily, :controller => 'transfers'
   resources :transfer_weekly, :controller => 'transfers'
