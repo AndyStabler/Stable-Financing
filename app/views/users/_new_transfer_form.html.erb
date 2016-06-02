@@ -1,4 +1,6 @@
-<%= form_for transfer, url: url_for(controller: 'users', action: 'new_transfer'), html: {style: (transfer.errors.any? ? "display:block;" : "display:none;").html_safe} do |f| %>
+<%= form_for transfer,
+    url: url_for(controller: 'users', action: 'new_transfer'),
+    html: {style: transfer.errors.any? ? "display:block;"  : "display:none;"} do |f| %>
     <% if transfer.errors.any? %>
         <div id="error_explanation">
           <ul>
@@ -18,7 +20,10 @@
     </div>
     <div class="field">
       <%= f.label :amount %><br>
-      <%= f.text_field :amount, type: "text" %>
+      <div class="input-group">
+        <span class="input-group-addon">£</span>
+        <%= f.number_field :amount, placeholder: "20.00", :class => "form-control" %>
+      </div>
     </div>
     <div class="field">
       <%= f.label :outgoing %><br>
