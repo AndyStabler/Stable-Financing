@@ -1,6 +1,6 @@
+<div id="new_transfer_container" class="collapse <%=  "collapsed" unless transfer.errors.any? %>">
 <%= form_for transfer,
-    url: url_for(controller: 'users', action: 'new_transfer'),
-    html: {style: transfer.errors.any? ? "display:block;"  : "display:none;"} do |f| %>
+    url: url_for(controller: 'users', action: 'new_transfer')do |f| %>
     <% if transfer.errors.any? %>
         <div id="error_explanation">
           <ul>
@@ -41,3 +41,4 @@
       <%= f.submit %>
     </div>
 <% end %>
+</div>
