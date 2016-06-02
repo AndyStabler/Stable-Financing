@@ -19,6 +19,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @balance = @user.balance
+    @transfer = Transfer.new
     respond_to do |format|
       format.html { render :show }
       format.json { render json: @user.balance_data }
@@ -75,6 +76,7 @@ class UsersController < ApplicationController
 
   #POST /users/:id/new/transfer
   def new_transfer
+    @balance = @user.balance
     @transfer = Transfer.new(trans_params)
     @transfer.user= @user
     respond_to do |format|
