@@ -5,7 +5,9 @@
   <h1>Transfers</h1>
 
   <div class="user-transfers-new">
-    <p id="user-transfer-new-button" class=<%= @transfer.errors.any? ? "open" : "closed" %>>New</p>
+    <a href="#" data-toggle="collapse" data-target="#new_transfer_container" id="new-transfer-toggle">
+      <i class="glyphicon glyphicon-plus"></i>
+    </a>
     <%= render 'new_transfer_form', transfer: @transfer %>
   </div>
 
