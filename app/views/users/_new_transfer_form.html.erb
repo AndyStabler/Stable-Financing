@@ -16,7 +16,9 @@
     </div>
     <div class="field">
       <%= f.label :on, "Date" %><br>
-      <%= f.text_field :on, class: "datepicker" %>
+      <div class="input-group">
+        <%= f.text_field :on, placeholder: "#{Date.current}", :class => "form-control datepicker" %>
+      </div>
     </div>
     <div class="field">
       <%= f.label :amount %><br>
