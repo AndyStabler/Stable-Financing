@@ -5,8 +5,8 @@
   <h1>Transfers</h1>
 
   <div class="user-transfers-new">
-    <p id="user-transfer-new-button" class=<%= (defined?(@transfer) && @transfer.errors.any?) ? "open" : "closed" %>>New</p>
-    <%= render 'new_transfer_form', transfer: defined?(@transfer) ? @transfer : Transfer.new %>
+    <p id="user-transfer-new-button" class=<%= @transfer.errors.any? ? "open" : "closed" %>>New</p>
+    <%= render 'new_transfer_form', transfer: @transfer %>
   </div>
 
   <div class="options">
