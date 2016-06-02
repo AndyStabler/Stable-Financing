@@ -12,7 +12,9 @@
     <% end %>
     <div class="field">
       <%= f.label :reference %><br>
-      <%= f.text_field :reference %>
+      <div class="input-group">
+        <%= f.text_field :reference, :placeholder => "Cake", :class => "form-control" %>
+      </div>
     </div>
     <div class="field">
       <%= f.label :on, "Date" %><br>
