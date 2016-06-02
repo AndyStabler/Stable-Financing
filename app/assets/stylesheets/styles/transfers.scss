@@ -19,7 +19,7 @@
   }
 }
 
-.in {
+.transfer-in {
   background-color: #E9FFE9;
   border: 1px dashed green;
   h2, p {
@@ -27,13 +27,21 @@
   }
 }
 
-.out {
+.transfer-out {
   background-color: #FDD7E3;
   border: 1px dashed #711B1B;
   h2, p {
     color: #711B1B;
   }
 
+}
+
+#new-transfer-toggle {
+  float:right;
+}
+
+#new-transfer-toggle:hover {
+  background-color: transparent;
 }
 
 .new_transfer {
