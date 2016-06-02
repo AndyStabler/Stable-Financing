@@ -74,18 +74,18 @@
 
 }
 
-//#error_explanation {
-//  position: absolute;
-//  background-color: #FDD7E3;
-//  width: auto;
-//  padding-right: 2em;
-//  ul {
-//    li {
-//      list-style-type: decimal;
-//      color: #711B1B;
-//    }
-//  }
-//}
+#error_explanation {
+ position: absolute;
+ background-color: #FDD7E3;
+ width: auto;
+ padding-right: 2em;
+ ul {
+   li {
+     list-style-type: decimal;
+     color: #711B1B;
+   }
+ }
+}
 
 .value-currency::before {
   position: absolute;
