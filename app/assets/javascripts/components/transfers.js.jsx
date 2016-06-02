@@ -1,6 +1,6 @@
 var Transfer = React.createClass({
   "render": function() {
-    var outgoing = this.props.outgoing ? "out" : "in";
+    var outgoing = this.props.outgoing ? "transfer-out" : "transfer-in";
     return (
       <div className={"transfer " + outgoing }>
         <h2>{this.props.reference}</h2>
