@@ -3,9 +3,9 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 initialiseNewTransferToggle = () ->
-  $('#new-transfer-toggle').click( ->
-    $(this).find('i').toggleClass('glyphicon-minus').toggleClass('glyphicon-plus');
-  );
+  $('#new-transfer-toggle').click ->
+    $("#new_transfer_container").slideToggle 500, ->
+      $('#new-transfer-toggle').find('i').toggleClass('glyphicon-minus').toggleClass('glyphicon-plus')
 
 $(document).on 'ready page:load', ->
   initialiseNewTransferToggle()
