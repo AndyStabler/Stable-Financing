@@ -77,8 +77,8 @@ class UsersController < ApplicationController
   #POST /users/:id/new/transfer
   def new_transfer
     @balance = @user.balance
-    @transfer = Transfer.new(trans_params)
-    @transfer.user= @user
+    @transfer = TransferFactory.build(transfer_type, trans_params)
+    @transfer.user = @user
     respond_to do |format|
       if @transfer.save
         format.html { redirect_to action: :show }
@@ -105,7 +105,11 @@ class UsersController < ApplicationController
   end
 
   def trans_params
-    params.require(:transfer).permit(:on, :amount, :recurrence, :user_id, :outgoing, :reference)
+    params.require(:transfer).permit(:on, :amount, :user_id, :outgoing, :reference)
+  end
+
+  def transfer_type
+    params.require(:recurrence)
   end
 
   def balance_params
