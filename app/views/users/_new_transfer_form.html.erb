@@ -1,4 +1,4 @@
-<div id="new_transfer_container" class="collapse <%=  "collapsed" unless transfer.errors.any? %>">
+<div id="new_transfer_container" style="<%=  "display:none;" unless transfer.errors.any? %>">
 <%= form_for transfer,
     url: url_for(controller: 'users', action: 'new_transfer')do |f| %>
     <% if transfer.errors.any? %>
