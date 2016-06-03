@@ -30,6 +30,12 @@
       </div>
     </div>
     <div class="field">
+      <%= f.label :recurrence %><br>
+      <div class="input-group">
+        <%= select_tag(:recurrence, options_for_select(TransferFactory::TYPES, 1), :class => "form-control") %>
+      </div>
+    </div>
+    <div class="field">
       <%= f.label :outgoing %><br>
       <%= f.radio_button :outgoing, true, checked: true %>
       <%= f.label :outgoing, "Yes", value: true %>
