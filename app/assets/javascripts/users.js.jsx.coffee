@@ -132,5 +132,7 @@ $(document).on 'ready page:load', ->
   if google?
     # Load the Visualization API and the corechart package.
     google.charts.load('current', {'packages':['corechart']})
-  sfUser.drawChartOrFallbackTable()
+    google.charts.setOnLoadCallback(sfUser.drawChartOrFallbackTable);
+  else
+    sfUser.drawChartOrFallbackTable()
 
