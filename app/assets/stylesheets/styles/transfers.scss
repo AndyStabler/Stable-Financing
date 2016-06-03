@@ -44,11 +44,11 @@
   background-color: transparent;
 }
 
-.new_transfer {
+#new_transfer {
   padding: 1em;
-}
-
-#transfer_amount::after {
-  position: absolute;
-  content: "£"
+  .field {
+    .input-group {
+      width: 70%;
+    }
+  }
 }
