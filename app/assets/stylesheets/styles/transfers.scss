@@ -37,7 +37,8 @@
 }
 
 #new-transfer-toggle {
-  float:right;
+  position: absolute;
+  right: 0;
 }
 
 #new-transfer-toggle:hover {
@@ -51,4 +52,8 @@
       width: 70%;
     }
   }
+}
+
+.user-transfers-new {
+  position: relative;
 }
