@@ -2,14 +2,9 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {:registrations => 'registrations'}
   root 'home#index'
 
-  resources :transfers
-  resources :transfer_daily, :controller => 'transfers'
-  resources :transfer_weekly, :controller => 'transfers'
-  resources :transfer_monthly, :controller => 'transfers'
-  resources :transfer_no_recurrence, :controller => 'transfers'
   resources :users
 
-  post 'users/:id/new/transfer', to: 'users#new_transfer'
+  post 'users/:id/new/transfer', as: "new_transfer", to: 'users#new_transfer'
   post 'users/:id/new/balance', as: "new_balance", to: 'users#new_balance'
   get 'users/:id/transfers', as: 'user_transfers', to: 'users#transfers'
 
