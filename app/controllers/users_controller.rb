@@ -76,18 +76,10 @@ class UsersController < ApplicationController
 
   #POST /users/:id/new/transfer
   def new_transfer
-    @balance = @user.balance
     @transfer = TransferFactory.build(transfer_type, trans_params)
     @transfer.user = @user
-    respond_to do |format|
-      if @transfer.save
-        format.html { redirect_to action: :show }
-        format.json { render json: :no_content }
-      else
-        format.html { render :show }
-        format.json { render json: @transfer.errors, status: :unprocessable_entity }
-      end
-    end
+    @transfer = Transfer.new(:user => @user) if @transfer.save
+    render :partial => "new_transfer.js.coffee"
   end
 
   #POST /users/:id/new/balance
