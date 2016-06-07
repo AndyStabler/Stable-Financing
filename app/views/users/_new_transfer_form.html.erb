@@ -1,14 +1,19 @@
-<div id="new_transfer_container" style="<%=  "display:none;" unless transfer.errors.any? %>">
-<%= form_for transfer,
-    url: url_for(controller: 'users', action: 'new_transfer')do |f| %>
+<div id="new-transfer-container"
+  style="<%= "display:none;" unless transfer.errors.present? %>">
+<%= form_for(transfer, :as => :transfer,
+    url: new_transfer_path,
+    html: {:id => "new_transfer", :class => "new_transfer"},
+    remote: true) do |f| %>
     <% if transfer.errors.any? %>
-        <div id="error_explanation">
-          <ul>
-            <% transfer.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
+      <div class="alert alert-danger fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        Some fields were invalid!
+        <ul>
+          <% transfer.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
     <div class="field">
       <%= f.label :reference %><br>
@@ -44,7 +49,7 @@
 
     </div>
     <div class="actions">
-      <%= f.submit %>
+      <%= f.submit "Create!" %>
     </div>
 <% end %>
 </div>
