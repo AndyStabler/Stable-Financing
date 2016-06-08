@@ -27,7 +27,7 @@ gem 'jquery-ui-rails'
 
 gem 'devise'
 gem "react-rails", "~> 1.6.0"
-
+gem "bootstrap_form"
 
 # Use Unicorn as the app server
 # gem 'unicorn'
