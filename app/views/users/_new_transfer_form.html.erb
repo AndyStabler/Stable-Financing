@@ -1,55 +1,24 @@
 <div id="new-transfer-container"
-  style="<%= "display:none;" unless transfer.errors.present? %>">
-<%= form_for(transfer, :as => :transfer,
-    url: new_transfer_path,
-    html: {:id => "new_transfer", :class => "new_transfer"},
-    remote: true) do |f| %>
-    <% if transfer.errors.any? %>
-      <div class="alert alert-danger fade in">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        Some fields were invalid!
-        <ul>
-          <% transfer.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
+  style="<%= "display:none;" unless transfer.errors.present? %>" class="panel panel-default">
+  <div class="panel-heading">
+    <h3>New Transfer</h3>
+  </div>
+  <div class="panel-body">
+    <%= bootstrap_form_for(transfer, :as => :transfer,
+        url: new_transfer_path,
+        html: {:id => "new_transfer", :class => "new_transfer"},
+        remote: true) do |f| %>
+        <%= f.text_field :reference, :placeholder => "Cake" %>
+        <%= f.text_field :on, :class => "datepicker", :label => "Date" %>
+        <%= f.number_field :amount, :placeholder => "20.00",prepend: "£" %>
+        <%= f.static_control :label => "Recurrence" do %>
+          <%= select_tag(:recurrence, options_for_select(TransferFactory::TYPES, 1), :class => "form-control") %>
+        <% end %>
+        <%= f.form_group :outgoing, label: { text: "Direction" } do %>
+          <%= f.radio_button :outgoing, 0, label: "In", checked: true %>
+          <%= f.radio_button :outgoing, 1, label: "Out" %>
+        <% end %>
+        <%= f.submit "Create!" %>
     <% end %>
-    <div class="field">
-      <%= f.label :reference %><br>
-      <div class="input-group">
-        <%= f.text_field :reference, :placeholder => "Cake", :class => "form-control" %>
-      </div>
-    </div>
-    <div class="field">
-      <%= f.label :on, "Date" %><br>
-      <div class="input-group">
-        <%= f.text_field :on, :class => "form-control datepicker" %>
-      </div>
-    </div>
-    <div class="field">
-      <%= f.label :amount %><br>
-      <div class="input-group">
-        <span class="input-group-addon">£</span>
-        <%= f.number_field :amount, placeholder: "20.00", :class => "form-control" %>
-      </div>
-    </div>
-    <div class="field">
-      <%= f.label :recurrence %><br>
-      <div class="input-group">
-        <%= select_tag(:recurrence, options_for_select(TransferFactory::TYPES, 1), :class => "form-control") %>
-      </div>
-    </div>
-    <div class="field">
-      <%= f.label :outgoing %><br>
-      <%= f.radio_button :outgoing, true, checked: true %>
-      <%= f.label :outgoing, "Yes", value: true %>
-      <%= f.radio_button :outgoing, false, value: false %>
-      <%= f.label :outgoing, "No", value: false %>
-
-    </div>
-    <div class="actions">
-      <%= f.submit "Create!" %>
-    </div>
-<% end %>
+  </div>
 </div>
