@@ -3,11 +3,14 @@ var Transfer = React.createClass({
     var outgoing = this.props.outgoing ? "transfer-out" : "transfer-in";
     return (
       <div className={"transfer " + outgoing }>
+        <a className="transfer-destroy" data-remote="true" rel="nofollow" data-method="delete" href={this.props.destroy_link}>
+          <i className="glyph-link glyphicon glyphicon-remove"></i>
+        </a>
         <h2>{this.props.reference}</h2>
         <p><strong>Date: </strong>{this.props.on}</p>
         <p><strong>Amount: </strong>{"£" + this.props.amount}</p>
         <p><strong>Recurrence: </strong> {this.props.recurrence}</p>
-        <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href={"/transfer_monthly/" + this.props.id}>Destroy</a>
+        <a data-remote="true" rel="nofollow" data-method="delete" href={this.props.destroy_link}>Delete a transfer</a>
       </div>
     )
   }
@@ -25,7 +28,8 @@ var Transfers = React.createClass({
             on={new Date(transfer.on).toString()}
             amount={transfer.amount}
             recurrence={transfer.recurrence}
-            id={transfer.id} />
+            id={transfer.id}
+            destroy_link={"/users/" + transfer.user_id + "/transfers/delete/" + transfer.id} />
         })}
       </div>
     )

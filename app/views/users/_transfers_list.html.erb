@@ -14,7 +14,8 @@
             on: tr.on.to_date,
             amount: tr.amount,
             recurrence: tr.recurrence,
-            id: tr.id
+            id: tr.id,
+            destroy_link: destroy_transfer_path(current_user, tr.id)
           })
         %>
       <% end %>
@@ -27,7 +28,8 @@
           on: tr.on.to_date,
           amount: tr.amount,
           recurrence: tr.recurrence,
-          id: tr.id
+          id: tr.id,
+          destroy_link: destroy_transfer_path(current_user, tr.id)
         }) %>
       <% end %>
     </div>
