@@ -6,7 +6,8 @@ class UsersController < ApplicationController
     :destroy,
     :new_balance,
     :new_transfer,
-    :transfers
+    :transfers,
+    :destroy_transfer
   ]
 
   # GET /users
@@ -72,6 +73,14 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  #DESTROY /users/:id/transfer/:transfer
+  def destroy_transfer
+    transfer = Transfer.find(params[:transfer])
+    transfer.destroy if transfer.present?
+    @transfer = Transfer.new(:user => @user)
+    render :partial => "new_transfer.js.coffee"
   end
 
   #POST /users/:id/new/transfer
