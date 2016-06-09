@@ -10,7 +10,6 @@ var Transfer = React.createClass({
         <p><strong>Date: </strong>{this.props.on}</p>
         <p><strong>Amount: </strong>{"£" + this.props.amount}</p>
         <p><strong>Recurrence: </strong> {this.props.recurrence}</p>
-        <a data-remote="true" rel="nofollow" data-method="delete" href={this.props.destroy_link}>Delete a transfer</a>
       </div>
     )
   }
