@@ -2,6 +2,11 @@ FactoryGirl.define do
 
   factory :transfer do
 
+    amount 20.00
+    on DateTime.current
+    outgoing true
+    reference "Cake mix"
+
     trait :incoming do
       outgoing false
     end
