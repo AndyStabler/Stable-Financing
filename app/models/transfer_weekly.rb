@@ -17,6 +17,6 @@ class TransferWeekly < Transfer
   end
 
   def recurrence
-    "Weekly"
+    "Weekly".freeze
   end
 end

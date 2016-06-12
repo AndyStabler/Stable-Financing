@@ -6,6 +6,6 @@ class TransferNoRecurrence < Transfer
   end
 
   def recurrence
-    "None"
+    "None".freeze
   end
 end

@@ -17,6 +17,6 @@ class TransferMonthly < Transfer
   end
 
   def recurrence
-    "Monthly"
+    "Monthly".freeze
   end
 end
