@@ -49,12 +49,22 @@ RSpec.describe UsersController, type: :controller do
     end
 
     context "when a transfer date is in the params" do
+
+      it "should use the current date when the date string is mangled" do
+        date = "An invalid date!"
+        allow(homer.transfer_calculator).to receive(:transfers_occurring_on) { transfers }
+        get :transfers, :id => homer.id, :transfer => date, :format => "json", :xhr => true
+        expect(response.content_type).to eq("application/json")
+        # to_json is the json_string, not the JSON object - dandy!
+        expect(response.body).to eq transfers.to_json(:methods => :recurrence)
+        check_status response
+      end
+
       it "should only return transfers occurring on that date" do
         date = DateTime.current
         allow(homer.transfer_calculator).to receive(:transfers_occurring_on) { transfers }
         get :transfers, :id => homer.id, :transfer => date.to_s, :format => "json", :xhr => true
         expect(response.content_type).to eq("application/json")
-        # to_json is the json_string, not the JSON object - dandy!
         expect(response.body).to eq transfers.to_json(:methods => :recurrence)
         check_status response
       end
@@ -65,6 +75,69 @@ RSpec.describe UsersController, type: :controller do
         homer.transfers = transfers
         get :transfers, :id => homer.id, :format => "json", :xhr => true
         expect(response.body).to eq transfers.to_json(:methods => :recurrence)
+        check_status response
+      end
+    end
+  end
+
+  describe "GET new" do
+    it "should create a new user" do
+      get :new
+      expect(assigns(:user).new_record?).to be true
+      check_status response
+    end
+  end
+
+  describe "POST new_transfer" do
+    context "with an invalid transfer" do
+      it "should pass the erroneous transfer back" do
+        transfer = FactoryGirl.build(:transfer_daily, :on => nil, :user => homer)
+        recurrence = TransferDaily.recurrence
+        post :new_transfer,
+          {
+            :id => homer.id,
+            :transfer => transfer.attributes,
+            :recurrence => recurrence
+          }, :xhr => true
+        expect(assigns(:transfer).attributes).to eq transfer.attributes
+        check_status response
+      end
+    end
+
+    it "should create a new transfer" do
+      transfer = FactoryGirl.build(:transfer_daily, :user => homer)
+      recurrence = TransferDaily.recurrence
+      post :new_transfer,
+        {
+          :id => homer.id,
+          :transfer => transfer.attributes,
+          :recurrence => recurrence
+        }, :xhr => true
+      expect(assigns(:transfer).new_record?).to be true
+      expect(assigns(:transfer).attributes).to_not eq transfer.attributes
+      check_status response
+    end
+  end
+
+  describe "POST new_balance" do
+    context "when the balance is valid" do
+      it "should save the balance" do
+        balance = FactoryGirl.build(:balance, :today, :value => 20.00)
+        expect(homer.balance.value).to_not eq balance.value
+        post :new_balance, :id => homer.id, :balance => balance.attributes, :xhr => true
+        expect(assigns(:balance).persisted?).to be true
+        expect(homer.balance.value).to eq balance.value
+        check_status response
+      end
+    end
+
+    context "when the balance is invalid" do
+      it "should not save the balance" do
+        balance = FactoryGirl.build(:balance, :today, :value => "")
+        post :new_balance, :id => homer.id, :balance => balance.attributes, :xhr => true
+        expect(assigns(:balance).new_record?).to be true
+        expect(homer.balance.value).to_not eq balance.value
+        expect(assigns(:balance).errors.present?).to be true
         check_status response
       end
     end
