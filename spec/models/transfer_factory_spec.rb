@@ -30,5 +30,12 @@ RSpec.describe TransferFactory, type: :model do
         expect(TransferFactory.build(TransferNoRecurrence.recurrence, transfer.attributes).class).to eq TransferNoRecurrence
       end
     end
+
+    context "when the recurrence isn't recognised" do
+      it "should return a base transfer" do
+        transfer = FactoryGirl.build(:transfer)
+        expect(TransferFactory.build("unknown", transfer.attributes).class).to eq Transfer
+      end
+    end
   end
 end
