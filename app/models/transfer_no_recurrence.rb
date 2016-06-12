@@ -5,7 +5,7 @@ class TransferNoRecurrence < Transfer
     (from..to).include?(on.to_date) ? [self] : []
   end
 
-  def recurrence
+  def self.recurrence
     "None".freeze
   end
 end

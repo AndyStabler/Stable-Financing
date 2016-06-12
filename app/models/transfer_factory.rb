@@ -1,20 +1,21 @@
 class TransferFactory
 
-  DAILY = "daily"
-  WEEKLY = "weekly"
-  MONTHLY = "monthly"
-  NONE = "none"
-  TYPES = [DAILY, WEEKLY, MONTHLY, NONE]
+  RECURRENCES = [
+    TransferDaily.recurrence,
+    TransferWeekly.recurrence,
+    TransferMonthly.recurrence,
+    TransferNoRecurrence.recurrence
+  ]
 
   def self.build(recurrence, attributes)
     case recurrence
-    when DAILY
+    when TransferDaily.recurrence
       TransferDaily.new(attributes)
-    when WEEKLY
-      TransferDaily.new(attributes)
-    when MONTHLY
+    when TransferWeekly.recurrence
+      TransferWeekly.new(attributes)
+    when TransferMonthly.recurrence
       TransferMonthly.new(attributes)
-    when NONE
+    when TransferNoRecurrence.recurrence
       TransferNoRecurrence.new(attributes)
     else
       Transfer.new(attributes)

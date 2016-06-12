@@ -14,7 +14,7 @@ class Transfer < ActiveRecord::Base
     fail NotImplementedError, "Abstract method forecast needs implementing"
   end
 
-  def recurrence
+  def self.recurrence
     fail NotImplementedError, "Abstract method recurrence needs implementing"
   end
 
