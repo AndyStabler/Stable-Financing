@@ -16,7 +16,7 @@ class TransferWeekly < Transfer
     transfer_occurences
   end
 
-  def recurrence
-    "Weekly"
+  def self.recurrence
+    "Weekly".freeze
   end
 end

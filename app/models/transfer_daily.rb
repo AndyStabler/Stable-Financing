@@ -16,8 +16,7 @@ class TransferDaily < Transfer
     transfer_occurences
   end
 
-  def recurrence
-    "Daily"
+  def self.recurrence
+    "Daily".freeze
   end
-
 end

@@ -35,10 +35,6 @@ class BalanceCalculator
 
   private
 
-  def transfer_calculator
-    @transfer_calculator ||= TransferCalculator.new(@user)
-  end
-
   def last_balance_of_day date
     balances = @user.balances.all.select { |balance| balance.on.to_date == date }
     balances.sort_by { |balance| balance.on }.last
