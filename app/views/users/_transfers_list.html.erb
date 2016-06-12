@@ -13,7 +13,7 @@
             reference: tr.reference,
             on: tr.on.to_date,
             amount: tr.amount,
-            recurrence: tr.recurrence,
+            recurrence: tr.class.recurrence,
             id: tr.id
           })
         %>
@@ -26,7 +26,7 @@
           reference: tr.reference,
           on: tr.on.to_date,
           amount: tr.amount,
-          recurrence: tr.recurrence,
+          recurrence: tr.class.recurrence,
           id: tr.id
         }) %>
       <% end %>
