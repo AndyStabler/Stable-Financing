@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   def transfers
     transfer_date = params[:transfer]
     if (transfer_date)
-      transfer_date = Date.parse(transfer_date) || Date.current
+      transfer_date = Date.safe_date_parse(transfer_date)
       transfers = @user.transfer_calculator.transfers_occurring_on(transfer_date)
     else
       transfers = @user.transfers
