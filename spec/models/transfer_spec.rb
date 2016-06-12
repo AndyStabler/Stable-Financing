@@ -11,14 +11,12 @@ RSpec.describe Transfer, type: :model do
   end
   describe "#forecast" do
     it "should fail" do
-      # transfer = FactoryGirl.create(:transfer, :incoming, user: homer, reference: "transfer 1", on: DateTime.current-10.days, amount: 20)
       expect{transfer.forecast(Date.yesterday, Date.tomorrow)}.to raise_error(NotImplementedError)
     end
   end
 
   describe "#recurrence" do
     it "should fail" do
-      # transfer = FactoryGirl.create(:transfer, :incoming, user: homer, reference: "transfer 1", on: DateTime.current-10.days, amount: 20)
       expect {transfer.recurrence}.to raise_error(NotImplementedError)
     end
   end
