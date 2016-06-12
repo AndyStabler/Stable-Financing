@@ -17,7 +17,7 @@ RSpec.describe Transfer, type: :model do
 
   describe "#recurrence" do
     it "should fail" do
-      expect {transfer.recurrence}.to raise_error(NotImplementedError)
+      expect {transfer.class.recurrence}.to raise_error(NotImplementedError)
     end
   end
 end
