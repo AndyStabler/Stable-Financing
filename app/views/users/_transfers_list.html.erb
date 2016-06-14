@@ -13,7 +13,7 @@
             reference: tr.reference,
             on: tr.on.to_date,
             amount: tr.amount,
-            recurrence: tr.class.recurrence,
+            recurrence: tr.recurrence,
             id: tr.id,
             destroy_link: destroy_transfer_path(current_user, tr.id)
           })
@@ -27,7 +27,7 @@
           reference: tr.reference,
           on: tr.on.to_date,
           amount: tr.amount,
-          recurrence: tr.class.recurrence,
+          recurrence: tr.recurrence,
           id: tr.id,
           destroy_link: destroy_transfer_path(current_user, tr.id)
         }) %>
