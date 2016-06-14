@@ -68,6 +68,15 @@ RSpec.describe UsersController, type: :controller do
         expect(response.body).to eq transfers.to_json(:methods => :recurrence)
         check_status response
       end
+
+      it "should include the transfer recurrence in the response" do
+        date = DateTime.current
+        allow(homer.transfer_calculator).to receive(:transfers_occurring_on) { transfers }
+        get :transfers, :id => homer.id, :transfer => date.to_s, :format => "json", :xhr => true
+        expect(response.content_type).to eq("application/json")
+        json_response = JSON.parse(response.body).first
+        expect(json_response).to have_key "recurrence"
+      end
     end
 
     context "when no data is sent in the params" do
@@ -92,7 +101,7 @@ RSpec.describe UsersController, type: :controller do
     context "with an invalid transfer" do
       it "should pass the erroneous transfer back" do
         transfer = FactoryGirl.build(:transfer_daily, :on => nil, :user => homer)
-        recurrence = TransferDaily.recurrence
+        recurrence = TransferDaily::RECURRENCE
         post :new_transfer,
           {
             :id => homer.id,
@@ -106,7 +115,7 @@ RSpec.describe UsersController, type: :controller do
 
     it "should create a new transfer" do
       transfer = FactoryGirl.build(:transfer_daily, :user => homer)
-      recurrence = TransferDaily.recurrence
+      recurrence = TransferDaily::RECURRENCE
       post :new_transfer,
         {
           :id => homer.id,
