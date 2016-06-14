@@ -1,5 +1,7 @@
 class TransferMonthly < Transfer
 
+  RECURRENCE = "Monthly"
+
   def forecast(from = nil, to)
     transfer_occurences = []
     from ||= on.to_date
@@ -16,7 +18,4 @@ class TransferMonthly < Transfer
     transfer_occurences
   end
 
-  def self.recurrence
-    "Monthly".freeze
-  end
 end
