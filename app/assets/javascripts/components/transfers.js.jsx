@@ -24,7 +24,7 @@ var Transfers = React.createClass({
             reference={transfer.reference}
             on={new Date(transfer.on).toString()}
             amount={transfer.amount}
-            recurrence={transfer.class.recurrence}
+            recurrence={transfer.recurrence}
             id={transfer.id} />
         })}
       </div>
