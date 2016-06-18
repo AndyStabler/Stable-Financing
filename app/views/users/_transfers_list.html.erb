@@ -1,11 +1,10 @@
 <div id="transfers-list">
-  <div class="options">
-    <p id="options-in" class="selected">In</p>
-
-    <p id="options-out" class="unselected">Out</p>
-  </div>
-  <div class="user-transfers-panel">
-    <div id="user-transfers-in">
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#user-transfers-in" data-toggle="tab">In</a></li>
+    <li role="presentation"><a href="#user-transfers-out" data-toggle="tab">Out</a></li>
+  </ul>
+  <div class="user-transfers-panel tab-content">
+    <div id="user-transfers-in" role="tabpanel" class="tab-pane fade in active">
       <% user.transfers.where(outgoing: false).each do |tr| %>
         <%= react_component('Transfer',
           {
@@ -20,17 +19,19 @@
         %>
       <% end %>
     </div>
-    <div id="user-transfers-out">
+    <div id="user-transfers-out" role="tabpanel" class="tab-pane fade">
       <% user.transfers.where(outgoing: true).each do |tr| %>
-        <%= react_component('Transfer', {
-          outgoing: tr.outgoing,
-          reference: tr.reference,
-          on: tr.on.to_date,
-          amount: tr.amount,
-          recurrence: tr.recurrence,
-          id: tr.id,
-          destroy_link: destroy_transfer_path(current_user, tr.id)
-        }) %>
+        <%= react_component('Transfer',
+          {
+            outgoing: tr.outgoing,
+            reference: tr.reference,
+            on: tr.on.to_date,
+            amount: tr.amount,
+            recurrence: tr.recurrence,
+            id: tr.id,
+            destroy_link: destroy_transfer_path(current_user, tr.id)
+          })
+        %>
       <% end %>
     </div>
   </div>
