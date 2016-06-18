@@ -10,7 +10,7 @@
         remote: true) do |f| %>
         <%= f.text_field :reference, :placeholder => "Cake" %>
         <%= f.text_field :on, :class => "datepicker", :label => "Date" %>
-        <%= f.number_field :amount, :placeholder => "20.00",prepend: "£" %>
+        <%= f.number_field :amount, :placeholder => "20.00", prepend: "£", :step => 0.01 %>
         <%= f.static_control :label => "Recurrence" do %>
           <%= select_tag(:recurrence, options_for_select(TransferFactory::RECURRENCES, 1), :class => "form-control") %>
         <% end %>
