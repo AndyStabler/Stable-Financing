@@ -142,15 +142,6 @@
     }
   }
 
-  #user-transfers-in {
-    padding: 0.25em;
-  }
-
-  #user-transfers-out {
-    padding: 0.25em;
-    display: none;
-  }
-
   #user-transfer-new-button {
     cursor: pointer;
     margin: 0;
@@ -186,10 +177,6 @@
 .user-transfers-panel {
   background-color: white;
   border: 3px solid #f9f9f9;
-}
-
-#options-in {
-  float: left;
 }
 
 .user-finances {

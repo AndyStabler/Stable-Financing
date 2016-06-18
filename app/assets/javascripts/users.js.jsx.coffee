@@ -114,24 +114,8 @@ sfUser.initialiseDatePicker = () ->
     dateFormat: 'dd/mm/yy',
   }).datepicker('setDate', new Date())
 
-sfUser.initialiseOptionsIn = () ->
-  $("#options-in").click ->
-    $("#user-transfers-in").css("display", "block")
-    $("#user-transfers-out").css("display", "none")
-    $("#options-in").removeClass().addClass("selected")
-    $("#options-out").removeClass().addClass("unselected")
-
-sfUser.initialiseOptionsOut = () ->
-  $("#options-out").click ->
-    $("#user-transfers-in").css("display", "none")
-    $("#user-transfers-out").css("display", "block")
-    $("#options-in").removeClass().addClass("unselected")
-    $("#options-out").removeClass().addClass("selected")
-
 $(document).on 'ready page:load', ->
   sfUser.getTransfers()
-  sfUser.initialiseOptionsIn()
-  sfUser.initialiseOptionsOut()
   $("#user-transfer-new-button").click( ->
     $("#new_transfer").toggle()
     $("#user-transfer-new-button").toggleClass("closed open"))
