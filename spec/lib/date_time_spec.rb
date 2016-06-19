@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Util::DateTime do
 
 
-  describe "#months_between_inclusive" do
+  describe ".months_between_inclusive" do
     context "when the to day is less than the from day" do
 
       context "and the to day is last day of the month" do
