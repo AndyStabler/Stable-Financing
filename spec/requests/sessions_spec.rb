@@ -12,7 +12,7 @@ RSpec.describe "Sessions", type: :request do
         get new_user_session_path
         post user_session_path, session: { email: "", password: "" }
         expect(response).to render_template('devise/sessions/new')
-        expect(flash.alert).to eq "Invalid email or password."
+        expect(flash.alert).to eq "Invalid Email or password."
       end
     end
 
