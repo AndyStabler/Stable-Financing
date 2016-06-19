@@ -1,21 +1,27 @@
 <%= render 'nav_bar', :balance => @balance %>
 
 <p id="notice"><%= notice %></p>
-<div class="user-transfers">
-  <h2>Transfers</h2>
 
-  <div class="user-transfers-new">
-    <%= render 'new_transfer_toggle', transfer: @transfer %>
-    <%= render 'new_transfer_form', transfer: @transfer %>
+<div class="container">
+  <div class="user-transfers col-md-3">
+    <h2>Transfers</h2>
+
+    <div class="user-transfers-new">
+      <%= render 'new_transfer_toggle', transfer: @transfer %>
+      <%= render 'new_transfer_form', transfer: @transfer %>
+    </div>
+    <%= render "transfers_list", user: @user %>
   </div>
-  <%= render "transfers_list", user: @user %>
-</div>
-<div>
-  <%= link_to "Download csv", user_path(@user, :format => :csv) %>
-</div>
-<div id="balance-data" style="float: left; width: 50%; height: 250px; overflow-y: scroll;">
-</div>
-<div id="selected-balance-info" style="float:left;">
+  <div class="col-md-9">
+    <div>
+      <%= link_to "Download csv", user_path(@user, :format => :csv) %>
+    </div>
+    <div id="balance-data">
+     <!-- style="float: left; width: 50%; height: 250px; overflow-y: scroll;"> -->
+    </div>
+    <div id="selected-balance-info" style="float:left;">
+    </div>
+  </div>
 </div>
 <div class="user-data"
   data-json-url="<%= user_path @user %>.json"
