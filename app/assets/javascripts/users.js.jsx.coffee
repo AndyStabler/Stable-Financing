@@ -57,15 +57,16 @@ sfUser.drawChart = () ->
     explorer:
       actions: ['dragToZoom', 'rightClickToReset']
       keepInBounds: true,
-      colors: ['#e0440e', '#e6693e', '#ec8f6e', '#f3b49f', '#f6c7b6']
-    series:
-      0:
-        lineWidth: 2
-    curveType: 'function'
-    pointSize: 2
-    colors: ['#e0440e', '#15A0C8']
+    colors: ['#b3d7ed', '#0079c1']
     legend:
       position: "bottom"
+    vAxis:
+      gridlineColor: 'transparent'
+      baselineColor: '#868686'
+    hAxis:
+      gridlineColor: 'transparent'
+      baselineColor: '#868686'
+
   # create the data tables
   balanceDataTable = sfUser.createTableFrom(sfUser.balanceData.balanceLog, "Balance")
   forecastDataTable = sfUser.createTableFrom(sfUser.balanceData.balanceForecast, "Forecast")
@@ -95,6 +96,7 @@ sfUser.drawTable = () ->
   ReactDOM.render(`<BalanceTable balanceData={sfUser.balanceData}/>`, $("#balance-data")[0])
 
 sfUser.balanceItemSelected = (dateId) ->
+  sfUser.selectedDate = dateId;
   selectedForecast = sfUser.balanceData.balanceForecast.find((dataItem) -> dataItem.dateId == dateId)
   if !selectedForecast
     return
@@ -108,6 +110,10 @@ sfUser.balanceItemSelected = (dateId) ->
   .done((response) ->
     ReactDOM.render(`<Transfers transfers={response} />`, $("#selected-balance-info")[0]))
   .fail(() -> console.log("FAIL"))
+
+sfUser.refreshSelectedBalanceItems = () ->
+  if sfUser.selectedDate?
+    sfUser.balanceItemSelected(sfUser.selectedDate)
 
 sfUser.initialiseDatePicker = () ->
   $('.datepicker').datepicker({
