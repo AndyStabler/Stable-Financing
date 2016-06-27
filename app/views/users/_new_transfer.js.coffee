@@ -15,10 +15,9 @@ setTimeout(() ->
   $("#new-transfer-container").removeClass("bg-success");
   initNewTransfer()
 , 500)
-$("#transfers-list").replaceWith("<%= escape_javascript(render 'transfers_list', :user => @transfer.user) %>");
+$("#transfers-list").replaceWith("<%= escape_javascript(render 'transfers_list', :user => @transfer.user) %>")
 ReactRailsUJS.mountComponents("#user-transfers-in")
 ReactRailsUJS.mountComponents("#user-transfers-out")
-sfUser.initialiseOptionsIn()
-sfUser.initialiseOptionsOut()
+sfUser.refreshSelectedBalanceItems()
 sfUser.drawChartOrFallbackTable()
 <% end %>
