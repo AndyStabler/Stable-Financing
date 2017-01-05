@@ -39,56 +39,6 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "GET transfers" do
-
-    let!(:transfers) do
-      [
-        FactoryGirl.create(:transfer_weekly, :user => homer),
-        FactoryGirl.create(:transfer_monthly, :user => homer)
-      ]
-    end
-
-    context "when a transfer date is in the params" do
-
-      it "should use the current date when the date string is mangled" do
-        date = "An invalid date!"
-        allow(homer.transfer_calculator).to receive(:transfers_occurring_on) { transfers }
-        get :transfers, :id => homer.id, :transfer => date, :format => "json", :xhr => true
-        expect(response.content_type).to eq("application/json")
-        # to_json is the json_string, not the JSON object - dandy!
-        expect(response.body).to eq transfers.to_json(:methods => :recurrence)
-        check_status response
-      end
-
-      it "should only return transfers occurring on that date" do
-        date = DateTime.current
-        allow(homer.transfer_calculator).to receive(:transfers_occurring_on) { transfers }
-        get :transfers, :id => homer.id, :transfer => date.to_s, :format => "json", :xhr => true
-        expect(response.content_type).to eq("application/json")
-        expect(response.body).to eq transfers.to_json(:methods => :recurrence)
-        check_status response
-      end
-
-      it "should include the transfer recurrence in the response" do
-        date = DateTime.current
-        allow(homer.transfer_calculator).to receive(:transfers_occurring_on) { transfers }
-        get :transfers, :id => homer.id, :transfer => date.to_s, :format => "json", :xhr => true
-        expect(response.content_type).to eq("application/json")
-        json_response = JSON.parse(response.body).first
-        expect(json_response).to have_key "recurrence"
-      end
-    end
-
-    context "when no data is sent in the params" do
-      it "should return all transfers" do
-        homer.transfers = transfers
-        get :transfers, :id => homer.id, :format => "json", :xhr => true
-        expect(response.body).to eq transfers.to_json(:methods => :recurrence)
-        check_status response
-      end
-    end
-  end
-
   describe "GET new" do
     it "should create a new user" do
       get :new

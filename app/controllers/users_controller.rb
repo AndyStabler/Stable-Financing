@@ -30,18 +30,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET /users/1/transfers.json
-  def transfers
-    transfer_date = params[:transfer]
-    if (transfer_date)
-      transfer_date = Util::Date.safe_date_parse(transfer_date)
-      transfers = @user.transfer_calculator.transfers_occurring_on(transfer_date)
-    else
-      transfers = @user.transfers
-    end
-    render json: transfers.as_json(methods: :recurrence)
-  end
-
   # GET /users/new
   def new
     @user = User.new
