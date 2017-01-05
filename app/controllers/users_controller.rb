@@ -63,14 +63,6 @@ class UsersController < ApplicationController
     end
   end
 
-  #DESTROY /users/:id/transfer/:transfer
-  def destroy_transfer
-    transfer = Transfer.find(params[:transfer])
-    transfer.destroy if transfer.present?
-    @transfer = Transfer.new(:user => @user)
-    render :partial => "new_transfer.js.coffee"
-  end
-
   #POST /users/:id/new/transfer
   def new_transfer
     @transfer = TransferFactory.build(transfer_type, trans_params)

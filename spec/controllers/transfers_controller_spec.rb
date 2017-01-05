@@ -24,7 +24,7 @@ RSpec.describe TransfersController, type: :controller do
       it "should use the current date when the date string is mangled" do
         date = "An invalid date!"
         allow(homer.transfer_calculator).to receive(:transfers_occurring_on) { transfers }
-        get :index, :id => homer.id, :transfer => date, :format => "json", :xhr => true
+        get :index, :transfer => date, :format => "json", :xhr => true
         expect(response.content_type).to eq("application/json")
         # to_json is the json_string, not the JSON object - dandy!
         expect(response.body).to eq transfers.to_json(:methods => :recurrence)
@@ -34,7 +34,7 @@ RSpec.describe TransfersController, type: :controller do
       it "should only return transfers occurring on that date" do
         date = DateTime.current
         allow(homer.transfer_calculator).to receive(:transfers_occurring_on) { transfers }
-        get :index, :id => homer.id, :transfer => date.to_s, :format => "json", :xhr => true
+        get :index, :transfer => date.to_s, :format => "json", :xhr => true
         expect(response.content_type).to eq("application/json")
         expect(response.body).to eq transfers.to_json(:methods => :recurrence)
         expect(response).to be_success
@@ -43,7 +43,7 @@ RSpec.describe TransfersController, type: :controller do
       it "should include the transfer recurrence in the response" do
         date = DateTime.current
         allow(homer.transfer_calculator).to receive(:transfers_occurring_on) { transfers }
-        get :index, :id => homer.id, :transfer => date.to_s, :format => "json", :xhr => true
+        get :index, :transfer => date.to_s, :format => "json", :xhr => true
         expect(response.content_type).to eq("application/json")
         json_response = JSON.parse(response.body).first
         expect(json_response).to have_key "recurrence"
@@ -53,10 +53,19 @@ RSpec.describe TransfersController, type: :controller do
     context "when no data is sent in the params" do
       it "should return all transfers" do
         homer.transfers = transfers
-        get :index, :id => homer.id, :format => "json", :xhr => true
+        get :index, :format => "json", :xhr => true
         expect(response.body).to eq transfers.to_json(:methods => :recurrence)
         expect(response).to be_success
       end
+    end
+  end
+
+  describe "POST destroy" do
+    it "deletes the transfer" do
+      transfer = FactoryGirl.create(:transfer_weekly, :user => homer)
+      expect {
+        post :destroy, id: transfer.id
+      }.to change(Transfer, :count).by(-1)
     end
   end
 end
