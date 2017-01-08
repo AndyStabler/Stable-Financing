@@ -8,7 +8,7 @@
         <%= form_for(balance,
             :remote => true,
             :method => :post,
-            :url => new_balance_path) do |f| %>
+            :url => balances_path) do |f| %>
           <div class="input-group">
             <span class="input-group-addon">£</span>
             <%= f.number_field :value, placeholder: number_with_precision(balance.value, precision: 2), :class => "form-control", :value => "" %>

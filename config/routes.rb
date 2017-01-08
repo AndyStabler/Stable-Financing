@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :users
 
   resources :transfers, only: [:index, :create, :destroy]
+  resources :balances, only: :create
 
   post 'users/:id/new/balance', as: "new_balance", to: 'users#new_balance'
 

@@ -63,30 +63,11 @@ class UsersController < ApplicationController
     end
   end
 
-  #POST /users/:id/new/balance
-  def new_balance
-    @balance = Balance.new({ :user => @user, :on => Time.zone.now }.merge balance_params)
-    @balance.save
-    render :partial => "new_balance.js.coffee"
-  end
-
   private
 
   def set_user
     not_found unless current_user.id.to_s == params[:id].to_s
     @user = current_user
-  end
-
-  def trans_params
-    params.require(:transfer).permit(:on, :amount, :user_id, :outgoing, :reference)
-  end
-
-  def transfer_type
-    params.require(:recurrence)
-  end
-
-  def balance_params
-    params.require(:balance).permit(:value)
   end
 
   def user_params

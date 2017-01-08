@@ -47,30 +47,6 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "POST new_balance" do
-    context "when the balance is valid" do
-      it "should save the balance" do
-        balance = FactoryGirl.build(:balance, :today, :value => 20.00)
-        expect(homer.balance.value).to_not eq balance.value
-        post :new_balance, :id => homer.id, :balance => balance.attributes, :xhr => true
-        expect(assigns(:balance).persisted?).to be true
-        expect(homer.balance.value).to eq balance.value
-        check_status response
-      end
-    end
-
-    context "when the balance is invalid" do
-      it "should not save the balance" do
-        balance = FactoryGirl.build(:balance, :today, :value => "")
-        post :new_balance, :id => homer.id, :balance => balance.attributes, :xhr => true
-        expect(assigns(:balance).new_record?).to be true
-        expect(homer.balance.value).to_not eq balance.value
-        expect(assigns(:balance).errors.present?).to be true
-        check_status response
-      end
-    end
-  end
-
   def check_status(response, status = 200)
     expect(response.status).to eq status
   end
