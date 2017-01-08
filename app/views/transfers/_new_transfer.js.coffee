@@ -1,7 +1,7 @@
 initNewTransfer = () ->
   console.log("in init new transfer")
-  $("#new-transfer-container").replaceWith("<%= escape_javascript(render 'transfers/new_transfer_form', :transfer => @transfer) %>");
-  $("#new-transfer-toggle").replaceWith("<%= escape_javascript(render 'transfers/new_transfer_toggle', :transfer => @transfer) %>");
+  $("#new-transfer-container").replaceWith("<%= escape_javascript(render 'new_transfer_form', :transfer => @transfer) %>");
+  $("#new-transfer-toggle").replaceWith("<%= escape_javascript(render 'new_transfer_toggle', :transfer => @transfer) %>");
   sfUser.initialiseNewTransferToggle()
   sfUser.initialiseDatePicker()
 
@@ -15,7 +15,7 @@ setTimeout(() ->
   $("#new-transfer-container").removeClass("bg-success");
   initNewTransfer()
 , 500)
-$("#transfers-list").replaceWith("<%= escape_javascript(render 'transfers/transfers_list', :user => @transfer.user) %>")
+$("#transfers-list").replaceWith("<%= escape_javascript(render 'transfers_list', :user => @transfer.user) %>")
 ReactRailsUJS.mountComponents("#user-transfers-in")
 ReactRailsUJS.mountComponents("#user-transfers-out")
 sfUser.refreshSelectedBalanceItems()

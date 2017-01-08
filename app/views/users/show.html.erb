@@ -7,10 +7,10 @@
     <h2>Transfers</h2>
 
     <div class="user-transfers-new">
-      <%= render 'users/new_transfer_toggle', transfer: @transfer %>
-      <%= render 'users/new_transfer_form', transfer: @transfer %>
+      <%= render 'transfers/new_transfer_toggle', transfer: @transfer %>
+      <%= render 'transfers/new_transfer_form', transfer: @transfer %>
     </div>
-    <%= render "users/transfers_list", user: @user %>
+    <%= render "transfers/transfers_list", user: @user %>
   </div>
   <div class="col-md-9">
     <div>

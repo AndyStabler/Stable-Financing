@@ -16,13 +16,13 @@ class TransfersController < ApplicationController
     if @transfer.save
       @transfer = Transfer.new(:user => current_user)
     end
-    render :partial => "users/new_transfer.js.coffee"
+    render :partial => "new_transfer.js.coffee"
   end
 
   def destroy
     Transfer.find(params[:id]).destroy
     @transfer = Transfer.new(:user => current_user)
-    render :partial => "users/new_transfer.js.coffee"
+    render :partial => "new_transfer.js.coffee"
   end
 
   private
