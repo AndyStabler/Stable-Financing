@@ -14,7 +14,7 @@
             amount: tr.amount,
             recurrence: tr.recurrence,
             id: tr.id,
-            destroy_link: destroy_transfer_path(current_user, tr.id)
+            destroy_link: transfer_path(tr)
           })
         %>
       <% end %>
@@ -29,7 +29,7 @@
             amount: tr.amount,
             recurrence: tr.recurrence,
             id: tr.id,
-            destroy_link: destroy_transfer_path(current_user, tr.id)
+            destroy_link: transfer_path(tr)
           })
         %>
       <% end %>

@@ -5,7 +5,7 @@
   </div>
   <div class="panel-body">
     <%= bootstrap_form_for(transfer, :as => :transfer,
-        url: new_transfer_path,
+        url: transfers_path,
         html: {:id => "new_transfer", :class => "new_transfer"},
         remote: true) do |f| %>
         <%= f.text_field :reference, :placeholder => "Cake" %>

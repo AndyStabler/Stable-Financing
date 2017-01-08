@@ -11,9 +11,27 @@ class TransfersController < ApplicationController
     render json: transfers.as_json(methods: :recurrence)
   end
 
+  def create
+    @transfer = TransferFactory.build(transfer_type, transfer_params.merge({ user: current_user }))
+    if @transfer.save
+      @transfer = Transfer.new(:user => current_user)
+    end
+    render :partial => "users/new_transfer.js.coffee"
+  end
+
   def destroy
     Transfer.find(params[:id]).destroy
     @transfer = Transfer.new(:user => current_user)
     render :partial => "users/new_transfer.js.coffee"
+  end
+
+  private
+
+  def transfer_params
+    params.require(:transfer).permit(:on, :amount, :user_id, :outgoing, :reference)
+  end
+
+  def transfer_type
+    params.require(:recurrence)
   end
 end

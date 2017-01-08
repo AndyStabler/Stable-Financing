@@ -7,10 +7,10 @@
     <h2>Transfers</h2>
 
     <div class="user-transfers-new">
-      <%= render 'new_transfer_toggle', transfer: @transfer %>
-      <%= render 'new_transfer_form', transfer: @transfer %>
+      <%= render 'users/new_transfer_toggle', transfer: @transfer %>
+      <%= render 'users/new_transfer_form', transfer: @transfer %>
     </div>
-    <%= render "transfers_list", user: @user %>
+    <%= render "users/transfers_list", user: @user %>
   </div>
   <div class="col-md-9">
     <div>
@@ -25,7 +25,7 @@
 </div>
 <div class="user-data"
   data-json-url="<%= user_path @user %>.json"
-  data-transfers-url="<%= transfers_path @user %>.json"
+  data-transfers-url="<%= transfers_path @user %>"
 </div>
 
 <!--Div that will hold the pie chart-->

@@ -4,9 +4,8 @@ Rails.application.routes.draw do
 
   resources :users
 
-  resources :transfers, only: [:index, :destroy]
+  resources :transfers, only: [:index, :create, :destroy]
 
-  post 'users/:id/new/transfer', as: "new_transfer", to: 'users#new_transfer'
   post 'users/:id/new/balance', as: "new_balance", to: 'users#new_balance'
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -28,7 +28,7 @@ var Transfers = React.createClass({
             amount={transfer.amount}
             recurrence={transfer.recurrence}
             id={transfer.id}
-            destroy_link={"/users/" + transfer.user_id + "/transfers/delete/" + transfer.id} />
+            destroy_link={"/transfers/" + transfer.id} />
         })}
       </div>
     )

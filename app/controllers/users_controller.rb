@@ -63,14 +63,6 @@ class UsersController < ApplicationController
     end
   end
 
-  #POST /users/:id/new/transfer
-  def new_transfer
-    @transfer = TransferFactory.build(transfer_type, trans_params)
-    @transfer.user = @user
-    @transfer = Transfer.new(:user => @user) if @transfer.save
-    render :partial => "new_transfer.js.coffee"
-  end
-
   #POST /users/:id/new/balance
   def new_balance
     @balance = Balance.new({ :user => @user, :on => Time.zone.now }.merge balance_params)

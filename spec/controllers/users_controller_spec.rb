@@ -47,37 +47,6 @@ RSpec.describe UsersController, type: :controller do
     end
   end
 
-  describe "POST new_transfer" do
-    context "with an invalid transfer" do
-      it "should pass the erroneous transfer back" do
-        transfer = FactoryGirl.build(:transfer_daily, :on => nil, :user => homer)
-        recurrence = TransferDaily::RECURRENCE
-        post :new_transfer,
-          {
-            :id => homer.id,
-            :transfer => transfer.attributes,
-            :recurrence => recurrence
-          }, :xhr => true
-        expect(assigns(:transfer).attributes).to eq transfer.attributes
-        check_status response
-      end
-    end
-
-    it "should create a new transfer" do
-      transfer = FactoryGirl.build(:transfer_daily, :user => homer)
-      recurrence = TransferDaily::RECURRENCE
-      post :new_transfer,
-        {
-          :id => homer.id,
-          :transfer => transfer.attributes,
-          :recurrence => recurrence
-        }, :xhr => true
-      expect(assigns(:transfer).new_record?).to be true
-      expect(assigns(:transfer).attributes).to_not eq transfer.attributes
-      check_status response
-    end
-  end
-
   describe "POST new_balance" do
     context "when the balance is valid" do
       it "should save the balance" do

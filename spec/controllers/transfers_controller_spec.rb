@@ -60,6 +60,37 @@ RSpec.describe TransfersController, type: :controller do
     end
   end
 
+  describe "POST create_transfer" do
+    context "with an invalid transfer" do
+      it "should pass the erroneous transfer back" do
+        transfer = FactoryGirl.build(:transfer_daily, :on => nil, :user => homer)
+        recurrence = TransferDaily::RECURRENCE
+        post :create,
+          {
+            :id => homer.id,
+            :transfer => transfer.attributes,
+            :recurrence => recurrence
+          }, :xhr => true
+        expect(assigns(:transfer).attributes).to eq transfer.attributes
+        expect(response).to be_success
+      end
+    end
+
+    it "should create a new transfer" do
+      transfer = FactoryGirl.build(:transfer_daily, :user => homer)
+      recurrence = TransferDaily::RECURRENCE
+      post :create,
+        {
+          :id => homer.id,
+          :transfer => transfer.attributes,
+          :recurrence => recurrence
+        }, :xhr => true
+      expect(assigns(:transfer).new_record?).to be true
+      expect(assigns(:transfer).attributes).to_not eq transfer.attributes
+      expect(response).to be_success
+    end
+  end
+
   describe "POST destroy" do
     it "deletes the transfer" do
       transfer = FactoryGirl.create(:transfer_weekly, :user => homer)
