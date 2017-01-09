@@ -1,14 +1,4 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [
-    :show,
-    :edit,
-    :update,
-    :destroy,
-    :new_balance,
-    :new_transfer,
-    :transfers,
-    :destroy_transfer
-  ]
 
   # GET /users
   # GET /users.json
@@ -19,11 +9,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    @balance = @user.balance
+    @balance = current_user.balance
     @transfer = Transfer.new
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: @user.balance_data }
+      format.json { render json: current_user.balance_data }
       format.csv do
         response.headers['Content-Disposition'] = "attachment; filename=balance_data.csv"
       end
@@ -43,12 +33,12 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+      if current_user.update(user_params)
+        format.html { redirect_to current_user, notice: 'User was successfully updated.' }
+        format.json { render :show, status: :ok, location: current_user }
       else
         format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: current_user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -56,7 +46,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
+    current_user.destroy
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
@@ -65,12 +55,7 @@ class UsersController < ApplicationController
 
   private
 
-  def set_user
-    not_found unless current_user.id.to_s == params[:id].to_s
-    @user = current_user
-  end
-
   def user_params
-    params.require(:user).permit(:name, :password, :password, :password_confirmation, :email, :email_confirmation)
+    params.require(:user).permit(:name, :password, :password_confirmation, :email, :email_confirmation)
   end
 end

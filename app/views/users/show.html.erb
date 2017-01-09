@@ -10,11 +10,11 @@
       <%= render 'transfers/new_transfer_toggle', transfer: @transfer %>
       <%= render 'transfers/new_transfer_form', transfer: @transfer %>
     </div>
-    <%= render "transfers/transfers_list", user: @user %>
+    <%= render "transfers/transfers_list", user: current_user %>
   </div>
   <div class="col-md-9">
     <div>
-      <%= link_to "Download csv", user_path(@user, :format => :csv) %>
+      <%= link_to "Download csv", user_path(current_user, :format => :csv) %>
     </div>
     <div id="balance-data">
      <!-- style="float: left; width: 50%; height: 250px; overflow-y: scroll;"> -->
@@ -24,8 +24,8 @@
   </div>
 </div>
 <div class="user-data"
-  data-json-url="<%= user_path @user %>.json"
-  data-transfers-url="<%= transfers_path @user %>"
+  data-json-url="<%= user_path current_user %>.json"
+  data-transfers-url="<%= transfers_path current_user %>"
 </div>
 
 <!--Div that will hold the pie chart-->
