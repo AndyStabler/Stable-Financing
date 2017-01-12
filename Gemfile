@@ -37,15 +37,17 @@ gem "bootstrap_form"
 group :test do
   gem "factory_girl_rails", "~> 4.0"
   gem 'simplecov', :require => false
+  gem 'selenium-webdriver'
 end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-
+  gem 'ejs'
+  gem 'konacha'
+  gem 'poltergeist'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
   gem 'rspec-rails'
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
