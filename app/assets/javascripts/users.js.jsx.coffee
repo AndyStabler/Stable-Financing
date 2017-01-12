@@ -74,7 +74,6 @@ stableFinancing.drawChart = () ->
   chart = new google.visualization.AreaChart(document.getElementById('balance-data'))
   chart.draw(joinedData, options)
   google.visualization.events.addListener(chart, 'select', () -> stableFinancing.chartSelectHandler(chart.getSelection()[0], joinedData));
-  # google.visualization.events.addListener(chart, 'onmouseover', (e) -> stableFinancing.chartSelectHandler(e, joinedData));
 
 stableFinancing.drawChartProxy = () ->
   ReactDOM.render(`<Loading />`, $("#balance-data")[0])
