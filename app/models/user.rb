@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :transfers
-  # many balances over time - store them so the user can see what's going on
+
   has_many :balances
 
   validates :name, presence: true
@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     return [] unless bals.any?
     from = bals.first.on
     to = bals.last.on
-    BalanceCalculator.new(self).balance_log(from, to).sort_by(&:on)
+    BalanceCalculator.new(balances).balance_log(from, to).sort_by(&:on)
   end
 
   def finance_forecast

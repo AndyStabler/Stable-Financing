@@ -7,10 +7,8 @@ RSpec.describe BalanceCalculator, type: :model do
   end
 
   let(:balance_calculator) do
-    BalanceCalculator.new(homer)
+    BalanceCalculator.new(homer.balances.all)
   end
-
-
 
   describe "#balance_log" do
     context "when there are multiple balances per day" do
