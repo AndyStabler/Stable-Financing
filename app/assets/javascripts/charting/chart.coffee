@@ -1,3 +1,3 @@
 
-class stableFinancing.Chart
+class StableFinancing.Chart
   methodOne: -> false

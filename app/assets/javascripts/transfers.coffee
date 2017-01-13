@@ -2,12 +2,10 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-window.sfUser = window.sfUser || {}
-
-sfUser.initialiseNewTransferToggle = () ->
+StableFinancing.initialiseNewTransferToggle = () ->
   $('#new-transfer-toggle').click ->
     $("#new-transfer-container").slideToggle 500, ->
       $('#new-transfer-toggle').find('i').toggleClass('glyphicon-minus').toggleClass('glyphicon-plus')
 
 $(document).on 'ready page:load', ->
-  sfUser.initialiseNewTransferToggle()
+  StableFinancing.initialiseNewTransferToggle()

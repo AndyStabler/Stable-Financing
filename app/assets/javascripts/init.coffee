@@ -1,6 +1,6 @@
-window.stableFinancing = {};
+window.StableFinancing = {};
 
-stableFinancing.initialiseDatePicker = () ->
+StableFinancing.initialiseDatePicker = () ->
   $('.datepicker').datepicker({
     dateFormat: 'dd/mm/yy',
   }).datepicker('setDate', new Date())
