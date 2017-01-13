@@ -15,14 +15,6 @@ class User < ActiveRecord::Base
     Balance.create(:value => 0.0, :on => Time.zone.now, :user => self)
   end
 
-  def balance_calculator
-    @balance_calculator ||= BalanceCalculator.new self
-  end
-
-  def balance_forecaster
-    @balance_forecaster ||= BalanceForecaster.new self
-  end
-
   def transfer_calculator
     @transfer_calculator ||= TransferCalculator.new self
   end
@@ -36,14 +28,14 @@ class User < ActiveRecord::Base
     return [] unless bals.any?
     from = bals.first.on
     to = bals.last.on
-    balance_calculator.balance_log(from, to).sort_by(&:on)
+    BalanceCalculator.new(self).balance_log(from, to).sort_by(&:on)
   end
 
   def finance_forecast
     trans = transfers.order(:on)
     return [] unless trans.any?
     to = trans.last.on.to_date+1.year
-    balance_forecaster.forecast_balance(to).sort_by(&:date)
+    BalanceForecaster.new(self).forecast_balance(to).sort_by(&:date)
   end
 
   def balance

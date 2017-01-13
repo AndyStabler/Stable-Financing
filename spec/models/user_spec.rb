@@ -14,12 +14,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "#balance_forecaster" do
-    it "should be a BalanceForecaster" do
-      expect(homer.balance_forecaster.class).to eq BalanceForecaster
-    end
-  end
-
   describe "#finance_forecast" do
     context "when there are no transfers" do
       it "should be empty" do
