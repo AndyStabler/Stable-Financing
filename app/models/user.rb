@@ -20,19 +20,19 @@ class User < ActiveRecord::Base
   end
 
   def balance_data
-    [finance_log, finance_forecast]
+    [balance_log, balance_forecast]
   end
 
-  def finance_log
-    bals = balances.order(:on)
+  def balance_log
+    bals = balances.order :on
     return [] unless bals.any?
     from = bals.first.on
     to = bals.last.on
     BalanceCalculator.new(balances).balance_log(from, to).sort_by(&:on)
   end
 
-  def finance_forecast
-    trans = transfers.order(:on)
+  def balance_forecast
+    trans = transfers.order :on
     return [] unless trans.any?
     to = trans.last.on.to_date+1.year
     BalanceForecaster.new(self).forecast_balance(to).sort_by(&:date)
