@@ -21,9 +21,4 @@ class BalanceForecaster
     end
     balance_forecasts
   end
-
-  def forecast_balance_between(start_date, end_date)
-    forecast_balance(end_date).reject { |forecast| forecast.date < start_date }
-  end
-
 end
