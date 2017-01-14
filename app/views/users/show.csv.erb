@@ -1,11 +1,11 @@
 <% require("csv") %>
 <%= CSV.generate_line ["Date", "Balance"] %>
-<% @user.finance_log.each_with_index do |balance, index| %>
+<% @balance_log.each_with_index do |balance, index| %>
   <% row = [balance.on, balance.value] %>
   <% row << "Balance Log" if index == 0 %>
   <%= CSV.generate_line(row).strip %>
 <% end %>
-<% @user.finance_forecast.each_with_index do |forecast, index| %>
+<% @balance_forecast.each_with_index do |forecast, index| %>
   <% row = [forecast.date, forecast.balance] %>
   <% row << "Balance Forecast" if index == 0 %>
   <%= CSV.generate_line(row).strip %>

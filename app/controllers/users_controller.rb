@@ -15,6 +15,8 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { render :show }
       format.csv do
+        @balance_log = current_user.finance_log
+        @balance_forecast = current_user.finance_forecast
         response.headers['Content-Disposition'] = "attachment; filename=balance_data.csv"
       end
     end
