@@ -11,13 +11,14 @@ class BalanceForecaster
     # get all transfer dates occurring after the user's latest balance update
     from = balance.on.to_date + 1.day
     transfer_dates = @transfer_calculator.all_transfer_dates(from, to)
-    balance = balance.value
+    balance_value = balance.value
 
     transfer_dates.sort.each do |transfer_date|
       transfers = @transfer_calculator.transfers_occurring_on transfer_date
       diff = TransferCalculator.total_difference transfers
-      balance+= diff
-      balance_forecasts << BalanceForecast.new(transfer_date, balance, transfers)
+      balance_value+= diff
+      balance = Balance.new(value: balance_value, on: transfer_date, user: @user)
+      balance_forecasts << BalanceForecast.new(balance: balance, transfers: transfers)
     end
     balance_forecasts
   end

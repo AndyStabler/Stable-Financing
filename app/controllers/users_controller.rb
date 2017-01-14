@@ -14,6 +14,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html { render :show }
+      format.json { render json: current_user.balance_data }
       format.csv do
         @balance_log = current_user.balance_log
         @balance_forecast = current_user.balance_forecast

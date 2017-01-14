@@ -36,8 +36,8 @@ RSpec.describe BalanceForecaster, type: :model do
       FactoryGirl.create(:transfer_daily, :outgoing, user: homer, reference: "transfer 4", on: second_date, amount: 40.0)
       forecast = balance_forecaster.forecast_balance(second_date)
       expect(forecast.count).to eq 2
-      expect(forecast.first.balance).to eq 40
-      expect(forecast[1].balance).to eq 20
+      expect(forecast.first.value).to eq 40
+      expect(forecast[1].value).to eq 20
     end
   end
 end

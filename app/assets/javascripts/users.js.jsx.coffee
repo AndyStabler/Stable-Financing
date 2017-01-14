@@ -19,10 +19,11 @@ class sfUser.BalanceData
         parseFloat(balance.value)
       )
     @balanceForecast = $.map @jsonData[1], (forecast) ->
+      balanceDate = forecast.on.toString().split(" ").slice(0,4).join(" ")
       new sfUser.BalanceDataItem(
-        new Date(forecast.date).toString(),
-        new Date(forecast.date),
-        parseFloat(forecast.balance)
+        new Date(balanceDate).toString(),
+        new Date(balanceDate),
+        parseFloat(forecast.value)
       )
 
 sfUser.getBalanceData = (success_callback) ->

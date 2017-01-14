@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
     trans = transfers.order :on
     return [] unless trans.any?
     to = trans.last.on.to_date+1.year
-    BalanceForecaster.new(self).forecast_balance(to).sort_by(&:date)
+    BalanceForecaster.new(self).forecast_balance(to).sort_by(&:on)
   end
 
   def balance

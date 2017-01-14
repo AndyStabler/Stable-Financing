@@ -5,8 +5,8 @@
   <% row << "Balance Log" if index == 0 %>
   <%= CSV.generate_line(row).strip %>
 <% end %>
-<% @balance_forecast.each_with_index do |forecast, index| %>
-  <% row = [forecast.date, forecast.balance] %>
+<% @balance_forecast.each_with_index do |balance, index| %>
+  <% row = [balance.on, forecast.value] %>
   <% row << "Balance Forecast" if index == 0 %>
   <%= CSV.generate_line(row).strip %>
 <% end %>
