@@ -29,14 +29,6 @@ RSpec.describe UsersController, type: :controller do
         check_status response
       end
     end
-
-    context "when the format is json" do
-      it "should return json data" do
-        get :show, :id => homer.id, :format => "json"
-        expect(response.content_type).to eq("application/json")
-        check_status response
-      end
-    end
   end
 
   describe "GET new" do

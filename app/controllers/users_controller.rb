@@ -11,9 +11,9 @@ class UsersController < ApplicationController
   def show
     @balance = current_user.balance
     @transfer = Transfer.new
+
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: current_user.balance_data }
       format.csv do
         response.headers['Content-Disposition'] = "attachment; filename=balance_data.csv"
       end
