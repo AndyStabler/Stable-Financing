@@ -28,14 +28,14 @@ class User < ActiveRecord::Base
     return [] unless bals.any?
     from = bals.first.on
     to = bals.last.on
-    BalanceCalculator.new(balances).balance_log(from, to).sort_by(&:on)
+    Balance::Calculator.new(balances).balance_log(from, to).sort_by(&:on)
   end
 
   def balance_forecast
     trans = transfers.order :on
     return [] unless trans.any?
     to = trans.last.on.to_date+1.year
-    BalanceForecaster.new(self).forecast_balance(to).sort_by(&:on)
+    Balance::Forecaster.new(self).forecast_balance(to).sort_by(&:on)
   end
 
   def balance

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe BalanceForecaster, type: :model do
+RSpec.describe Balance::Forecaster, type: :model do
 
   let(:homer) do
     FactoryGirl.create(:user, :homer)
   end
 
   let(:balance_forecaster) do
-    BalanceForecaster.new(homer)
+    Balance::Forecaster.new(homer)
   end
 
   describe "#forecast_balance" do

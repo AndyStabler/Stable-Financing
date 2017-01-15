@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe BalanceCalculator, type: :model do
+RSpec.describe Balance::Calculator, type: :model do
 
   let(:homer) do
     FactoryGirl.create(:user, :homer)
   end
 
   let(:balance_calculator) do
-    BalanceCalculator.new(homer.balances.all)
+    Balance::Calculator.new(homer.balances.all)
   end
 
   describe "#balance_log" do

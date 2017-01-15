@@ -1,4 +1,4 @@
-class BalanceForecast < Delegator
+class Balance::Forecast < Delegator
 
   attr_reader :balance, :transfers
 

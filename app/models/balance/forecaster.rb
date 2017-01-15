@@ -1,4 +1,4 @@
-class BalanceForecaster
+class Balance::Forecaster
 
   def initialize(user)
     @user = user
@@ -18,7 +18,7 @@ class BalanceForecaster
       diff = TransferCalculator.total_difference transfers
       balance_value+= diff
       balance = Balance.new(value: balance_value, on: transfer_date, user: @user)
-      balance_forecasts << BalanceForecast.new(balance: balance, transfers: transfers)
+      balance_forecasts << Balance::Forecast.new(balance: balance, transfers: transfers)
     end
     balance_forecasts
   end

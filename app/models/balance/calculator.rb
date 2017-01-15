@@ -1,4 +1,4 @@
-class BalanceCalculator
+class Balance::Calculator
 
   def initialize(balances)
     @balances = balances
