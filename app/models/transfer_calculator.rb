@@ -4,14 +4,6 @@ class TransferCalculator
     @user = user
   end
 
-  def total_incoming
-    @total_incoming ||= Transfer.incoming(@user).map(&:amount).inject(:+) || 0.0
-  end
-
-  def total_outgoing
-    @total_outgoing ||= Transfer.outgoing(@user).map(&:amount).inject(:+) || 0.0
-  end
-
   # Public: forecasts every transfer
   #
   # from  - used to get transfers occurring on or after this date (optional)
