@@ -71,25 +71,6 @@ RSpec.describe Balance, type: :model do
       end
     end
 
-    describe "last_of_month?" do
-      context "when last of month" do
-        it "should be true" do
-          balance = FactoryGirl.create(:balance, on: Date.today.end_of_month.to_datetime, user: homer, :value => 10.0)
-          expect(balance.last_of_month?).to be true
-        end
-      end
-
-      context "when first of month" do
-        it "should be false" do
-          balance = FactoryGirl.create(:balance, on: Date.today.beginning_of_month.to_datetime, user: homer, :value => 10.0)
-          expect(balance.last_of_month?).to be false
-
-        end
-      end
-    end
-
-
-
   end
 end
 

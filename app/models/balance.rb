@@ -4,11 +4,6 @@ class Balance < ActiveRecord::Base
   validates :value, :on, :user, presence: { message: "Value cannot be empty" }
   validates :value, numericality: true
 
-  def last_of_month?
-    bals = user.balances.group_by { |bal| bal.on.month }
-    bals[on.month].sort_by { |bal| bal.on }.last == self
-  end
-
   # Returns the difference between this value and the previous day's
   def diff_from_previous_day
     bals = user.balances.order(:on)
