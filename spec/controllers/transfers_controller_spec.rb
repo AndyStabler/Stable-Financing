@@ -64,7 +64,7 @@ RSpec.describe TransfersController, type: :controller do
     context "with an invalid transfer" do
       it "should pass the erroneous transfer back" do
         transfer = FactoryGirl.build(:transfer_daily, :on => nil, :user => homer)
-        recurrence = TransferDaily::RECURRENCE
+        recurrence = Transfer::Daily::RECURRENCE
         post :create,
           {
             :id => homer.id,
@@ -78,7 +78,7 @@ RSpec.describe TransfersController, type: :controller do
 
     it "should create a new transfer" do
       transfer = FactoryGirl.build(:transfer_daily, :user => homer)
-      recurrence = TransferDaily::RECURRENCE
+      recurrence = Transfer::Daily::RECURRENCE
       post :create,
         {
           :id => homer.id,

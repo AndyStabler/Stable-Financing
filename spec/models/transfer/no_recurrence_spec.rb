@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TransferNoRecurrence, type: :model do
+RSpec.describe Transfer::NoRecurrence, type: :model do
 
   let(:homer) { FactoryGirl.create(:user, :homer) }
 

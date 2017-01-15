@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-RSpec.describe TransferCalculator, type: :model do
+RSpec.describe Transfer::Calculator, type: :model do
 
   let(:homer) do
     FactoryGirl.create(:user, :homer)
   end
 
   let(:transfer_calculator) do
-    TransferCalculator.new(homer)
+    Transfer::Calculator.new(homer)
   end
 
   describe "#transfers_occurring_on" do

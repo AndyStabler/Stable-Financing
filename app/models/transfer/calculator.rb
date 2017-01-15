@@ -1,4 +1,4 @@
-class TransferCalculator
+class Transfer::Calculator
 
   def initialize(user)
     @user = user

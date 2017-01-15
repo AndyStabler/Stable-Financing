@@ -1,6 +1,6 @@
-class TransferDaily < Transfer
+class Transfer::Monthly < Transfer
 
-  RECURRENCE = "Daily"
+  RECURRENCE = "Monthly"
 
   def forecast(from = nil, to)
     transfer_occurences = []
@@ -9,9 +9,9 @@ class TransferDaily < Transfer
     return transfer_occurences unless to >= from && on.to_date <= to
     transfer_date = on.to_date
 
-    days = Util::DateTime.days_between_inclusive(transfer_date, to)
-    days.times do |day_to_add|
-      new_transfer_date = transfer_date + day_to_add.days
+    months = Util::DateTime.months_between_inclusive(transfer_date, to)
+    months.times do |mt|
+      new_transfer_date = transfer_date + mt.months
       next if new_transfer_date < from
       transfer_occurences << new_transfer_date
     end

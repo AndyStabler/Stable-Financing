@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TransferDaily, type: :model do
+RSpec.describe Transfer::Daily, type: :model do
 
   let(:homer) { FactoryGirl.create(:user, :homer) }
 

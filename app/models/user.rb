@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   end
 
   def transfer_calculator
-    @transfer_calculator ||= TransferCalculator.new self
+    @transfer_calculator ||= Transfer::Calculator.new self
   end
 
   def balance_data

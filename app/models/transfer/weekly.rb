@@ -1,4 +1,4 @@
-class TransferWeekly < Transfer
+class Transfer::Weekly < Transfer
 
   RECURRENCE = "Weekly"
 

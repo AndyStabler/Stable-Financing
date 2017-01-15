@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TransferMonthly, type: :model do
+RSpec.describe Transfer::Monthly, type: :model do
 
   let(:homer) { FactoryGirl.create(:user, :homer) }
 

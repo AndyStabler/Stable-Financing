@@ -12,7 +12,7 @@ class TransfersController < ApplicationController
   end
 
   def create
-    @transfer = TransferFactory.build(transfer_type, transfer_params.merge({ user: current_user }))
+    @transfer = Transfer::Factory.build(transfer_type, transfer_params.merge({ user: current_user }))
     if @transfer.save
       @transfer = Transfer.new(:user => current_user)
     end

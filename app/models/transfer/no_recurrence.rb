@@ -1,4 +1,4 @@
-class TransferNoRecurrence < Transfer
+class Transfer::NoRecurrence < Transfer
 
   RECURRENCE = "None"
 

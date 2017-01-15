@@ -24,16 +24,16 @@ FactoryGirl.define do
     end
   end
 
-  factory :transfer_daily, class: TransferDaily, parent: :transfer do
+  factory :transfer_daily, class: Transfer::Daily, parent: :transfer do
   end
 
-  factory :transfer_weekly, class: TransferWeekly, parent: :transfer do
+  factory :transfer_weekly, class: Transfer::Weekly, parent: :transfer do
   end
 
-  factory :transfer_monthly, class: TransferMonthly, parent: :transfer do
+  factory :transfer_monthly, class: Transfer::Monthly, parent: :transfer do
   end
 
-  factory :transfer_no_recurrence, class: TransferNoRecurrence, parent: :transfer do
+  factory :transfer_no_recurrence, class: Transfer::NoRecurrence, parent: :transfer do
   end
 
 end
