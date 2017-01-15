@@ -6,6 +6,9 @@ class Transfer < ActiveRecord::Base
   validates :outgoing, inclusion: [true, false]
   validates :amount, numericality: true
 
+  scope :outgoing, ->(user) { where("user_id = ? AND outgoing = ?", user.id, true) }
+  scope :incoming, ->(user) { where("user_id = ? AND outgoing = ?", user.id, false) }
+
   def difference
     outgoing ? -amount : amount
   end
