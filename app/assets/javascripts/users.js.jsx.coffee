@@ -2,9 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-Date.prototype.toString = () ->
-  this.getDate() + "-" + (this.getMonth() + 1) + "-" + this.getFullYear()
-
 class StableFinancing.BalanceDataItem
   constructor: (@dateId, @date, @balance) ->
 

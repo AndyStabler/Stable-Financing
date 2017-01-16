@@ -18,4 +18,5 @@
 //= require react_ujs
 //= require components
 //= require init
+//= require util
 //= require_tree .
