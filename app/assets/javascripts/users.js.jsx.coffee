@@ -111,9 +111,7 @@ $(document).on 'ready page:load', ->
   if google?
     # Load the Visualization API and the corechart package.
     google.charts.load('current', {'packages':['corechart']})
-    # StableFinancing.getBalanceData () -> StableFinancing.drawChart()
     google.charts.setOnLoadCallback () -> StableFinancing.drawChartProxy()
-    # google.charts.setOnLoadCallback(() -> (StableFinancing.fetchBalanceData () -> StableFinancing.drawChartProxy()));
   else
     console.log("Google is dead")
 
