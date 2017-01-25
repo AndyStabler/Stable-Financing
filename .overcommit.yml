@@ -55,10 +55,6 @@ PostCommit: &postcommit
     enabled: true
 
 PostCheckout:
-  CustomScript:
-    required_executable: './.git-hooks/post-checkout/stop_spring.sh'
-    enabled: true
-
   <<: *postcommit
 
 PostMerge:
