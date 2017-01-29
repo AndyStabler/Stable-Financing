@@ -1,4 +1,5 @@
 #= require init
+#= require util
 #= require_tree ./templates
 
 # set the Mocha test interface
