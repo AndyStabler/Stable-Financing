@@ -1,3 +1,26 @@
+class StableFinancing.Views.User.Show
+
+  @fetchTransfers: (options) ->
+    $.getJSON(
+      $(".user-data").data("transfers-url"),
+      { format: "json" })
+    .done((response) ->
+      options.success?(response))
+    .fail -> options.fail?()
+
+  @fetchBalances: (options) ->
+    $.getJSON(
+      $(".user-data").data("json-url")
+      { format: "json" })
+    .done (response) ->
+      options.success?(
+        log: ($.map response[0],
+          StableFinancing.Models.Balance.createFromJson),
+        forecast: ($.map response[1],
+          StableFinancing.Models.Balance.createFromJson)
+      )
+    .fail (response) -> options.fail?()
+
 class StableFinancing.BalanceDataItem
   constructor: (@dateId, @date, @balance) ->
 
