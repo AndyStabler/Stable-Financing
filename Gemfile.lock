@@ -70,7 +70,6 @@ GEM
       coffee-script
       execjs
       json
-    colorize (0.8.1)
     concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
     debug_inspector (0.0.2)
@@ -82,7 +81,6 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    ejs (1.1.1)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.7.0)
@@ -104,14 +102,6 @@ GEM
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (1.8.3)
-    konacha (4.0.0)
-      actionpack (>= 4.1, < 5)
-      capybara
-      colorize
-      railties (>= 4.1, < 5)
-      sprockets (>= 2, < 4)
-      sprockets-rails (>= 2, < 4)
-      tilt
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -251,12 +241,10 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   coffeelint
   devise
-  ejs
   factory_girl_rails (~> 4.0)
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails
-  konacha
   pg
   poltergeist
   rails (= 4.2.5)
