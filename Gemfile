@@ -25,8 +25,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'jquery-ui-rails'
 
 gem 'devise'
-gem "react-rails", "~> 1.6.0"
-gem "bootstrap_form"
+gem 'react-rails'
+gem 'bootstrap_form'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -35,7 +35,7 @@ gem "bootstrap_form"
 # gem 'capistrano-rails', group: :development
 
 group :test do
-  gem "factory_girl_rails", "~> 4.0"
+  gem 'factory_girl_rails', '~> 4.0'
   gem 'simplecov', :require => false
   gem 'selenium-webdriver'
 end
@@ -59,5 +59,5 @@ group :development do
 end
 
 group :production do
-  gem "pg"
+  gem 'pg'
 end
