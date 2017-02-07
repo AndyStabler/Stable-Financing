@@ -1,4 +1,5 @@
-window.StableFinancing = {}
-window.StableFinancing.Models = {}
-window.StableFinancing.Views = {}
-window.StableFinancing.Views.Users = {}
+window.StableFinancing =
+  Models: {},
+  Views: {
+    Users: {},
+  },
