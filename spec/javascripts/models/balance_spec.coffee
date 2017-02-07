@@ -2,13 +2,14 @@
 #= require models/balance
 
 describe 'Balance', ->
-  describe '.createFromJson', ->
-    it 'creates a balance object', ->
-      balanceJSON = JSON.stringify(
-        on: '2017-01-15 20:57:13 UTC',
-        value: 50.50
-      )
-      balance = StableFinancing.Models.Balance.createFromJson(balanceJSON)
-      expectedDate = Date.parseRailsDate('2017-01-15 20:57:13 UTC')
-      expect(balance.on.getTime()).to.equal(expectedDate.getTime())
-      expect(balance.value).to.equal(50.50)
+  it 'constructs the object when the arguments are strings', ->
+    date = "2016-12-04T00:00:00.000Z"
+    balance = new StableFinancing.Models.Balance(date, "50.20")
+    expect(balance.on.getTime()).to.equal(new Date(date).getTime())
+    expect(balance.value).to.equal(50.20)
+
+  it 'constructs the object', ->
+    date = new Date("2016-12-04T00:00:00.000Z")
+    balance = new StableFinancing.Models.Balance(date, 50.20)
+    expect(balance.on.getTime()).to.equal(date.getTime())
+    expect(balance.value).to.equal(50.20)

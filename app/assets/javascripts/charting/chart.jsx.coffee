@@ -1,4 +1,4 @@
-class StableFinancing.GoogleChart
+class StableFinancing.Chart
 
   constructor: (options) ->
     @chartContainer = options.chartContainer
@@ -27,13 +27,13 @@ class StableFinancing.GoogleChart
     chart = new google.visualization.AreaChart(@chartContainer)
     console.log("chart is defined!")
     chart.draw(joinedData, options)
-    google.visualization.events.addListener(chart, 'select', () => @chartSelectHandler(chart.getSelection()[0], joinedData));
+    #google.visualization.events.addListener(chart, 'select', () => @chartSelectHandler(chart.getSelection()[0], joinedData));
 
   createTableFrom: (balanceItems, label) ->
     dataTable = new google.visualization.DataTable()
     dataTable.addColumn('date', 'Date')
     dataTable.addColumn('number', label)
-    dataTable.addRows($.map(balanceItems, (item) -> [[item.date, item.balance]]))
+    dataTable.addRows($.map(balanceItems, (item) -> [[item.on, item.value]]))
     dataTable
 
   chartSelectHandler: (selection, data) ->
@@ -54,4 +54,3 @@ class StableFinancing.GoogleChart
     hAxis:
       gridlineColor: 'transparent'
       baselineColor: '#868686'
-
