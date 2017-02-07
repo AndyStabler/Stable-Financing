@@ -6,8 +6,4 @@ Rails.application.routes.draw do
 
   resources :transfers, only: [:index, :create, :destroy]
   resources :balances, only: :create
-
-  Rails.application.routes.draw do
-    mount Konacha::Engine, at: "/konacha" if defined?(Konacha)
-  end
 end
