@@ -1,8 +1,8 @@
 class TransfersController < ApplicationController
 
   def index
-    transfer_date = params[:transfer]
-    if (transfer_date)
+    transfer_date = params[:transfer_date]
+    if transfer_date.present?
       transfer_date = Util::Date.safe_date_parse(transfer_date)
       transfers = current_user.transfer_calculator.transfers_occurring_on(transfer_date)
     else
