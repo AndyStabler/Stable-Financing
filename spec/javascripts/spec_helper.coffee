@@ -1,9 +1,10 @@
-#= require init
-#= require util
-#= require_tree ./templates
-
 #= require support/sinon
 #= require support/chai
+#= require support/sinon-chai
+#= require jquery
+#= require react
+#= require init
+#= require util
 
 window.expect = chai.expect
 
