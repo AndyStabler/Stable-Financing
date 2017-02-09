@@ -1,0 +1,5 @@
+<% balances.each_with_index do |balance, index| %>
+  <% row = [balance.on, balance.value] %>
+  <% row << header if index == 0 %>
+  <%= CSV.generate_line(row).strip %>
+<% end %>

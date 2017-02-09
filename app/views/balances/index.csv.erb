@@ -1,0 +1,4 @@
+<% require("csv") %>
+<%= CSV.generate_line ["Date", "Balance"] %>
+<%= render "balance_rows", balances: @balance_log, header: "Balance Log" %>
+<%= render "balance_rows", balances: @balance_forecast, header: "Balance Forecast" %>

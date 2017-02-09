@@ -11,7 +11,19 @@ RSpec.describe BalancesController, type: :controller do
     sign_in homer
   end
 
-  describe "POST create" do
+  describe "#index" do
+    it "renders json balance data" do
+      get :index, format: :json
+      expect(response.content_type).to eq Mime::JSON
+      expect(JSON.parse(response.body)).to eq JSON.parse(homer.balance_data.to_json)
+    end
+
+    it "renders csv balance data" do
+      get :index, format: :csv
+    end
+  end
+
+  describe "#create" do
     context "when the balance is valid" do
       it "should save the balance" do
         balance = FactoryGirl.build(:balance, :today, :value => 20.00)
