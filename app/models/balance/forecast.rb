@@ -1,3 +1,7 @@
+# A Forecast is a non-persistant balance that has some extra information
+# (stored on it)
+# Using a delgator here so balance methods can be accessed directly on instances
+# of this class
 class Balance::Forecast < Delegator
 
   attr_reader :balance, :transfers
