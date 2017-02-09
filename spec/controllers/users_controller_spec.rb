@@ -20,15 +20,6 @@ RSpec.describe UsersController, type: :controller do
         check_status response
       end
     end
-
-    context "when the format is csv" do
-      it "should render a csv output" do
-        get :show, :id => homer.id, :format => "csv"
-        expect(response).to render_template :show
-        expect(response.content_type).to eq("text/csv")
-        check_status response
-      end
-    end
   end
 
   describe "GET new" do

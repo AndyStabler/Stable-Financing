@@ -20,6 +20,8 @@ RSpec.describe BalancesController, type: :controller do
 
     it "renders csv balance data" do
       get :index, format: :csv
+      expect(response).to render_template :index
+      expect(response.content_type).to eq("text/csv")
     end
   end
 
