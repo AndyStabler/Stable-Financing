@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   resources :users
 
   resources :transfers, only: [:index, :create, :destroy]
-  resources :balances, only: [:index, :create]
+  resources :balances, only: [:new, :index, :create]
 end

@@ -11,6 +11,14 @@ RSpec.describe BalancesController, type: :controller do
     sign_in homer
   end
 
+  describe "#new" do
+    it "initialises a new Balance" do
+      get :new
+      expect(assigns(:balance).value).to eq homer.balance.value
+      expect(response).to render_template "_new.js.coffee"
+    end
+  end
+
   describe "#index" do
     it "renders json balance data" do
       get :index, format: :json

@@ -1,0 +1,10 @@
+<% result_class = "has-error" unless @balance.valid? %>
+$("#main-nav").replaceWith("<%= escape_javascript(render 'new', balance: @balance) %>")
+
+$("#balance-update-container").addClass("<%= result_class %>");
+setTimeout(( -> $("#balance-update-container").removeClass("<%= result_class %>")), 1000);
+console.log("balance is valid: " + <%= @balance.valid? %>)
+
+<% if @balance.valid? %>
+StableFinancing.Views.Users.Show.fetchBalances(success: StableFinancing.Views.Users.Show.drawChart)
+<% end %>
