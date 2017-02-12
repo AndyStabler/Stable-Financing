@@ -29,4 +29,8 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  it "adds an initial balance on creation" do
+    expect(homer.balance).to be_present
+  end
 end
