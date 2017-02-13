@@ -1,14 +1,14 @@
 #= require spec_helper
 #= require components/balance_data
 #= require models/balance
-#= require views/users/show
+#= require user
 
-fixture.preload('views/user/show')
+fixture.preload('users/show')
 
 describe 'Users.Show', ->
 
   beforeEach ->
-    this.fixtures = fixture.load('views/users/show.html')
+    this.fixtures = fixture.load('users/show.html')
     @server = sinon.fakeServer.create()
     @success = sinon.spy()
 
@@ -19,7 +19,7 @@ describe 'Users.Show', ->
     it 'correctly handles success', ->
       response = [200, { 'Content-Type': 'application/json' }, JSON.stringify('Success!')]
       @server.respondWith('GET', '/transfers/1.json', response)
-
+      debugger
       StableFinancing.Views.Users.Show.fetchTransfers(success: @success)
       @server.respond()
 
