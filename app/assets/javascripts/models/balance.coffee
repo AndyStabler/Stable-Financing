@@ -12,5 +12,4 @@ class StableFinancing.Models.Balance
         forecast: ($.map response[1], (balance) ->
           new StableFinancing.Models.Balance(balance.on, balance.value))
       ))
-    .fail (response) ->
-      $("#balance-data").html("<h1>Couldn't get balance data</h1>")
+    .fail (response) -> options.fail(response)
