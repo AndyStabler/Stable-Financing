@@ -15,7 +15,7 @@ describe 'Balance', ->
     expect(balance.value).to.equal(50.20)
 
 
-  describe '.fetchBalances', ->
+  describe '.fetchAll', ->
     beforeEach ->
       @server = sinon.fakeServer.create()
       @success = sinon.spy()
@@ -38,7 +38,7 @@ describe 'Balance', ->
       response = [200, { 'Content-Type': 'application/json' }, JSON.stringify(body)]
       @server.respondWith('GET', '/balances/1.json', response)
 
-      StableFinancing.Models.Balance.fetchBalances
+      StableFinancing.Models.Balance.fetchAll
         balanceUrl: '/balances/1.json',
         success: @success,
         fail: @failure
@@ -59,7 +59,7 @@ describe 'Balance', ->
       response = [500, { 'Content-Type': 'application/json' }, JSON.stringify('Error!')]
       @server.respondWith('GET', '/balances/1.json', response)
 
-      StableFinancing.Models.Balance.fetchBalances
+      StableFinancing.Models.Balance.fetchAll
         balanceUrl: '/balances/1.json',
         success: @success,
         fail: @failure

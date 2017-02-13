@@ -3,7 +3,7 @@ class StableFinancing.Models.Balance
     @on = new Date(@on) if typeof @on is 'string'
     @value = parseFloat(@value) if typeof @value is 'string'
 
-  @fetchBalances: (options) ->
+  @fetchAll: (options) ->
     $.getJSON(options.balanceUrl)
     .done((response) ->
       options.success(
