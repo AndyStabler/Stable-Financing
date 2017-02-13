@@ -21,5 +21,6 @@ $(document).on 'turbolinks:load', ->
   StableFinancing.initialiseDatePicker()
   ReactDOM.render(`<Loading />`, $("#balance-data")[0])
   StableFinancing.Models.Balance.fetchBalances
+    balanceUrl: $(".user-data").data("json-url")
     success: StableFinancing.Views.Users.Show.drawChart
     fail: $("#balance-data").html("<h1>Couldn't get balance data</h1>")

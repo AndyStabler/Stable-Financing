@@ -17,7 +17,6 @@ describe 'Balance', ->
 
   describe '.fetchBalances', ->
     beforeEach ->
-      fixture.load('users/show')
       @server = sinon.fakeServer.create()
       @success = sinon.spy()
       @failure = sinon.spy()
@@ -39,9 +38,10 @@ describe 'Balance', ->
       response = [200, { 'Content-Type': 'application/json' }, JSON.stringify(body)]
       @server.respondWith('GET', '/balances/1.json', response)
 
-      StableFinancing.Models.Balance.fetchBalances(
-        success: @success
-        fail: @failure)
+      StableFinancing.Models.Balance.fetchBalances
+        balanceUrl: '/balances/1.json',
+        success: @success,
+        fail: @failure
       @server.respond()
 
       balanceLog = [
@@ -59,10 +59,11 @@ describe 'Balance', ->
       response = [500, { 'Content-Type': 'application/json' }, JSON.stringify('Error!')]
       @server.respondWith('GET', '/balances/1.json', response)
 
-      StableFinancing.Models.Balance.fetchBalances(
-        success: @success
-        fail: @failure)
+      StableFinancing.Models.Balance.fetchBalances
+        balanceUrl: '/balances/1.json',
+        success: @success,
+        fail: @failure
       @server.respond()
 
       expect(@success).to.not.have.been.called
-      expect(@failure).to.have.been.calledWith
+      expect(@failure).to.have.been.called
