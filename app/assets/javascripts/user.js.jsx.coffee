@@ -1,12 +1,5 @@
 class StableFinancing.Views.Users.Show
 
-  @fetchTransfers: (options) ->
-    $.getJSON($(".user-data").data("transfers-url"), { transfer_date: options.date })
-    .done((response) ->
-      options.success(response))
-    .fail (response) ->
-      $("#selected-balance-info").html("<h1>Couldn't get transfers</h1>")
-
   @drawChart: (balances) ->
     new StableFinancing.Chart({
         chartContainer: document.getElementById('balance-data'),
