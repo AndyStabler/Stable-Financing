@@ -23,8 +23,8 @@
   </div>
 </div>
 <div class="user-data"
-  data-json-url="<%= user_path current_user %>.json"
-  data-transfers-url="<%= transfers_path current_user %>"
+  data-balances-url="<%= balances_path(format: :json) %>"
+  data-transfers-url="<%= transfers_path %>"
 </div>
 
 <div id="chart_div"></div>

@@ -4,7 +4,7 @@ class StableFinancing.Models.Balance
     @value = parseFloat(@value) if typeof @value is 'string'
 
   @fetchAll: (options) ->
-    $.getJSON(options.balanceUrl)
+    $.getJSON(options.balancesUrl)
     .done((response) ->
       options.success(
         log: ($.map response[0], (balance) ->

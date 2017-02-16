@@ -39,7 +39,7 @@ describe 'Balance', ->
       @server.respondWith('GET', '/balances/1.json', response)
 
       StableFinancing.Models.Balance.fetchAll
-        balanceUrl: '/balances/1.json',
+        balancesUrl: '/balances/1.json',
         success: @success,
         fail: @failure
       @server.respond()
@@ -60,7 +60,7 @@ describe 'Balance', ->
       @server.respondWith('GET', '/balances/1.json', response)
 
       StableFinancing.Models.Balance.fetchAll
-        balanceUrl: '/balances/1.json',
+        balancesUrl: '/balances/1.json',
         success: @success,
         fail: @failure
       @server.respond()
