@@ -9,23 +9,18 @@ class StableFinancing.Chart
     @selectionCallback = options.selectionCallback
 
   startDrawing: ->
-    console.log("Inside of startDrawing!")
     return console.error("Google Charts unavailable") unless google?
-    console.log("Google is defined!")
     google.charts.load('current', {'packages':['corechart']})
     google.charts.setOnLoadCallback () => @draw()
 
   draw: ->
     return console.error("Google Charts unavailable") unless google?
-    console.log("Inside of draw!")
     # create the data tables
     balanceDataTable = @createTableFrom(@log, "Balance")
     forecastDataTable = @createTableFrom(@forecast, "Forecast")
     joinedData = google.visualization.data.join(forecastDataTable, balanceDataTable, 'full', [[0, 0]], [1], [1])
-    console.log("chart is _not_ defined!")
     # Instantiate and draw our chart, passing in some options.
     chart = new google.visualization.AreaChart(@chartContainer)
-    console.log("chart is defined!")
     chart.draw(joinedData, options)
     #google.visualization.events.addListener(chart, 'select', () => @chartSelectHandler(chart.getSelection()[0], joinedData));
 
