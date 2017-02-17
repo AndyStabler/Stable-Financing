@@ -8,6 +8,7 @@ class StableFinancing.Views.Users.Show
       }).startDrawing();
 
 $(document).on 'turbolinks:load', ->
+  return unless $(".users.show").length > 0
   $("#user-transfer-new-button").click( ->
     $("#new_transfer").toggle()
     $("#user-transfer-new-button").toggleClass("closed open"))
