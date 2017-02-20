@@ -1,51 +1,84 @@
-class StableFinancing.Chart
+class StableFinancing.ChartAdapter
 
   constructor: (options) ->
     @chartContainer = options.chartContainer
     @log = options.log[..]
     @forecast = options.forecast[..]
-    [..., lastLog] = @log
-    @forecast.unshift(lastLog)
     @selectionCallback = options.selectionCallback
 
-  startDrawing: ->
-    return console.error("Google Charts unavailable") unless google?
-    google.charts.load('current', {'packages':['corechart']})
-    google.charts.setOnLoadCallback () => @draw()
-
   draw: ->
-    return console.error("Google Charts unavailable") unless google?
-    # create the data tables
-    balanceDataTable = @createTableFrom(@log, "Balance")
-    forecastDataTable = @createTableFrom(@forecast, "Forecast")
-    joinedData = google.visualization.data.join(forecastDataTable, balanceDataTable, 'full', [[0, 0]], [1], [1])
-    # Instantiate and draw our chart, passing in some options.
-    chart = new google.visualization.AreaChart(@chartContainer)
-    chart.draw(joinedData, options)
-    #google.visualization.events.addListener(chart, 'select', () => @chartSelectHandler(chart.getSelection()[0], joinedData));
-
-  createTableFrom: (balanceItems, label) ->
-    dataTable = new google.visualization.DataTable()
-    dataTable.addColumn('date', 'Date')
-    dataTable.addColumn('number', label)
-    dataTable.addRows($.map(balanceItems, (item) -> [[item.on, item.value]]))
-    dataTable
-
-  chartSelectHandler: (selection, data) ->
-    # The user selected _all_ the items
-    return if !selection || !selection.row
-    date = data.getValue(selection.row, 0).toString()
-    @selectionCallback(date)
-
-  options = explorer:
-    actions: ['dragToZoom', 'rightClickToReset']
-    keepInBounds: true,
-    colors: ['#b3d7ed', '#0079c1']
-    legend:
-      position: "bottom"
-    vAxis:
-      gridlineColor: 'transparent'
-      baselineColor: '#868686'
-    hAxis:
-      gridlineColor: 'transparent'
-      baselineColor: '#868686'
+    new Chart(@chartContainer, {
+      type: 'line',
+      data: {
+        labels: (@log.concat(@forecast).map (balance) -> balance.on),
+        datasets: [
+            {
+                label: "Log £",
+                lineTension: 0.1,
+                backgroundColor: "rgba(75,192,192,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: (@log.map (balance) -> { x: balance.on, y: balance.value }),
+                spanGaps: false,
+            },
+            {
+                label: "Forecast £",
+                lineTension: 0.1,
+                backgroundColor: "rgba(229,246,255,0.4)",
+                borderColor: "rgba(75,192,192,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(75,192,192,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: (@forecast.map (balance) -> { x: balance.on, y: balance.value }),
+                spanGaps: false,
+            }
+        ]
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            type: 'time',
+            position: 'bottom'
+          }],
+          yAxes: [{
+            ticks: {
+              callback: (value, index, values) ->
+                value.toLocaleString("en-GB",{ style:"currency", currency:"GBP" })
+            }
+          }]
+        },
+        responsieve: true,
+        title: {
+          display: true,
+          text: 'Balance log/forecast'
+        },
+        tooltips: {
+          intersects: false
+        },
+        hover: {
+          mode: 'single'
+        }
+      }
+  })

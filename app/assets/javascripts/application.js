@@ -19,4 +19,6 @@
 //= require components
 //= require init
 //= require util
+//= require moment
+//= require Chart
 //= require_tree .

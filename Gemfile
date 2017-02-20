@@ -27,6 +27,8 @@ gem 'jquery-ui-rails'
 gem 'devise'
 gem 'react-rails'
 gem 'bootstrap_form'
+gem 'momentjs-rails'
+gem 'chart-js-rails'
 
 # Use Unicorn as the app server
 # gem 'unicorn'

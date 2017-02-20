@@ -1,11 +1,11 @@
 class StableFinancing.Views.Users.Show
 
   @drawChart: (balances) ->
-    new StableFinancing.Chart({
+    new StableFinancing.ChartAdapter({
         chartContainer: document.getElementById('balance-data'),
         log: balances.log,
         forecast: balances.forecast
-      }).startDrawing();
+      }).draw()
 
 $(document).on 'turbolinks:load', ->
   return unless $(".users.show").length > 0
@@ -14,7 +14,6 @@ $(document).on 'turbolinks:load', ->
     $("#user-transfer-new-button").toggleClass("closed open"))
   StableFinancing.initialiseDatePicker()
   ReactDOM.render(`<Loading />`, $("#balance-data")[0])
-
   StableFinancing.Models.Balance.fetchAll
     balancesUrl: $(".user-data").data("balances-url")
     success: StableFinancing.Views.Users.Show.drawChart
