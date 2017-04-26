@@ -7,11 +7,11 @@ class Balance::Forecaster
 
   def forecast_balance(to)
     balance_forecasts = []
-    balance = @user.balance
     # get all transfer dates occurring after the user's latest balance update
-    from = balance.on.to_date + 1.day
+    from = @user.balance.on.tomorrow.to_date
+
     transfer_dates = @transfer_calculator.all_transfer_dates(from, to)
-    balance_value = balance.value
+    balance_value = @user.balance.value
 
     transfer_dates.sort.each do |transfer_date|
       transfers = @transfer_calculator.transfers_occurring_on transfer_date
@@ -22,4 +22,9 @@ class Balance::Forecaster
     end
     balance_forecasts
   end
+
+  def balance_forecast_on(transfer_date)
+    forecast_balance(transfer_date).last
+  end
+
 end
