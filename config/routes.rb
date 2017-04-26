@@ -6,4 +6,5 @@ Rails.application.routes.draw do
 
   resources :transfers, only: [:index, :create, :destroy]
   resources :balances, only: [:new, :index, :create]
+  resources :balance_forecasts, only: [:show]
 end
