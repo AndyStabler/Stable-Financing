@@ -11,9 +11,15 @@ RSpec.describe BalanceForecastsController, type: :controller do
   end
 
   describe "#show" do
-    it "returns the balance forecast for the given date" do
-      xhr :get, :show, id: homer.id, date: DateTime.current
+    it "renders the balance forecast table" do
+      FactoryGirl.create(:transfer_daily, user: homer)
+      xhr :get, :show, id: homer.id, date: 1.week.from_now
       expect(response).to render_template "balance_forecasts/_show"
+    end
+
+    it "renders the blank slate when the date is invalid" do
+      xhr :get, :show, id: homer.id, date: DateTime.yesterday
+      expect(response).to render_template "balance_forecasts/_blank_slate"
     end
   end
 end

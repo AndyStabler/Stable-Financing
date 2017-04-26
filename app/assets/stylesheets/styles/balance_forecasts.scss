@@ -1,0 +1,31 @@
+#balance_forecast {
+  table {
+    width: 100%;
+
+    th {
+      font-weight: 400;
+      border-bottom: 1px solid;
+    }
+
+    tr {
+      font-size: 1.5em;
+    }
+
+    tfoot {
+      font-size: 1.25em;
+
+      td {
+        padding-top: 1em;
+        font-weight: 400;
+      }
+    }
+
+    .row-odd {
+      background-color: #efefef;
+    }
+
+    .row-even {
+      background-color: #fbfbfb;
+    }
+  }
+}
