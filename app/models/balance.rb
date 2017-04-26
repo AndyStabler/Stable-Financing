@@ -22,7 +22,7 @@ class Balance < ActiveRecord::Base
     value - previous_balance.last.last.sort_by {|b| b.on}.last.value
   end
 
-  # Returns the difference between this balance and the previous one (might be on the same day)
+  # Returns the difference between this balance and the previous one
   # they could both occur on the same day
   def diff_from_previous_balance
     bals = user.balances.order(:on)
