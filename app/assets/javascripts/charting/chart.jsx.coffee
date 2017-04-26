@@ -7,7 +7,7 @@ class StableFinancing.ChartAdapter
     @selectionCallback = options.selectionCallback
 
   draw: ->
-    new Chart(@chartContainer, {
+    @chart = new Chart(@chartContainer, {
       type: 'line',
       data: {
         labels: (@log.concat(@forecast).map (balance) -> balance.on),
@@ -15,6 +15,17 @@ class StableFinancing.ChartAdapter
       },
       options: @chartOptions()
     })
+
+  clickHandler: (callback) ->
+    console.error("chart is undefined") unless @chart?
+    @chartContainer.onclick = (evt) =>
+      element = @chart.getElementAtEvent(evt)[0]
+      return unless element?
+      if element._datasetIndex == 0
+        dataset = @balanceLogDataset()
+      else
+        dataset = @balanceForecastDataset()
+      callback(dataset.data[element._index].x)
 
   balanceLogDataset: ->
     dataset = @datasetFor @log

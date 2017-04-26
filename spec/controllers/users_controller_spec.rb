@@ -12,12 +12,18 @@ RSpec.describe UsersController, type: :controller do
   end
 
   describe "GET show" do
+    render_views
 
     context "when the format is html" do
       it "should render the html show template" do
         get :show,:id => homer.id
         expect(response).to render_template(:show)
         check_status response
+      end
+
+      it "renders the balance forecast blank slate" do
+        get :show, :id => homer.id
+        expect(response).to render_template partial: "balance_forecasts/_blank_slate"
       end
     end
   end

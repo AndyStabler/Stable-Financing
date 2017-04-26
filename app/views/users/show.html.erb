@@ -20,13 +20,16 @@
     </canvas>
     <div id="selected-balance-info" style="float:left;">
     </div>
+    <div id="chart_div"></div>
+    <%= render "balance_forecasts/blank_slate" %>
   </div>
 </div>
 <div class="user-data"
   data-balances-url="<%= balances_path(format: :json) %>"
+  data-balance-forecast-url="<%= balance_forecast_path %>"
   data-transfers-url="<%= transfers_path %>"
 </div>
 
-<div id="chart_div"></div>
+
 <!--Load the AJAX API-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
