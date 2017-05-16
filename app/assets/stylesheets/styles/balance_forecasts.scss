@@ -1,4 +1,5 @@
-#balance_forecast {
+#balance-forecast-prediction {
+
   table {
     width: 100%;
 
@@ -27,5 +28,19 @@
     .row-even {
       background-color: #fbfbfb;
     }
+  }
+
+}
+
+#balance-forecast-prediction.blank-slate {
+  * {
+    color: #dadada;
+  }
+
+  .hint-text {
+    color: #797979;
+    padding: 0 1em;
+    text-align: center;
+    font-weight: 400;
   }
 }

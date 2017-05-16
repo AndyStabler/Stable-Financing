@@ -1,23 +1,28 @@
-<div id="balance_forecast">
-  <h4>Here's what we think your bank account might look like on <%= forecast.balance.on.to_date.to_formatted_s(:long) %></h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Transfer</th>
-        <th>Change</th>
-      </tr>
-    </thead>
-    <% forecast.transfers.each_with_index do |transfer, index| %>
-      <tr class="row-<%= index.even? ? 'even' : 'odd' %>">
-        <td><%= transfer.reference %></td>
-        <td><%= number_to_currency(transfer.difference, unit: "£") %></td>
-      </tr>
-    <% end %>
-    <tfoot>
-      <tr>
-        <td>Balance</td>
-        <td><%= number_to_currency(forecast.balance.value, unit: "£") %></td>
-      </tr>
-    </tfoot>
-  </table>
+<div id="balance-forecast-prediction" class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-heading">Balance Forecast</h1>
+  </div>
+  <div class="panel-body">
+    <h4>Here's what we think your bank account will look like on <%= forecast.balance.on.to_date.to_formatted_s(:long) %></h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Transfer</th>
+          <th>Change</th>
+        </tr>
+      </thead>
+      <% forecast.transfers.each_with_index do |transfer, index| %>
+        <tr class="row-<%= index.even? ? 'even' : 'odd' %>">
+          <td><%= transfer.reference %></td>
+          <td><%= number_to_currency(transfer.difference, unit: "£") %></td>
+        </tr>
+      <% end %>
+      <tfoot>
+        <tr>
+          <td>Balance</td>
+          <td><%= number_to_currency(forecast.balance.value, unit: "£") %></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 </div>

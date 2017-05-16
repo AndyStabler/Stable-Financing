@@ -13,7 +13,7 @@ class StableFinancing.Views.Users.Show
         data: { date: element },
       })
       .done (html) ->
-        $("#balance_forecast").replaceWith(html)
+        $("#balance-forecast-prediction").replaceWith(html)
 
 $(document).on 'turbolinks:load', ->
   return unless $(".users.show").length > 0
