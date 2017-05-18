@@ -81,7 +81,8 @@ class StableFinancing.ChartAdapter
         text: 'Balance log/forecast'
       },
       tooltips: {
-        intersects: false
+        intersects: false,
+        mode: 'label'
       },
       hover: {
         mode: 'single'
