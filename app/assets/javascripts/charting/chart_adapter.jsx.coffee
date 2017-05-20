@@ -4,7 +4,23 @@ class StableFinancing.ChartAdapter
     @chartContainer = options.chartContainer
     @log = options.log[..]
     @forecast = options.forecast[..]
+    @fillBlankBalances()
     @selectionCallback = options.selectionCallback
+
+  # Chart-JS requires two datasets to be of equal length for labels to work
+  fillBlankBalances: ->
+    logWithBlanks = @appendBlankBalances(@log, @forecast)
+    forecastWithBlanks = @prependBlankBalances(@log, @forecast)
+    @log = logWithBlanks
+    @forecast = forecastWithBlanks
+
+  prependBlankBalances: (blanks, balances) ->
+    blankBalances = blanks.map (balance) -> { value: NaN, on: balance.on }
+    blankBalances.concat(balances)
+
+  appendBlankBalances: (balances, blanks) ->
+    blankBalances = blanks.map (balance) -> { value: NaN, on: balance.on }
+    balances.concat(blankBalances)
 
   draw: ->
     @chart = new Chart(@chartContainer, {
@@ -25,12 +41,12 @@ class StableFinancing.ChartAdapter
         dataset = @balanceLogDataset()
       else
         dataset = @balanceForecastDataset()
-      callback(dataset.data[element._index].x)
+      callback(dataset.data[element._index]?.x)
 
   balanceLogDataset: ->
     dataset = @datasetFor @log
     dataset.label = "Log £"
-    dataset.backgroundColor = "rgba(75,192,192,0.4)"
+    dataset.backgroundColor = "rgba(205,236,251,1)"
     dataset
 
   balanceForecastDataset: ->
@@ -42,8 +58,8 @@ class StableFinancing.ChartAdapter
   datasetFor: (balances) ->
     {
       lineTension: 0.1,
-      backgroundColor: "rgba(229,246,255,0.4)",
-      borderColor: "rgba(75,192,192,1)",
+      backgroundColor: "rgba(112,178,210,1)",
+      borderColor: "rgba(112,178,210,1)",
       borderCapStyle: 'butt',
       borderDash: [],
       borderDashOffset: 0.0,
@@ -57,7 +73,7 @@ class StableFinancing.ChartAdapter
       pointHoverBorderWidth: 2,
       pointRadius: 0,
       pointHitRadius: 10,
-      data: (balances.map (balance) -> { x: balance.on, y: balance.value }),
+      data: (balances.map (balance) -> { x: balance.on, y: balance?.value }),
       spanGaps: false,
     }
 
@@ -82,7 +98,8 @@ class StableFinancing.ChartAdapter
       },
       tooltips: {
         intersects: false,
-        mode: 'label'
+        mode: 'label',
+        position: 'nearest'
       },
       hover: {
         mode: 'single'
